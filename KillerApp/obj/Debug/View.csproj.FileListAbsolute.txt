@@ -74,3 +74,7 @@ C:\Users\mark\Desktop\School\S2V2\KillerAppS2v2\KillerApp\obj\Debug\View.csproj.
 C:\Users\mark\Desktop\School\S2V2\KillerAppS2v2\KillerApp\obj\Debug\View.csproj.CopyComplete
 C:\Users\mark\Desktop\School\S2V2\KillerAppS2v2\KillerApp\obj\Debug\KillerApp.dll
 C:\Users\mark\Desktop\School\S2V2\KillerAppS2v2\KillerApp\obj\Debug\KillerApp.pdb
+C:\Users\mark\Desktop\School\S2V2\KillerAppS2v2\KillerApp\bin\Logic.dll
+C:\Users\mark\Desktop\School\S2V2\KillerAppS2v2\KillerApp\bin\Models.dll
+C:\Users\mark\Desktop\School\S2V2\KillerAppS2v2\KillerApp\bin\Logic.pdb
+C:\Users\mark\Desktop\School\S2V2\KillerAppS2v2\KillerApp\bin\Models.pdb
