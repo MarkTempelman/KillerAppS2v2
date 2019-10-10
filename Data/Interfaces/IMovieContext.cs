@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models;
 
 namespace Data.Interfaces
 {
-    interface IMovieContext
+    public interface IMovieContext
     {
+        List<MovieModel> GetAllMovies();
     }
 }
