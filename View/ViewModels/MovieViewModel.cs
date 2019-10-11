@@ -11,13 +11,16 @@ namespace KillerApp.ViewModels
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime ReleaseDate { get; set; }
+        public string ShortDescription { get; set; }
+
         public double AverageRating { get; set; }
 
-        public MovieViewModel(string title, string description, DateTime releaseDate)
+        public MovieViewModel(string title, string description, DateTime releaseDate, string shortDescription)
         {
             Title = title;
             Description = description;
             ReleaseDate = releaseDate;
+            ShortDescription = shortDescription;
         }
 
         public MovieViewModel()
