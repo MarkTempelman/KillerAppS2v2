@@ -12,7 +12,7 @@ namespace View.Controllers
 {
     public class MovieController : Controller
     {
-        private MovieLogic _movieLogic = new MovieLogic();
+        private readonly MovieLogic _movieLogic = new MovieLogic();
 
         private string ShortenStringIfNecessary(string longString)
         {
