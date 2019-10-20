@@ -12,8 +12,8 @@ namespace KillerApp.ViewModels
         public string Description { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string ShortDescription { get; set; }
-
         public double AverageRating { get; set; }
+        public List<string> Genres { get; set; }
 
         public MovieViewModel(string title, string description, DateTime releaseDate, string shortDescription)
         {

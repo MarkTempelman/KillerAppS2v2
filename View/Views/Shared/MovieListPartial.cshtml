@@ -1,0 +1,16 @@
+﻿@model KillerApp.ViewModels.MovieViewModel
+
+@{
+    ViewData["Title"] = "HomePage";
+}
+
+<h2>HomePage</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<h2><B>@Html.DisplayFor(modelItem => Model.Title)</B></h2>
+<span>Release date: </span> @Html.DisplayFor(modelItem => Model.ReleaseDate);
+<br><br>
+@Html.DisplayFor(modelItem => Model.ShortDescription);

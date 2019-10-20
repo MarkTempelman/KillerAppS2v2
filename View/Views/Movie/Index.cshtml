@@ -1,0 +1,13 @@
+﻿@model IEnumerable<KillerApp.ViewModels.MovieViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.Partial("SearchPartial", new View.ViewModels.SearchViewModel());
+
+@foreach (var item in Model)
+{
+    @Html.Partial("MovieListPartial", item)
+}

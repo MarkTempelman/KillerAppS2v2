@@ -64,7 +64,7 @@ namespace View
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Movie}/{action=HomePage}/{id?}");
+                    template: "{controller=Movie}/{action=Index}/{id?}");
             });
         }
     }

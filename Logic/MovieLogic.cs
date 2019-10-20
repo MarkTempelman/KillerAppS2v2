@@ -16,5 +16,14 @@ namespace Logic
         {
             return _iMovieContext.GetAllMovies();
         }
+
+        public List<MovieModel> SearchForMovies(SearchModel search)
+        {
+            List<MovieModel> movies = GetAllMovies();
+            
+            return movies;
+        }
+
+      
     }
 }

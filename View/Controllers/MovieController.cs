@@ -7,6 +7,7 @@ using Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using View.ViewModels;
 
 namespace View.Controllers
 {
@@ -24,7 +25,7 @@ namespace View.Controllers
             return longString;
         }
 
-        public ActionResult HomePage()
+        public ActionResult Index()
         {
             IEnumerable<MovieModel> movies = _movieLogic.GetAllMovies();
             List<MovieViewModel> movieViewModels = new List<MovieViewModel>();
@@ -34,6 +35,17 @@ namespace View.Controllers
                 movieViewModels.Add(movieViewModel);
             }
             return View(movieViewModels);
+        }
+
+        public ActionResult MovieListPartial()
+        {
+            return View();
+        }
+
+        public ActionResult SearchPartial()
+        {
+            SearchViewModel searchViewModel = new SearchViewModel();
+            return View(searchViewModel);
         }
     }
 }
