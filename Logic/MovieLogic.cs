@@ -11,6 +11,8 @@ namespace Logic
 {
     public class MovieLogic
     {
+        private readonly IMovieContext _iMovieContext;
+
         public MovieLogic()
         {
             _iMovieContext = new MovieSQLContext();
@@ -20,35 +22,47 @@ namespace Logic
         {
             _iMovieContext = movieContext;
         }
-        private readonly IMovieContext _iMovieContext;
+
         public List<MovieModel> GetAllMovies()
         {
             return _iMovieContext.GetAllMovies();
         }
 
-        public List<MovieModel> SearchForMovies(List<MovieModel> movies, SearchModel search)
+        public List<MovieModel> GetMoviesBySearchModel(List<MovieModel> movies, SearchModel search)
         {
+            if (search.Genre != null)
+            {
+                movies = FilterMoviesByGenre(movies, search.Genre);
+            }
+
+            movies = GetMoviesReleasedAfter(movies, search.ReleasedAfter);
+            movies = GetMoviesReleasedBefore(movies, search.ReleasedBefore);
+
+            if (search.SearchTerm != null)
+            {
+                movies = GetMoviesByTitle(movies, search.SearchTerm);
+            }
             return movies;
         }
 
-        private List<MovieModel> FilterByGenre(List<MovieModel> movies, GenreModel genre)
+        private List<MovieModel> FilterMoviesByGenre(List<MovieModel> movies, GenreModel genre)
         {
             return (from movie in movies from movieGenre in movie.Genres where movieGenre.Genre == genre.Genre select movie).ToList();
         }
 
-        private List<MovieModel> ReleasedAfter(List<MovieModel> movies, DateTime releasedAfter)
+        private List<MovieModel> GetMoviesReleasedAfter(List<MovieModel> movies, DateTime releasedAfter)
         {
             return movies.Where(m => m.ReleaseDate > releasedAfter).ToList(); ;
         }
 
-        private List<MovieModel> ReleasedBefore(List<MovieModel> movies, DateTime releasedBefore)
+        private List<MovieModel> GetMoviesReleasedBefore(List<MovieModel> movies, DateTime releasedBefore)
         {
             return movies.Where(m => m.ReleaseDate < releasedBefore).ToList();
         }
 
-        private List<MovieModel> SearchForMoviesByTitle(List<MovieModel> movies, string searchTerm)
+        private List<MovieModel> GetMoviesByTitle(List<MovieModel> movies, string searchTerm)
         {
-            return (movies.Where(movie => movie.Title.Contains(searchTerm))).ToList();
+            return movies.Where(movie => movie.Title.Contains(searchTerm)).ToList();
         }
     }
 }

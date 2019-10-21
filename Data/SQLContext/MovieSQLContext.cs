@@ -49,6 +49,8 @@ namespace Data.SQLContext
             return movies;
         }
 
+        //outdated for current GenreModel
+        //Todo redo entire method so it adds a GenreModel for each genre a movie has
         public List<GenreModel> GetGenreByMovieId(int movieId)
         {
             List<GenreModel> genres = new List<GenreModel>();
@@ -72,7 +74,7 @@ namespace Data.SQLContext
         public List<GenreModel> GetAllGenres()
         {
             List<GenreModel> genres = new List<GenreModel>();
-            string query = "SELECT Genre, MovieId FROM `genre` INNER JOIN `genre_movie` USING (genreId)";
+            string query = "SELECT Genre, GenreId FROM `genre`";
             MySqlCommand command = new MySqlCommand(query, _conn);
 
             _conn.Open();
@@ -81,7 +83,7 @@ namespace Data.SQLContext
             {
                 genres.Add(new GenreModel(
                     reader.GetString(reader.GetOrdinal("Genre")),
-                    reader.GetInt32(reader.GetOrdinal("MovieId"))));
+                    reader.GetInt32(reader.GetOrdinal("GenreId"))));
             }
             _conn.Close();
             return genres;

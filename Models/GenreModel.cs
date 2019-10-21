@@ -7,12 +7,12 @@ namespace Models
     public class GenreModel
     {
         public string Genre { get; set; }
-        public int MovieId { get; set; }
+        public int GenreId { get; set; }
 
-        public GenreModel(string genre, int movieId)
+        public GenreModel(string genre, int genreId)
         {
             Genre = genre;
-            MovieId = movieId;
+            GenreId = genreId;
         }
     }
 }

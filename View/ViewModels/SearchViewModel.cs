@@ -10,12 +10,26 @@ namespace View.ViewModels
     {
         [DisplayName("Sort by:")]
         public string SortBy { get; set; }
-        public string Genre { get; set; }
+        public GenreViewModel Genre { get; set; }
         [DisplayName("Released after:")]
-        public DateTime ReleasedAfter { get; set; }
+        public DateTime ReleasedAfter { get; set; } = DateTime.MinValue;
         [DisplayName("Released before:")]
-        public DateTime ReleasedBefore { get; set; }
+        public DateTime ReleasedBefore { get; set; } = DateTime.MaxValue;
         [DisplayName("Search")]
         public string SearchTerm { get; set; }
+
+        public SearchViewModel()
+        {
+
+        }
+
+        public SearchViewModel(string sortBy, GenreViewModel genre, DateTime releasedAfter, DateTime releasedBefore, string searchTerm)
+        {
+            SortBy = sortBy;
+            Genre = genre;
+            ReleasedAfter = releasedAfter;
+            ReleasedBefore = releasedBefore;
+            SearchTerm = searchTerm;
+        }
     }
 }

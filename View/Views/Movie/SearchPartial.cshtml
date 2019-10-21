@@ -1,43 +1,58 @@
-﻿@model View.ViewModels.SearchViewModel
+﻿@using View.Controllers
+@model View.ViewModels.SearchViewModel
 
-<h4>SearchViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SearchPartial">
+        <form asp-action="Index" asp-controller="Movie">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <select class="form-group" id="SortBy" name="SortBy">
-                <option>Title</option>
-                <option>Release Date</option>
-            </select>
+            <table>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="SearchTerm" class="control-label"></label>
+                            <input asp-for="SearchTerm" class="form-control" />
+                            <span asp-validation-for="SearchTerm" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <span>Sort by:</span><br>
+                        <select class="form-group" id="SortBy" name="SortBy">
+                            <option>Title</option>
+                            <option>Release Date</option>
+                        </select>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="Genre" class="control-label"></label>
+                            <input asp-for="Genre" class="form-control" />
+                            <span asp-validation-for="Genre" class="text-danger"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="ReleasedAfter" class="control-label"></label>
+                            <input asp-for="ReleasedAfter" class="form-control" />
+                            <span asp-validation-for="ReleasedAfter" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="ReleasedBefore" class="control-label"></label>
+                            <input asp-for="ReleasedBefore" class="form-control" />
+                            <span asp-validation-for="ReleasedBefore" class="text-danger"></span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
             <div class="form-group">
-                <label asp-for="Genre" class="control-label"></label>
-                <input asp-for="Genre" class="form-control" />
-                <span asp-validation-for="Genre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReleasedAfter" class="control-label"></label>
-                <input asp-for="ReleasedAfter" class="form-control" />
-                <span asp-validation-for="ReleasedAfter" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReleasedBefore" class="control-label"></label>
-                <input asp-for="ReleasedBefore" class="form-control" />
-                <span asp-validation-for="ReleasedBefore" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SearchTerm" class="control-label"></label>
-                <input asp-for="SearchTerm" class="form-control" />
-                <span asp-validation-for="SearchTerm" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Search" class="btn btn-default" formaction=""/>
             </div>
         </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

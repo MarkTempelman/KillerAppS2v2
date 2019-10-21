@@ -15,26 +15,58 @@ namespace View.Controllers
     {
         private readonly MovieLogic _movieLogic = new MovieLogic();
 
-        private string ShortenStringIfNecessary(string longString)
+        private string ShortenStringIfNecessary(string longString, int maxLength)
         {
-            if (longString.Length > 100)
+            if (longString.Length > maxLength)
             {
-                string shortString = longString.Remove(100);
+                string shortString = longString.Remove(maxLength);
                 return shortString += "...";
             }
             return longString;
         }
 
+        private IEnumerable<MovieModel> GetAllMovieModels()
+        {
+            return _movieLogic.GetAllMovies();
+        }
+
+        private IEnumerable<MovieViewModel> ToMovieViewModels(IEnumerable<MovieModel> movies)
+        {
+            return movies.Select(movie => new MovieViewModel(movie.Title, movie.Description, movie.ReleaseDate, ShortenStringIfNecessary(movie.Description, 200)));
+        }
+
+        public GenreModel ToGenreModel(GenreViewModel genre)
+        {
+            return new GenreModel(genre.Genre, genre.GenreId);
+        }
+
+        public SearchModel ToSearchModel(SearchViewModel search)
+        {
+            var searchModel = new SearchModel();
+            if (search.Genre != null)
+            {
+                searchModel.Genre = ToGenreModel(search.Genre);
+            }
+
+            searchModel.ReleasedAfter = search.ReleasedAfter;
+            searchModel.ReleasedBefore = search.ReleasedBefore;
+
+            if (search.SearchTerm != null)
+            {
+                searchModel.SearchTerm = search.SearchTerm;
+            }
+
+            if (search.SortBy != null)
+            {
+                searchModel.SortBy = search.SortBy;
+            }
+
+            return searchModel;
+        }
+
         public ActionResult Index()
         {
-            IEnumerable<MovieModel> movies = _movieLogic.GetAllMovies();
-            List<MovieViewModel> movieViewModels = new List<MovieViewModel>();
-            foreach (var movie in movies)
-            {
-                MovieViewModel movieViewModel = new MovieViewModel(movie.Title, movie.Description, movie.ReleaseDate, ShortenStringIfNecessary(movie.Description));
-                movieViewModels.Add(movieViewModel);
-            }
-            return View(movieViewModels);
+            return View(ToMovieViewModels(GetAllMovieModels()));
         }
 
         public ActionResult MovieListPartial()
@@ -46,6 +78,12 @@ namespace View.Controllers
         {
             SearchViewModel searchViewModel = new SearchViewModel();
             return View(searchViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Index(SearchViewModel search)
+        {
+            return View(ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), ToSearchModel(search))));
         }
     }
 }
