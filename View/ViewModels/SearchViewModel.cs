@@ -16,12 +16,12 @@ namespace View.ViewModels
 
         [DisplayName("Released after:")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ReleasedAfter { get; set; } = DateTime.MinValue;
 
         [DisplayName("Released before:")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ReleasedBefore { get; set; } = DateTime.MaxValue;
 
         [DisplayName("Search")]
