@@ -32,12 +32,23 @@ namespace View.Controllers
 
         private IEnumerable<MovieViewModel> ToMovieViewModels(IEnumerable<MovieModel> movies)
         {
-            return movies.Select(movie => new MovieViewModel(movie.Title, movie.Description, movie.ReleaseDate, ShortenStringIfNecessary(movie.Description, 200)));
+            List<MovieViewModel> movieViewModels = new List<MovieViewModel>();
+            foreach (MovieModel movie in movies)
+            {
+                List<GenreViewModel> genresViewModels = movie.Genres.Select(ToGenreViewModel).ToList();
+                movieViewModels.Add(new MovieViewModel(movie.Title, movie.Description, movie.ReleaseDate, ShortenStringIfNecessary(movie.Description, 200), genresViewModels));
+            }
+            return movieViewModels;
         }
 
         public GenreModel ToGenreModel(GenreViewModel genre)
         {
             return new GenreModel(genre.Genre, genre.GenreId);
+        }
+
+        public GenreViewModel ToGenreViewModel(GenreModel genre)
+        {
+            return new GenreViewModel(genre.Genre, genre.GenreId);
         }
 
         public SearchModel ToSearchModel(SearchViewModel search)

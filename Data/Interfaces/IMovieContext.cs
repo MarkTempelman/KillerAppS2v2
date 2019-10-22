@@ -10,5 +10,9 @@ namespace Data.Interfaces
     public interface IMovieContext
     {
         List<MovieModel> GetAllMovies();
+
+        List<GenreModel> GetGenresByMovieId(int movieId);
+
+        List<GenreModel> GetAllGenres();
     }
 }

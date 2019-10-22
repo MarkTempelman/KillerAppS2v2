@@ -1,4 +1,6 @@
-﻿@model KillerApp.ViewModels.MovieViewModel
+﻿@using Org.BouncyCastle.Asn1.Cmp
+@using View.ViewModels
+@model KillerApp.ViewModels.MovieViewModel
 
 @{
     ViewData["Title"] = "HomePage";
@@ -8,4 +10,8 @@
     <span>Release date: </span> @Html.DisplayFor(modelItem => Model.ReleaseDate);
     <br><br>
     @Html.DisplayFor(modelItem => Model.ShortDescription);
+    @foreach (GenreViewModel genre in Model.Genres)
+    {
+        @Html.Partial("GenrePartial", genre)
+    }
 </div>

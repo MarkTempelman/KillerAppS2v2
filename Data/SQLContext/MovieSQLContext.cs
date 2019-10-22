@@ -49,25 +49,31 @@ namespace Data.SQLContext
             return movies;
         }
 
-        //outdated for current GenreModel
-        //Todo redo entire method so it adds a GenreModel for each genre a movie has
-        public List<GenreModel> GetGenreByMovieId(int movieId)
+        public List<GenreModel> GetGenresByMovieId(int movieId)
         {
             List<GenreModel> genres = new List<GenreModel>();
-            string query = "SELECT Genre, MovieId FROM `genre`, `genre_movie` WHERE genre.GenreId = genre_movie.GenreId AND genre_movie.MovieId = @MovieId";
+            string query = "SELECT Genre, genre.GenreId FROM `genre`, `genre_movie` WHERE genre.GenreId = genre_movie.GenreId AND genre_movie.MovieId = @MovieId";
             MySqlCommand command = new MySqlCommand(query, _conn);
-
-            command.Parameters.AddWithValue("@movieId", movieId);
-
-            _conn.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                genres.Add(new GenreModel(
-                    reader.GetString(reader.GetOrdinal("Genre")),
-                    reader.GetInt32(reader.GetOrdinal("MovieId"))));
-            }
+                command.Parameters.AddWithValue("@movieId", movieId);
 
+                _conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    genres.Add(new GenreModel(
+                        reader.GetString(reader.GetOrdinal("Genre")),
+                        reader.GetInt32(reader.GetOrdinal("GenreId"))));
+                }
+                _conn.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _conn.Close();
+                throw;
+            }
             return genres;
         }
 
@@ -76,16 +82,24 @@ namespace Data.SQLContext
             List<GenreModel> genres = new List<GenreModel>();
             string query = "SELECT Genre, GenreId FROM `genre`";
             MySqlCommand command = new MySqlCommand(query, _conn);
-
-            _conn.Open();
-            MySqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                genres.Add(new GenreModel(
-                    reader.GetString(reader.GetOrdinal("Genre")),
-                    reader.GetInt32(reader.GetOrdinal("GenreId"))));
+                _conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    genres.Add(new GenreModel(
+                        reader.GetString(reader.GetOrdinal("Genre")),
+                        reader.GetInt32(reader.GetOrdinal("GenreId"))));
+                }
+                _conn.Close();
             }
-            _conn.Close();
+            catch (Exception e)
+            {
+                _conn.Close();
+                Console.WriteLine(e);
+                throw;
+            }
             return genres;
         }
     }

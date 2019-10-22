@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Models;
+using View.ViewModels;
 
 namespace KillerApp.ViewModels
 {
@@ -13,15 +14,16 @@ namespace KillerApp.ViewModels
         public DateTime ReleaseDate { get; set; }
         public string ShortDescription { get; set; }
         public double AverageRating { get; set; }
-        public List<string> Genres { get; set; }
+        public List<GenreViewModel> Genres { get; set; }
 
-        public MovieViewModel(string title, string description, DateTime releaseDate, string shortDescription)
+        public MovieViewModel(string title, string description, DateTime releaseDate, string shortDescription, List<GenreViewModel> genres)
         {
             Title = title;
             Description = description;
             ReleaseDate = releaseDate;
             ShortDescription = shortDescription;
-        }
+            Genres = genres;
+        }   
 
         public MovieViewModel()
         {

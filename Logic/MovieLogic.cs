@@ -23,12 +23,21 @@ namespace Logic
             _iMovieContext = movieContext;
         }
 
-        public List<MovieModel> GetAllMovies()
+        public IEnumerable<MovieModel> GetAllMovies()
         {
-            return _iMovieContext.GetAllMovies();
+            return GetGenresForMovies(_iMovieContext.GetAllMovies());
         }
 
-        public List<MovieModel> GetMoviesBySearchModel(List<MovieModel> movies, SearchModel search)
+        private IEnumerable<MovieModel> GetGenresForMovies(IEnumerable<MovieModel> movies)
+        {
+            foreach (MovieModel movie in movies)
+            {
+                movie.Genres.AddRange(_iMovieContext.GetGenresByMovieId(movie.MovieId));
+            }
+            return movies;
+        }
+
+        public IEnumerable<MovieModel> GetMoviesBySearchModel(IEnumerable<MovieModel> movies, SearchModel search)
         {
             if (search.Genre != null)
             {
@@ -45,22 +54,22 @@ namespace Logic
             return movies;
         }
 
-        private List<MovieModel> FilterMoviesByGenre(List<MovieModel> movies, GenreModel genre)
+        private IEnumerable<MovieModel> FilterMoviesByGenre(IEnumerable<MovieModel> movies, GenreModel genre)
         {
             return (from movie in movies from movieGenre in movie.Genres where movieGenre.Genre == genre.Genre select movie).ToList();
         }
 
-        private List<MovieModel> GetMoviesReleasedAfter(List<MovieModel> movies, DateTime releasedAfter)
+        private IEnumerable<MovieModel> GetMoviesReleasedAfter(IEnumerable<MovieModel> movies, DateTime releasedAfter)
         {
             return movies.Where(m => m.ReleaseDate > releasedAfter).ToList(); ;
         }
 
-        private List<MovieModel> GetMoviesReleasedBefore(List<MovieModel> movies, DateTime releasedBefore)
+        private IEnumerable<MovieModel> GetMoviesReleasedBefore(IEnumerable<MovieModel> movies, DateTime releasedBefore)
         {
             return movies.Where(m => m.ReleaseDate < releasedBefore).ToList();
         }
 
-        private List<MovieModel> GetMoviesByTitle(List<MovieModel> movies, string searchTerm)
+        private IEnumerable<MovieModel> GetMoviesByTitle(IEnumerable<MovieModel> movies, string searchTerm)
         {
             return movies.Where(movie => movie.Title.Contains(searchTerm)).ToList();
         }

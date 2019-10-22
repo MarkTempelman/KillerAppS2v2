@@ -12,7 +12,7 @@ namespace Models
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public List<GenreModel> Genres { get; set; }
+        public List<GenreModel> Genres { get; set; } = new List<GenreModel>();
 
         public MovieModel(int movieId, string title, string description, DateTime releaseDate)
         {
