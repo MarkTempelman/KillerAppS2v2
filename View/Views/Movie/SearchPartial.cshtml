@@ -3,22 +3,22 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Index" asp-controller="Movie">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <table>
+            <table class="table table-hover">
                 <tr>
                     <td>
                         <div class="form-group">
                             <label asp-for="SearchTerm" class="control-label"></label>
-                            <input asp-for="SearchTerm" class="form-control" />
+                            <input asp-for="SearchTerm" placeholder="Search" class="form-control" />
                             <span asp-validation-for="SearchTerm" class="text-danger"></span>
                         </div>
                     </td>
                     <td>
-                        <span>Sort by:</span><br>
-                        <select class="form-group" id="SortBy" name="SortBy">
+                        <label asp-for="SortBy">Sort by:</label>
+                        <select class="form-control" id="SortBy" name="SortBy">
                             <option>Title</option>
                             <option>Release Date</option>
                         </select>
@@ -30,8 +30,6 @@
                             <span asp-validation-for="Genre" class="text-danger"></span>
                         </div>
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <div class="form-group">
                             <label asp-for="ReleasedAfter" class="control-label"></label>
@@ -49,10 +47,10 @@
                 </tr>
             </table>
             <div class="form-group">
-                <input type="submit" value="Search" class="btn btn-default" formaction=""/>
+                <input type="submit" value="Search" class="btn btn-default" formaction="" />
             </div>
         </form>
-        </div>
     </div>
+</div>
 
 

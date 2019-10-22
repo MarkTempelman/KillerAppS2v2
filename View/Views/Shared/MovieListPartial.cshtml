@@ -3,8 +3,9 @@
 @{
     ViewData["Title"] = "HomePage";
 }
-
-<h2><B>@Html.DisplayFor(modelItem => Model.Title)</B></h2>
-<span>Release date: </span> @Html.DisplayFor(modelItem => Model.ReleaseDate);
-<br><br>
-@Html.DisplayFor(modelItem => Model.ShortDescription);
+<div class="col-md-12">
+    <h2><B>@Html.DisplayFor(modelItem => Model.Title)</B></h2>
+    <span>Release date: </span> @Html.DisplayFor(modelItem => Model.ReleaseDate);
+    <br><br>
+    @Html.DisplayFor(modelItem => Model.ShortDescription);
+</div>
