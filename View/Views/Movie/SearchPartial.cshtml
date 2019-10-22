@@ -1,4 +1,5 @@
 ﻿@using View.Controllers
+@using View.ViewModels
 @model View.ViewModels.SearchViewModel
 
 <hr />
@@ -24,11 +25,13 @@
                         </select>
                     </td>
                     <td>
-                        <div class="form-group">
-                            <label asp-for="Genre" class="control-label"></label>
-                            <input asp-for="Genre" class="form-control" />
-                            <span asp-validation-for="Genre" class="text-danger"></span>
-                        </div>
+                        <label asp-for="Genre" class="control-label"></label>
+                        <select class="form-control">
+                            @foreach (GenreViewModel genre in Model.AllGenres)
+                            {
+                                <option>@genre.Genre</option>
+                            }
+                        </select>
                     </td>
                     <td>
                         <div class="form-group">

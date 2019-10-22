@@ -85,10 +85,14 @@ namespace View.Controllers
             return View();
         }
 
-        public ActionResult SearchPartial()
+        public PartialViewResult SearchPartial()
         {
             SearchViewModel searchViewModel = new SearchViewModel();
-            return View(searchViewModel);
+            foreach (GenreModel genre in _movieLogic.GetAllGenres())
+            {
+                searchViewModel.AllGenres.Add(ToGenreViewModel(genre));
+            }
+            return PartialView(searchViewModel);
         }
 
         [HttpPost]

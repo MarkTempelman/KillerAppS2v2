@@ -27,6 +27,8 @@ namespace View.ViewModels
         [DisplayName("Search")]
         public string SearchTerm { get; set; }
 
+        public List<GenreViewModel> AllGenres { get; set; } = new List<GenreViewModel>();
+
         public SearchViewModel()
         {
 

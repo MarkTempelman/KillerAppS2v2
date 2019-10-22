@@ -11,6 +11,7 @@ namespace Models
         public DateTime ReleasedBefore { get; set; }
         public string SearchTerm { get; set; }
         public string SortBy { get; set; }
+        public List<GenreModel> AllGenres { get; set; }
 
         public SearchModel()
         {
