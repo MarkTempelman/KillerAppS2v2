@@ -20,7 +20,7 @@ namespace View.Controllers
             if (longString.Length > maxLength)
             {
                 string shortString = longString.Remove(maxLength);
-                return shortString += "...";
+                return shortString + "...";
             }
             return longString;
         }
@@ -83,16 +83,6 @@ namespace View.Controllers
         public ActionResult MovieListPartial()
         {
             return View();
-        }
-
-        public PartialViewResult SearchPartial()
-        {
-            SearchViewModel searchViewModel = new SearchViewModel();
-            foreach (GenreModel genre in _movieLogic.GetAllGenres())
-            {
-                searchViewModel.AllGenres.Add(ToGenreViewModel(genre));
-            }
-            return PartialView(searchViewModel);
         }
 
         [HttpPost]

@@ -1,11 +1,9 @@
-﻿@using View.Controllers
-@using View.ViewModels
-@model IEnumerable<KillerApp.ViewModels.MovieViewModel>
+﻿@model IEnumerable<KillerApp.ViewModels.MovieViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-@Html.Partial("SearchPartial", new SearchViewModel())
+@await Component.InvokeAsync("Search")
 
 @foreach (var item in Model)
 {
