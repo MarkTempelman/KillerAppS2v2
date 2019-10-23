@@ -12,7 +12,8 @@ namespace View.ViewModels
         [DisplayName("Sort by:")]
         public string SortBy { get; set; }
 
-        public GenreViewModel Genre { get; set; }
+        [DisplayName("Genre:")]
+        public int GenreId { get; set; }
 
         [DisplayName("Released after:")]
         [DataType(DataType.Date)]
@@ -34,10 +35,10 @@ namespace View.ViewModels
 
         }
 
-        public SearchViewModel(string sortBy, GenreViewModel genre, DateTime releasedAfter, DateTime releasedBefore, string searchTerm)
+        public SearchViewModel(string sortBy, int genreId, DateTime releasedAfter, DateTime releasedBefore, string searchTerm)
         {
             SortBy = sortBy;
-            Genre = genre;
+            GenreId = genreId;
             ReleasedAfter = releasedAfter;
             ReleasedBefore = releasedBefore;
             SearchTerm = searchTerm;

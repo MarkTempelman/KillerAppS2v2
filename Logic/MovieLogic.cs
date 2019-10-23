@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Data.Interfaces;
 using Data.SQLContext;
 using Models;
@@ -60,22 +58,22 @@ namespace Logic
 
         private IEnumerable<MovieModel> FilterMoviesByGenre(IEnumerable<MovieModel> movies, GenreModel genre)
         {
-            return (from movie in movies from movieGenre in movie.Genres where movieGenre.Genre == genre.Genre select movie).ToList();
+            return (from movie in movies from movieGenre in movie.Genres where movieGenre.GenreId == genre.GenreId select movie);
         }
 
         private IEnumerable<MovieModel> GetMoviesReleasedAfter(IEnumerable<MovieModel> movies, DateTime releasedAfter)
         {
-            return movies.Where(m => m.ReleaseDate > releasedAfter).ToList(); ;
+            return movies.Where(m => m.ReleaseDate > releasedAfter);
         }
 
         private IEnumerable<MovieModel> GetMoviesReleasedBefore(IEnumerable<MovieModel> movies, DateTime releasedBefore)
         {
-            return movies.Where(m => m.ReleaseDate < releasedBefore).ToList();
+            return movies.Where(m => m.ReleaseDate < releasedBefore);
         }
 
         private IEnumerable<MovieModel> GetMoviesByTitle(IEnumerable<MovieModel> movies, string searchTerm)
         {
-            return movies.Where(movie => movie.Title.Contains(searchTerm)).ToList();
+            return movies.Where(movie => movie.Title.ToLower().Contains(searchTerm.ToLower()));
         }
     }
 }

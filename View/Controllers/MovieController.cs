@@ -41,11 +41,6 @@ namespace View.Controllers
             return movieViewModels;
         }
 
-        public GenreModel ToGenreModel(GenreViewModel genre)
-        {
-            return new GenreModel(genre.Genre, genre.GenreId);
-        }
-
         public GenreViewModel ToGenreViewModel(GenreModel genre)
         {
             return new GenreViewModel(genre.Genre, genre.GenreId);
@@ -54,9 +49,9 @@ namespace View.Controllers
         public SearchModel ToSearchModel(SearchViewModel search)
         {
             var searchModel = new SearchModel();
-            if (search.Genre != null)
+            if (search.GenreId != -1)
             {
-                searchModel.Genre = ToGenreModel(search.Genre);
+                searchModel.Genre = new GenreModel(search.GenreId);
             }
 
             searchModel.ReleasedAfter = search.ReleasedAfter;

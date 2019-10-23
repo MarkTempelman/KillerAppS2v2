@@ -14,5 +14,10 @@ namespace Models
             Genre = genre;
             GenreId = genreId;
         }
+
+        public GenreModel(int genreId)
+        {
+            GenreId = genreId;
+        }
     }
 }

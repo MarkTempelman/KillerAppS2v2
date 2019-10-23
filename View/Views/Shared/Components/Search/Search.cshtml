@@ -1,5 +1,7 @@
 ﻿@using View.ViewModels
+@using System.Linq
 @model View.ViewModels.SearchViewModel
+
 
 <hr />
 <div class="row">
@@ -24,11 +26,12 @@
                         </select>
                     </td>
                     <td>
-                        <label asp-for="Genre" class="control-label"></label>
-                        <select class="form-control">
+                        <label asp-for="GenreId" class="control-label"></label>
+                        <select class="form-control" id="Genre" name="GenreId">
+                            <option value="-1">All Genres</option>
                             @foreach (GenreViewModel genre in Model.AllGenres)
                             {
-                            <option>@genre.Genre</option>
+                                <option value="@genre.GenreId">@genre.Genre</option>
                             }
                         </select>
                     </td>
