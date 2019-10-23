@@ -9,10 +9,10 @@ namespace Data.Interfaces
 {
     public interface IMovieContext
     {
-        List<MovieModel> GetAllMovies();
+        IEnumerable<MovieModel> GetAllMovies();
 
-        List<GenreModel> GetGenresByMovieId(int movieId);
+        IEnumerable<GenreModel> GetGenresByMovieId(int movieId);
 
-        List<GenreModel> GetAllGenres();
+        IEnumerable<GenreModel> GetAllGenres();
     }
 }

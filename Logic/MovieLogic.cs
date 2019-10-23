@@ -21,7 +21,7 @@ namespace Logic
             _iMovieContext = movieContext;
         }
 
-        public List<GenreModel> GetAllGenres() 
+        public IEnumerable<GenreModel> GetAllGenres() 
         {
             return _iMovieContext.GetAllGenres();
         }

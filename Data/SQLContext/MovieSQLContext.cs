@@ -19,7 +19,7 @@ namespace Data.SQLContext
             return command;
         }
 
-        public List<MovieModel> GetAllMovies()
+        public IEnumerable<MovieModel> GetAllMovies()
         {
             List<MovieModel> movies = new List<MovieModel>();
             try
@@ -49,7 +49,7 @@ namespace Data.SQLContext
             return movies;
         }
 
-        public List<GenreModel> GetGenresByMovieId(int movieId)
+        public IEnumerable<GenreModel> GetGenresByMovieId(int movieId)
         {
             List<GenreModel> genres = new List<GenreModel>();
             string query = "SELECT Genre, genre.GenreId FROM `genre`, `genre_movie` WHERE genre.GenreId = genre_movie.GenreId AND genre_movie.MovieId = @MovieId";
@@ -77,7 +77,7 @@ namespace Data.SQLContext
             return genres;
         }
 
-        public List<GenreModel> GetAllGenres()
+        public IEnumerable<GenreModel> GetAllGenres()
         {
             List<GenreModel> genres = new List<GenreModel>();
             string query = "SELECT Genre, GenreId FROM `genre`";
