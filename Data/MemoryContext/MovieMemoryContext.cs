@@ -6,11 +6,11 @@ using Models;
 
 namespace Data.MemoryContext
 {
-    class MovieMemoryContext : IMovieContext
+    public class MovieMemoryContext : IMovieContext
     {
         public IEnumerable<MovieModel> GetAllMovies()
         {
-            List<MovieModel> movies = new List<MovieModel>
+            IEnumerable<MovieModel> movies = new List<MovieModel>
             {
                 new MovieModel(1, "TestTitle1", "TestDescription1", new DateTime(2019, 10, 23)),
                 new MovieModel(2, "TestTitle2", "TestDescription2", new DateTime(2019, 10, 15))
