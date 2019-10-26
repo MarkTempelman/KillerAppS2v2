@@ -1,5 +1,6 @@
 ﻿@using View.ViewModels
 @using System.Linq
+@using Models
 @model View.ViewModels.SearchViewModel
 
 
@@ -20,9 +21,8 @@
                     </td>
                     <td>
                         <label asp-for="SortBy">Sort by:</label>
-                        <select class="form-control" id="SortBy" name="SortBy">
-                            <option>Title</option>
-                            <option>Release Date</option>
+                        <select class="form-control" id="SortBy" name="SortBy" asp-items="Html.GetEnumSelectList<SortBy>()">
+
                         </select>
                     </td>
                     <td>

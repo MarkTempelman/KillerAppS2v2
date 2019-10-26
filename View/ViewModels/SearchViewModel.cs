@@ -4,13 +4,14 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Models;
 
 namespace View.ViewModels
 {
     public class SearchViewModel
     {
         [DisplayName("Sort by:")]
-        public string SortBy { get; set; }
+        public SortBy SortBy { get; set; }
 
         [DisplayName("Genre:")]
         public int GenreId { get; set; }
@@ -33,15 +34,6 @@ namespace View.ViewModels
         public SearchViewModel()
         {
 
-        }
-
-        public SearchViewModel(string sortBy, int genreId, DateTime releasedAfter, DateTime releasedBefore, string searchTerm)
-        {
-            SortBy = sortBy;
-            GenreId = genreId;
-            ReleasedAfter = releasedAfter;
-            ReleasedBefore = releasedBefore;
-            SearchTerm = searchTerm;
         }
     }
 }

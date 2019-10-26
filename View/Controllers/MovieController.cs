@@ -62,10 +62,7 @@ namespace View.Controllers
                 searchModel.SearchTerm = search.SearchTerm;
             }
 
-            if (search.SortBy != null)
-            {
-                searchModel.SortBy = search.SortBy;
-            }
+            searchModel.SortBy = search.SortBy;
 
             return searchModel;
         }

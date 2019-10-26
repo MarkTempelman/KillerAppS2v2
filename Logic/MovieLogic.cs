@@ -53,6 +53,15 @@ namespace Logic
             {
                 movies = GetMoviesByTitle(movies, search.SearchTerm);
             }
+
+            if (search.SortBy == SortBy.Title)
+            {
+                movies = movies.OrderBy(m => m.Title);
+            }
+            else if (search.SortBy == SortBy.Date)
+            {
+                movies = movies.OrderBy(m => m.ReleaseDate);
+            }
             return movies;
         }
 
