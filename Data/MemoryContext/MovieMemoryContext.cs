@@ -12,8 +12,8 @@ namespace Data.MemoryContext
         {
             IEnumerable<MovieModel> movies = new List<MovieModel>
             {
-                new MovieModel(1, "TestTitle1", "TestDescription1", new DateTime(2019, 10, 23)),
-                new MovieModel(2, "TestTitle2", "TestDescription2", new DateTime(2019, 10, 15))
+                new MovieModel(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23)),
+                new MovieModel(2, "TestTitle1", "TestDescription2", new DateTime(2019, 10, 15))
             };
             return movies;
         }

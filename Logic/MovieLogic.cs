@@ -72,12 +72,12 @@ namespace Logic
 
         private IEnumerable<MovieModel> GetMoviesReleasedAfter(IEnumerable<MovieModel> movies, DateTime releasedAfter)
         {
-            return movies.Where(m => m.ReleaseDate > releasedAfter);
+            return movies.Where(m => m.ReleaseDate >= releasedAfter);
         }
 
         private IEnumerable<MovieModel> GetMoviesReleasedBefore(IEnumerable<MovieModel> movies, DateTime releasedBefore)
         {
-            return movies.Where(m => m.ReleaseDate < releasedBefore);
+            return movies.Where(m => m.ReleaseDate <= releasedBefore);
         }
 
         private IEnumerable<MovieModel> GetMoviesByTitle(IEnumerable<MovieModel> movies, string searchTerm)
