@@ -143,5 +143,42 @@ namespace Data.SQLContext
             }
             return genres;
         }
+
+        public MovieModel GetMovieById(int id)
+        {
+            MovieModel movie = new MovieModel();
+            string query = "SELECT * FROM movie WHERE movie.MovieId = @movieId";
+            MySqlCommand command = new MySqlCommand(query, _conn);
+            command.Parameters.AddWithValue("@movieId", id);
+
+            try
+            {
+                _conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    movie = new MovieModel(
+                        reader.GetInt32(reader.GetOrdinal("MovieId")),
+                        reader.GetString(reader.GetOrdinal("Title")),
+                        reader.GetString(reader.GetOrdinal("Description")),
+                        reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
+                        reader.GetInt32(reader.GetOrdinal("MediaId"))
+                    );
+                }
+                _conn.Close();
+                if (movie.Title != null)
+                {
+                    return movie;
+                }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                _conn.Close();
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

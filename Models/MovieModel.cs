@@ -23,5 +23,10 @@ namespace Models
             ReleaseDate = releaseDate;
             MediaId = mediaId;
         }
+
+        public MovieModel()
+        {
+
+        }
     }
 }

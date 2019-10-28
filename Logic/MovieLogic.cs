@@ -39,6 +39,11 @@ namespace Logic
             return movies;
         }
 
+        public MovieModel GetMovieById(int id)
+        {
+            return _iMovieContext.GetMovieById(id);
+        }
+
         public IEnumerable<MovieModel> GetMoviesBySearchModel(IEnumerable<MovieModel> movies, SearchModel search)
         {
             if (search.Genre != null)

@@ -41,5 +41,10 @@ namespace Data.MemoryContext
             };
             return genres;
         }
+
+        public MovieModel GetMovieById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

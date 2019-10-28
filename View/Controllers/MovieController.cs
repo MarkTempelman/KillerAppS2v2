@@ -36,7 +36,7 @@ namespace View.Controllers
             foreach (MovieModel movie in movies)
             {
                 List<GenreViewModel> genresViewModels = movie.Genres.Select(ToGenreViewModel).ToList();
-                movieViewModels.Add(new MovieViewModel(movie.Title, movie.Description, movie.ReleaseDate, ShortenStringIfNecessary(movie.Description, 200), genresViewModels));
+                movieViewModels.Add(new MovieViewModel(movie.Title, movie.Description, movie.ReleaseDate, ShortenStringIfNecessary(movie.Description, 200), genresViewModels, movie.MovieId));
             }
             return movieViewModels;
         }
@@ -81,6 +81,20 @@ namespace View.Controllers
         public ActionResult Index(SearchViewModel search)
         {
             return View(ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), ToSearchModel(search))));
+        }
+
+        public ActionResult MovieInfo(int id)
+        {
+            var movieModel = _movieLogic.GetMovieById(id);
+            if (movieModel == null)
+            {
+                return NotFound();
+            }
+            List<GenreViewModel> genresViewModels = movieModel.Genres.Select(ToGenreViewModel).ToList();
+            var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
+                ShortenStringIfNecessary(movieModel.Description, 200), genresViewModels, movieModel.MovieId);
+
+            return View(movieViewModel);
         }
     }
 }

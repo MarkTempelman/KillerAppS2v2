@@ -8,7 +8,7 @@
 <table class="table">
     <tr>
         <td width="80%">
-            <h2><B>@Html.DisplayFor(modelItem => Model.Title)</B></h2>
+            <a asp-controller="Movie" asp-action="MovieInfo" asp-route-id="@Model.MovieId"><h2><B>@Html.DisplayFor(modelItem => Model.Title)</B></h2></a>
         </td>
         <td width="20%" style="text-align: right;">
             <span>Release date: </span> @Html.DisplayFor(modelItem => Model.ReleaseDate)
