@@ -21,8 +21,8 @@ namespace LogicTests
         {
             _iMovieContext = new MovieMemoryContext();
             _movieLogic = new MovieLogic(_iMovieContext);
-            _testMovie1 = new MovieModel(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23));
-            _testMovie2 = new MovieModel(2, "TestTitle1", "TestDescription2", new DateTime(2019, 10, 15));
+            _testMovie1 = new MovieModel(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23), 1);
+            _testMovie2 = new MovieModel(2, "TestTitle1", "TestDescription2", new DateTime(2019, 10, 15), 2);
         }
 
         [Test]
