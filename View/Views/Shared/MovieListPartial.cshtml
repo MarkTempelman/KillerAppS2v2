@@ -5,13 +5,26 @@
 @{
     ViewData["Title"] = "HomePage";
 }
-<div class="col-md-12">
-    <h2><B>@Html.DisplayFor(modelItem => Model.Title)</B></h2>
-    <span>Release date: </span> @Html.DisplayFor(modelItem => Model.ReleaseDate);
-    <br><br>
-    @Html.DisplayFor(modelItem => Model.ShortDescription);
-    @foreach (GenreViewModel genre in Model.Genres)
-    {
-        @Html.Partial("GenrePartial", genre)
-    }
-</div>
+<table class="table">
+    <tr>
+        <td width="80%">
+            <h2><B>@Html.DisplayFor(modelItem => Model.Title)</B></h2>
+        </td>
+        <td width="20%" style="text-align: right;">
+            <span>Release date: </span> @Html.DisplayFor(modelItem => Model.ReleaseDate)
+        </td>
+    </tr>
+    <tr>
+        <td width="100%" colspan="2">
+            @foreach (GenreViewModel genre in Model.Genres)
+            {
+                @Html.Partial("GenrePartial", genre)
+            }
+        </td>
+    </tr>
+    <tr>
+        <td width="100%" colspan="2">
+            @Html.DisplayFor(modelItem => Model.ShortDescription);
+        </td>
+    </tr>
+</table>
