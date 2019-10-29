@@ -10,6 +10,7 @@ namespace Logic
     public class MovieLogic
     {
         private readonly IMovieContext _iMovieContext;
+        private readonly GenreLogic _genreLogic = new GenreLogic();
 
         public MovieLogic()
         {
@@ -21,22 +22,9 @@ namespace Logic
             _iMovieContext = movieContext;
         }
 
-        public IEnumerable<GenreModel> GetAllGenres() 
-        {
-            return _iMovieContext.GetAllGenres();
-        }
         public IEnumerable<MovieModel> GetAllMovies()
         {
-            return GetGenresForMovies(_iMovieContext.GetAllMovies());
-        }
-
-        private IEnumerable<MovieModel> GetGenresForMovies(IEnumerable<MovieModel> movies)
-        {
-            foreach (MovieModel movie in movies)
-            {
-                movie.Genres.AddRange(_iMovieContext.GetGenresByMovieId(movie.MovieId));
-            }
-            return movies;
+            return _genreLogic.AddGenresToMovies(_iMovieContext.GetAllMovies());
         }
 
         public MovieModel GetMovieById(int id)
@@ -46,7 +34,7 @@ namespace Logic
 
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
         {
-            return GetGenresForMovies(_iMovieContext.GetMoviesBySearchModel(search));
+            return _genreLogic.AddGenresToMovies(_iMovieContext.GetMoviesBySearchModel(search));
         }
     }
 }

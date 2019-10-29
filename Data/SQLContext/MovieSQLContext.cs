@@ -14,12 +14,6 @@ namespace Data.SQLContext
     {
         private readonly MySqlConnection _conn = SQLDatabaseConnection.GetConnection();
 
-        private MySqlCommand CreateCommand(string query)
-        {
-            MySqlCommand command = new MySqlCommand(query, _conn);
-            return command;
-        }
-
         public IEnumerable<MovieModel> GetAllMovies()
         {
             List<MovieModel> movies = new List<MovieModel>();
@@ -123,65 +117,6 @@ namespace Data.SQLContext
             command.CommandText = query;
 
             return command;
-        }
-
-        public IEnumerable<GenreModel> GetGenresByMovieId(int movieId)
-        {
-            List<GenreModel> genres = new List<GenreModel>();
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = _conn;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "sp_GetGenresByMovieId";
-            try
-            {
-                command.Parameters.AddWithValue("@movieId", movieId);
-
-                _conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    genres.Add(new GenreModel(
-                        reader.GetString(reader.GetOrdinal("Genre")),
-                        reader.GetInt32(reader.GetOrdinal("GenreId"))));
-                }
-                _conn.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                _conn.Close();
-                throw;
-            }
-            return genres;
-        }
-
-        public IEnumerable<GenreModel> GetAllGenres()
-        {
-            List<GenreModel> genres = new List<GenreModel>();
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = _conn;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "sp_GetAllGenres";
-
-            try
-            {
-                _conn.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    genres.Add(new GenreModel(
-                        reader.GetString(reader.GetOrdinal("Genre")),
-                        reader.GetInt32(reader.GetOrdinal("GenreId"))));
-                }
-                _conn.Close();
-            }
-            catch (Exception e)
-            {
-                _conn.Close();
-                Console.WriteLine(e);
-                throw;
-            }
-            return genres;
         }
 
         public MovieModel GetMovieById(int id)

@@ -12,7 +12,7 @@ namespace View.ViewComponents
 {
     public class SearchViewComponent : ViewComponent
     {
-        private readonly MovieLogic _movieLogic = new MovieLogic();
+        private readonly GenreLogic _genreLogic = new GenreLogic();
         private readonly MovieController _movieController = new MovieController();
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -20,7 +20,7 @@ namespace View.ViewComponents
             return await Task.Run<IViewComponentResult>(() =>
             {
                 SearchViewModel searchViewModel = new SearchViewModel();
-                foreach (GenreModel genre in _movieLogic.GetAllGenres())
+                foreach (GenreModel genre in _genreLogic.GetAllGenres())
                 {
                     searchViewModel.AllGenres.Add(_movieController.ToGenreViewModel(genre));
                 }

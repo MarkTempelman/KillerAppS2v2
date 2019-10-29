@@ -11,10 +11,6 @@ namespace Data.Interfaces
     {
         IEnumerable<MovieModel> GetAllMovies();
 
-        IEnumerable<GenreModel> GetGenresByMovieId(int movieId);
-
-        IEnumerable<GenreModel> GetAllGenres();
-
         MovieModel GetMovieById(int id);
 
         IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search);
