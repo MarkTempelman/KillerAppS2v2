@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,10 @@ namespace Data.SQLContext
             List<MovieModel> movies = new List<MovieModel>();
             try
             {
-                MySqlCommand command = CreateCommand("SELECT * FROM movie");
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = _conn;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "sp_GetAllMovies";
 
                 _conn.Open();
 
@@ -93,8 +97,10 @@ namespace Data.SQLContext
         public IEnumerable<GenreModel> GetGenresByMovieId(int movieId)
         {
             List<GenreModel> genres = new List<GenreModel>();
-            string query = "SELECT Genre, genre.GenreId FROM `genre`, `genre_movie` WHERE genre.GenreId = genre_movie.GenreId AND genre_movie.MovieId = @MovieId";
-            MySqlCommand command = new MySqlCommand(query, _conn);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = _conn;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "sp_GetGenresByMovieId";
             try
             {
                 command.Parameters.AddWithValue("@movieId", movieId);
@@ -121,8 +127,11 @@ namespace Data.SQLContext
         public IEnumerable<GenreModel> GetAllGenres()
         {
             List<GenreModel> genres = new List<GenreModel>();
-            string query = "SELECT Genre, GenreId FROM `genre`";
-            MySqlCommand command = new MySqlCommand(query, _conn);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = _conn;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "sp_GetAllGenres";
+
             try
             {
                 _conn.Open();
@@ -147,8 +156,10 @@ namespace Data.SQLContext
         public MovieModel GetMovieById(int id)
         {
             MovieModel movie = new MovieModel();
-            string query = "SELECT * FROM movie WHERE movie.MovieId = @movieId";
-            MySqlCommand command = new MySqlCommand(query, _conn);
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = _conn;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "sp_GetMovieById";
             command.Parameters.AddWithValue("@movieId", id);
 
             try
