@@ -80,7 +80,7 @@ namespace View.Controllers
         [HttpPost]
         public ActionResult Index(SearchViewModel search)
         {
-            return View(ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), ToSearchModel(search))));
+            return View(ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(ToSearchModel(search))));
         }
 
         public ActionResult MovieInfo(int id)

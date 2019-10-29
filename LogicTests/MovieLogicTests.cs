@@ -43,40 +43,40 @@ namespace LogicTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
-        public void FilterMoviesByGenreTest()
-        {
-            _search = new SearchModel {Genre = new GenreModel("TestGenre1", 1), ReleasedAfter = DateTime.MinValue, ReleasedBefore = DateTime.MaxValue};
-            var expected = _search.Genre.GenreId;
+        //[Test]
+        //public void FilterMoviesByGenreTest()
+        //{
+        //    _search = new SearchModel {Genre = new GenreModel("TestGenre1", 1), ReleasedAfter = DateTime.MinValue, ReleasedBefore = DateTime.MaxValue};
+        //    var expected = _search.Genre.GenreId;
 
-            var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search).First().Genres.First().GenreId;
+        //    var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search).First().Genres.First().GenreId;
             
-            Assert.AreEqual(expected, actual);
-        }
+        //    Assert.AreEqual(expected, actual);
+        //}
 
-        [Test]
-        public void GetMoviesReleasedAfterTest()
-        {
-            _search = new SearchModel{ReleasedAfter = new DateTime(2019, 10, 16), ReleasedBefore = DateTime.MaxValue};
-            var expected = new DateTime(2019, 10, 16);
+        //[Test]
+        //public void GetMoviesReleasedAfterTest()
+        //{
+        //    _search = new SearchModel{ReleasedAfter = new DateTime(2019, 10, 16), ReleasedBefore = DateTime.MaxValue};
+        //    var expected = new DateTime(2019, 10, 16);
 
-            var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search)
-                .Min(m => m.ReleaseDate);
+        //    var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search)
+        //        .Min(m => m.ReleaseDate);
 
-            Assert.GreaterOrEqual(actual, expected);
-        }
+        //    Assert.GreaterOrEqual(actual, expected);
+        //}
 
-        [Test]
-        public void GetMoviesReleasedBeforeTest()
-        {
-            _search = new SearchModel { ReleasedAfter = DateTime.MinValue, ReleasedBefore = new DateTime(2019, 10, 22)};
-            var expected = new DateTime(2019, 10, 22);
+        //[Test]
+        //public void GetMoviesReleasedBeforeTest()
+        //{
+        //    _search = new SearchModel { ReleasedAfter = DateTime.MinValue, ReleasedBefore = new DateTime(2019, 10, 22)};
+        //    var expected = new DateTime(2019, 10, 22);
 
-            var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search)
-                .Max(m => m.ReleaseDate);
+        //    var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search)
+        //        .Max(m => m.ReleaseDate);
 
-            Assert.GreaterOrEqual(expected, actual);
-        }
+        //    Assert.GreaterOrEqual(expected, actual);
+        //}
 
     }
 }

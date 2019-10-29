@@ -46,5 +46,10 @@ namespace Data.MemoryContext
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

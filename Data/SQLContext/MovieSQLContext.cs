@@ -57,12 +57,36 @@ namespace Data.SQLContext
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
         {
             List<MovieModel> movies = new List<MovieModel>();
-            
+            try
+            {
+                MySqlCommand command = GetCommandFromSearchModel(search);
+                command.Connection = _conn;
+                
+                _conn.Open();
 
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    movies.Add(new MovieModel(
+                        reader.GetInt32(reader.GetOrdinal("MovieId")),
+                        reader.GetString(reader.GetOrdinal("Title")),
+                        reader.GetString(reader.GetOrdinal("Description")),
+                        reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
+                        reader.GetInt32(reader.GetOrdinal("MediaId"))
+                    ));
+                }
+                _conn.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _conn.Close();
+                throw;
+            }
             return movies;
         }
 
-        private string GetQueryFromSearchModel(SearchModel search)
+        private MySqlCommand GetCommandFromSearchModel(SearchModel search)
         {
             MySqlCommand command = new MySqlCommand();
             string query ="SELECT movie.MovieId, movie.Title, movie.Description, movie.ReleaseDate, movie.MediaId FROM `movie`, `genre_movie` ";
@@ -74,13 +98,19 @@ namespace Data.SQLContext
 
             if (search.SearchTerm != null)
             {
-                query += "AND movie.Title LIKE %@title% ";
+                query += "AND movie.Title LIKE @searchTerm ";
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@searchTerm", "%" + search.SearchTerm + "%");
             }
 
             if (search.Genre != null)
             {
                 query += "AND movie.MovieId = genre_movie.MovieId AND genre_movie.GenreId = @genreId ";
+                command.CommandText = query;
+                command.Parameters.AddWithValue("@genreId", search.Genre.GenreId);
             }
+
+            query += "GROUP BY movie.MovieId ";
 
             if (search.SortBy == SortBy.Title)
             {
@@ -90,8 +120,9 @@ namespace Data.SQLContext
             {
                 query += "ORDER BY movie.ReleaseDate ASC";
             }
+            command.CommandText = query;
 
-            return query;
+            return command;
         }
 
         public IEnumerable<GenreModel> GetGenresByMovieId(int movieId)

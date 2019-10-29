@@ -44,50 +44,9 @@ namespace Logic
             return _iMovieContext.GetMovieById(id);
         }
 
-        public IEnumerable<MovieModel> GetMoviesBySearchModel(IEnumerable<MovieModel> movies, SearchModel search)
+        public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
         {
-            if (search.Genre != null)
-            {
-                movies = FilterMoviesByGenre(movies, search.Genre);
-            }
-
-            movies = GetMoviesReleasedAfter(movies, search.ReleasedAfter);
-            movies = GetMoviesReleasedBefore(movies, search.ReleasedBefore);
-
-            if (search.SearchTerm != null)
-            {
-                movies = GetMoviesByTitle(movies, search.SearchTerm);
-            }
-
-            if (search.SortBy == SortBy.Title)
-            {
-                movies = movies.OrderBy(m => m.Title);
-            }
-            else if (search.SortBy == SortBy.Date)
-            {
-                movies = movies.OrderBy(m => m.ReleaseDate);
-            }
-            return movies;
-        }
-
-        private IEnumerable<MovieModel> FilterMoviesByGenre(IEnumerable<MovieModel> movies, GenreModel genre)
-        {
-            return (from movie in movies from movieGenre in movie.Genres where movieGenre.GenreId == genre.GenreId select movie);
-        }
-
-        private IEnumerable<MovieModel> GetMoviesReleasedAfter(IEnumerable<MovieModel> movies, DateTime releasedAfter)
-        {
-            return movies.Where(m => m.ReleaseDate >= releasedAfter);
-        }
-
-        private IEnumerable<MovieModel> GetMoviesReleasedBefore(IEnumerable<MovieModel> movies, DateTime releasedBefore)
-        {
-            return movies.Where(m => m.ReleaseDate <= releasedBefore);
-        }
-
-        private IEnumerable<MovieModel> GetMoviesByTitle(IEnumerable<MovieModel> movies, string searchTerm)
-        {
-            return movies.Where(movie => movie.Title.ToLower().Contains(searchTerm.ToLower()));
+            return GetGenresForMovies(_iMovieContext.GetMoviesBySearchModel(search));
         }
     }
 }
