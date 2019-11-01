@@ -5,6 +5,7 @@ using Models;
 using Data;
 using Data.Interfaces;
 using Data.SQLContext;
+using Data.DTO;
 
 namespace Logic
 {
@@ -29,6 +30,16 @@ namespace Logic
                 movie.Genres.AddRange(_iGenreContext.GetGenresByMovieId(movie.MovieId));
             }
             return movies;
+        }
+
+        public GenreDTO ToGenreDTO(GenreModel genreModel)
+        {
+            return new GenreDTO(genreModel.Genre, genreModel.GenreId);
+        }
+
+        public GenreModel ToGenreModel(GenreDTO genreDTO)
+        {
+            return new GenreModel(genreDTO.Genre, genreDTO.GenreId);
         }
     }
 }

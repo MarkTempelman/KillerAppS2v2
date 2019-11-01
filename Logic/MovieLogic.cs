@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data.DTO;
 using Data.Interfaces;
 using Data.SQLContext;
 using Models;
@@ -35,6 +36,16 @@ namespace Logic
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
         {
             return _genreLogic.AddGenresToMovies(_iMovieContext.GetMoviesBySearchModel(search));
+        }
+
+        private MovieDTO ToMovieDTO(MovieModel movieModel)
+        {
+            return new MovieDTO(movieModel.MovieId, movieModel.Title, movieModel.Description, movieModel.ReleaseDate, movieModel.MediaId);
+        }
+
+        private MovieModel ToMovieModel(MovieDTO movieDTO)
+        {
+            return new MovieModel(movieDTO.MovieId, movieDTO.Title, movieDTO.Description, movieDTO.ReleaseDate, movieDTO.MediaId);
         }
     }
 }
