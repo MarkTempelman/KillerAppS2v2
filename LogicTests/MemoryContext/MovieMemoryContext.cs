@@ -4,7 +4,7 @@ using System.Text;
 using Data.Interfaces;
 using Models;
 
-namespace Data.MemoryContext
+namespace LogicTests.MemoryContext
 {
     public class MovieMemoryContext : IMovieContext
     {

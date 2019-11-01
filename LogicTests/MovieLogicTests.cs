@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data.Interfaces;
-using Data.MemoryContext;
+using LogicTests.MemoryContext;
 using Logic;
 using Models;
 using NUnit.Framework;
