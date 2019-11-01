@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.DTO;
 using Models;
 
 namespace Data.Interfaces
 {
     public interface IMovieContext
     {
-        IEnumerable<MovieModel> GetAllMovies();
+        IEnumerable<MovieDTO> GetAllMovies();
 
-        MovieModel GetMovieById(int id);
+        MovieDTO GetMovieById(int id);
 
-        IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search);
+        IEnumerable<MovieDTO> GetMoviesBySearchModel(SearchDTO search);
     }
 }

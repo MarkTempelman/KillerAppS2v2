@@ -12,6 +12,7 @@ namespace Logic
     {
         private readonly IMovieContext _iMovieContext;
         private readonly GenreLogic _genreLogic = new GenreLogic();
+        private readonly SearchLogic _searchLogic = new SearchLogic();
 
         public MovieLogic()
         {
@@ -25,17 +26,17 @@ namespace Logic
 
         public IEnumerable<MovieModel> GetAllMovies()
         {
-            return _genreLogic.AddGenresToMovies(_iMovieContext.GetAllMovies());
+            return _genreLogic.AddGenresToMovies(_iMovieContext.GetAllMovies().Select(ToMovieModel));
         }
 
         public MovieModel GetMovieById(int id)
         {
-            return _iMovieContext.GetMovieById(id);
+            return ToMovieModel(_iMovieContext.GetMovieById(id));
         }
 
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
         {
-            return _genreLogic.AddGenresToMovies(_iMovieContext.GetMoviesBySearchModel(search));
+            return _iMovieContext.GetMoviesBySearchModel(_searchLogic.ToSearchDTO(search)).Select(ToMovieModel);
         }
 
         private MovieDTO ToMovieDTO(MovieModel movieModel)

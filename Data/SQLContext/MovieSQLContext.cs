@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.DTO;
 using Data.Interfaces;
 using Models;
 using Models.Enums;
@@ -15,9 +16,9 @@ namespace Data.SQLContext
     {
         private readonly MySqlConnection _conn = SQLDatabaseConnection.GetConnection();
 
-        public IEnumerable<MovieModel> GetAllMovies()
+        public IEnumerable<MovieDTO> GetAllMovies()
         {
-            List<MovieModel> movies = new List<MovieModel>();
+            List<MovieDTO> movies = new List<MovieDTO>();
             try
             {
                 MySqlCommand command = new MySqlCommand();
@@ -30,7 +31,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    movies.Add(new MovieModel(
+                    movies.Add(new MovieDTO(
                         reader.GetInt32(reader.GetOrdinal("MovieId")),
                         reader.GetString(reader.GetOrdinal("Title")),
                         reader.GetString(reader.GetOrdinal("Description")),
@@ -49,9 +50,9 @@ namespace Data.SQLContext
             return movies;
         }
 
-        public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
+        public IEnumerable<MovieDTO> GetMoviesBySearchModel(SearchDTO search)
         {
-            List<MovieModel> movies = new List<MovieModel>();
+            List<MovieDTO> movies = new List<MovieDTO>();
             try
             {
                 MySqlCommand command = GetCommandFromSearchModel(search);
@@ -62,7 +63,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    movies.Add(new MovieModel(
+                    movies.Add(new MovieDTO(
                         reader.GetInt32(reader.GetOrdinal("MovieId")),
                         reader.GetString(reader.GetOrdinal("Title")),
                         reader.GetString(reader.GetOrdinal("Description")),
@@ -81,7 +82,7 @@ namespace Data.SQLContext
             return movies;
         }
 
-        private MySqlCommand GetCommandFromSearchModel(SearchModel search)
+        private MySqlCommand GetCommandFromSearchModel(SearchDTO search)
         {
             MySqlCommand command = new MySqlCommand();
             string query ="SELECT movie.MovieId, movie.Title, movie.Description, movie.ReleaseDate, movie.MediaId FROM `movie`, `genre_movie` ";
@@ -120,9 +121,9 @@ namespace Data.SQLContext
             return command;
         }
 
-        public MovieModel GetMovieById(int id)
+        public MovieDTO GetMovieById(int id)
         {
-            MovieModel movie = new MovieModel();
+            MovieDTO movie = new MovieDTO();
             MySqlCommand command = new MySqlCommand();
             command.Connection = _conn;
             command.CommandType = CommandType.StoredProcedure;
@@ -135,7 +136,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    movie = new MovieModel(
+                    movie = new MovieDTO(
                         reader.GetInt32(reader.GetOrdinal("MovieId")),
                         reader.GetString(reader.GetOrdinal("Title")),
                         reader.GetString(reader.GetOrdinal("Description")),

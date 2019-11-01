@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Data.DTO;
 using Data.Interfaces;
 using Models;
 
@@ -8,12 +9,12 @@ namespace LogicTests.MemoryContext
 {
     public class MovieMemoryContext : IMovieContext
     {
-        public IEnumerable<MovieModel> GetAllMovies()
+        public IEnumerable<MovieDTO> GetAllMovies()
         {
-            IEnumerable<MovieModel> movies = new List<MovieModel>
+            IEnumerable<MovieDTO> movies = new List<MovieDTO>
             {
-                new MovieModel(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23),1),
-                new MovieModel(2, "TestTitle1", "TestDescription2", new DateTime(2019, 10, 15), 2)
+                new MovieDTO(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23),1),
+                new MovieDTO(2, "TestTitle1", "TestDescription2", new DateTime(2019, 10, 15), 2)
             };
             return movies;
         }
@@ -42,7 +43,12 @@ namespace LogicTests.MemoryContext
             return genres;
         }
 
-        public MovieModel GetMovieById(int id)
+        public MovieDTO GetMovieById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<MovieDTO> GetMoviesBySearchModel(SearchDTO search)
         {
             throw new NotImplementedException();
         }

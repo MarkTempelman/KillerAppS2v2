@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Data.DTO;
 using Data.Interfaces;
 using Models;
 using MySql.Data.MySqlClient;
@@ -11,9 +12,9 @@ namespace Data.SQLContext
     {
         private readonly MySqlConnection _conn = SQLDatabaseConnection.GetConnection();
 
-        public IEnumerable<GenreModel> GetGenresByMovieId(int movieId)
+        public IEnumerable<GenreDTO> GetGenresByMovieId(int movieId)
         {
-            List<GenreModel> genres = new List<GenreModel>();
+            List<GenreDTO> genres = new List<GenreDTO>();
             MySqlCommand command = new MySqlCommand();
             command.Connection = _conn;
             command.CommandType = CommandType.StoredProcedure;
@@ -26,7 +27,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    genres.Add(new GenreModel(
+                    genres.Add(new GenreDTO(
                         reader.GetString(reader.GetOrdinal("Genre")),
                         reader.GetInt32(reader.GetOrdinal("GenreId"))));
                 }
@@ -41,13 +42,13 @@ namespace Data.SQLContext
             return genres;
         }
 
-        public IEnumerable<GenreModel> GetAllGenres()
+        public IEnumerable<GenreDTO> GetAllGenres()
         {
-            List<GenreModel> genres = new List<GenreModel>();
-            MySqlCommand command = new MySqlCommand();
-            command.Connection = _conn;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "sp_GetAllGenres";
+            List<GenreDTO> genres = new List<GenreDTO>();
+            MySqlCommand command = new MySqlCommand
+            {
+                Connection = _conn, CommandType = CommandType.StoredProcedure, CommandText = "sp_GetAllGenres"
+            };
 
             try
             {
@@ -55,7 +56,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    genres.Add(new GenreModel(
+                    genres.Add(new GenreDTO(
                         reader.GetString(reader.GetOrdinal("Genre")),
                         reader.GetInt32(reader.GetOrdinal("GenreId"))));
                 }

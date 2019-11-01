@@ -19,14 +19,13 @@ namespace Data.DTO
 
         }
 
-        public SearchDTO(GenreDTO genre, DateTime releasedAfter, DateTime releasedBefore, string searchTerm, SortBy sortBy, List<GenreDTO> allGenres)
+        public SearchDTO(GenreDTO genre, DateTime releasedAfter, DateTime releasedBefore, string searchTerm, SortBy sortBy)
         {
             Genre = genre;
             ReleasedAfter = releasedAfter;
             ReleasedBefore = releasedBefore;
             SearchTerm = searchTerm;
             SortBy = sortBy;
-            AllGenres = allGenres;
         }
     }
 }

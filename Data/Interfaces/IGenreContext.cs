@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Data.DTO;
 using Models;
 
 namespace Data.Interfaces
 {
     public interface IGenreContext
     {
-        IEnumerable<GenreModel> GetGenresByMovieId(int movieId);
+        IEnumerable<GenreDTO> GetGenresByMovieId(int movieId);
 
-        IEnumerable<GenreModel> GetAllGenres();
+        IEnumerable<GenreDTO> GetAllGenres();
     }
 }

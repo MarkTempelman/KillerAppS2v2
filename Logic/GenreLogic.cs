@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Models;
 using Data;
@@ -13,6 +14,11 @@ namespace Logic
     {
         private readonly IGenreContext _iGenreContext;
 
+        public GenreLogic(IGenreContext iGenreContext)
+        {
+            _iGenreContext = iGenreContext;
+        }
+
         public GenreLogic()
         {
             _iGenreContext = new GenreSQLContext();
@@ -20,20 +26,24 @@ namespace Logic
 
         public IEnumerable<GenreModel> GetAllGenres()
         {
-            return _iGenreContext.GetAllGenres();
+            return _iGenreContext.GetAllGenres().Select(ToGenreModel).ToList(); ;
         }
 
         public IEnumerable<MovieModel> AddGenresToMovies(IEnumerable<MovieModel> movies)
         {
             foreach (MovieModel movie in movies)
             {
-                movie.Genres.AddRange(_iGenreContext.GetGenresByMovieId(movie.MovieId));
+                movie.Genres.AddRange(_iGenreContext.GetGenresByMovieId(movie.MovieId).Select(ToGenreModel));
             }
             return movies;
         }
 
         public GenreDTO ToGenreDTO(GenreModel genreModel)
         {
+            if (genreModel == null)
+            {
+                return null;
+            }
             return new GenreDTO(genreModel.Genre, genreModel.GenreId);
         }
 
