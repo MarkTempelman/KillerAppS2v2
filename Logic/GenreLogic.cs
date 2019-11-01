@@ -26,7 +26,7 @@ namespace Logic
 
         public IEnumerable<GenreModel> GetAllGenres()
         {
-            return _iGenreContext.GetAllGenres().Select(ToGenreModel).ToList(); ;
+            return _iGenreContext.GetAllGenres().Select(ToGenreModel);
         }
 
         public IEnumerable<MovieModel> AddGenresToMovies(IEnumerable<MovieModel> movies)
