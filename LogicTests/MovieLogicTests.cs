@@ -6,12 +6,14 @@ using LogicTests.MemoryContext;
 using Logic;
 using Models;
 using NUnit.Framework;
+using Renci.SshNet;
 
 namespace LogicTests
 {
     public class MovieLogicTests
     {
         private IMovieContext _iMovieContext;
+        private IGenreContext _iGenreContext;
         private MovieLogic _movieLogic;
         private MovieModel _testMovie1;
         private MovieModel _testMovie2;
@@ -20,7 +22,8 @@ namespace LogicTests
         public void Setup()
         {
             _iMovieContext = new MovieMemoryContext();
-            _movieLogic = new MovieLogic(_iMovieContext);
+            _iGenreContext = new GenreMemoryContext();
+            _movieLogic = new MovieLogic(_iMovieContext, _iGenreContext);
             _testMovie1 = new MovieModel(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23), 1);
             _testMovie2 = new MovieModel(2, "TestTitle1", "TestDescription2", new DateTime(2019, 10, 15), 2);
         }
@@ -33,50 +36,34 @@ namespace LogicTests
                 _testMovie1.MovieId,
                 _testMovie2.MovieId
             };
-            List<int> actual = new List<int>();
-
-            foreach (var movie in _movieLogic.GetAllMovies())
-            {
-                actual.Add(movie.MovieId);
-            }
+            List<int> actual = _movieLogic.GetAllMovies().Select(movie => movie.MovieId).ToList();
 
             Assert.AreEqual(expected, actual);
         }
 
-        //[Test]
-        //public void FilterMoviesByGenreTest()
-        //{
-        //    _search = new SearchModel {Genre = new GenreModel("TestGenre1", 1), ReleasedAfter = DateTime.MinValue, ReleasedBefore = DateTime.MaxValue};
-        //    var expected = _search.Genre.GenreId;
+        [Test]
+        public void GetMovieById()
+        {
+            var expected = 1;
+            var actual = _movieLogic.GetMovieById(1).MovieId;
+            Assert.AreEqual(expected, actual);
+        }
 
-        //    var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search).First().Genres.First().GenreId;
+        [Test]
+        public void GetMoviesBySearchModel_ExistingTitle()
+        {
+            SearchModel search = new SearchModel {SearchTerm = "TestTitle1"};
+            List<int>expected = new List<int>();
+            expected.Add(2);
+
+            List<int>actual = new List<int>();
+
+            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search))
+            {
+                actual.Add(movie.MovieId);
+            }
             
-        //    Assert.AreEqual(expected, actual);
-        //}
-
-        //[Test]
-        //public void GetMoviesReleasedAfterTest()
-        //{
-        //    _search = new SearchModel{ReleasedAfter = new DateTime(2019, 10, 16), ReleasedBefore = DateTime.MaxValue};
-        //    var expected = new DateTime(2019, 10, 16);
-
-        //    var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search)
-        //        .Min(m => m.ReleaseDate);
-
-        //    Assert.GreaterOrEqual(actual, expected);
-        //}
-
-        //[Test]
-        //public void GetMoviesReleasedBeforeTest()
-        //{
-        //    _search = new SearchModel { ReleasedAfter = DateTime.MinValue, ReleasedBefore = new DateTime(2019, 10, 22)};
-        //    var expected = new DateTime(2019, 10, 22);
-
-        //    var actual = _movieLogic.GetMoviesBySearchModel(_movieLogic.GetAllMovies(), _search)
-        //        .Max(m => m.ReleaseDate);
-
-        //    Assert.GreaterOrEqual(expected, actual);
-        //}
-
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

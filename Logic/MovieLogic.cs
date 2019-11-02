@@ -19,9 +19,10 @@ namespace Logic
             _iMovieContext = new MovieSQLContext();
         }
 
-        public MovieLogic(IMovieContext movieContext)
+        public MovieLogic(IMovieContext movieContext, IGenreContext genreContext)
         {
             _iMovieContext = movieContext;
+            _genreLogic = new GenreLogic(genreContext);
         }
 
         public IEnumerable<MovieModel> GetAllMovies()
