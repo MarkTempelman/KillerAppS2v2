@@ -53,8 +53,7 @@ namespace LogicTests
         public void GetMoviesBySearchModel_ExistingTitle()
         {
             SearchModel search = new SearchModel {SearchTerm = "TestTitle1"};
-            List<int>expected = new List<int>();
-            expected.Add(2);
+            List<int> expected = new List<int> {2};
 
             List<int>actual = new List<int>();
 
