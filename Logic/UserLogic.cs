@@ -21,9 +21,19 @@ namespace Logic
             _iUserContext.CreateUser(ToUserDTO(userModel));
         }
 
+        public UserModel CheckUserValidity(string username, string password)
+        {
+            return ToUserModel(_iUserContext.CheckUserValidity(username, password));
+        }
+
         public UserDTO ToUserDTO(UserModel userModel)
         {
             return new UserDTO(userModel.Username, userModel.EmailAddress, userModel.AccountType, userModel.Password);
+        }
+
+        public UserModel ToUserModel(UserDTO userDTO)
+        {
+            return new UserModel(userDTO.Username, userDTO.EmailAddress, userDTO.AccountType, userDTO.Password);
         }
     }
 }

@@ -12,5 +12,18 @@ namespace View.ViewModels
         public string EmailAddress { get; set; }
         public AccountType AccountType { get; set; }
         public string Password { get; set; }
+
+        public UserViewModel()
+        {
+
+        }
+
+        public UserViewModel(string username, string emailAddress, AccountType accountType, string password)
+        {
+            Username = username;
+            EmailAddress = emailAddress;
+            AccountType = accountType;
+            Password = password;
+        }
     }
 }

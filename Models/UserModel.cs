@@ -24,5 +24,13 @@ namespace Models
             EmailAddress = emailAddress;
             Password = password;
         }
+
+        public UserModel(string username, string emailAddress, AccountType accountType, string password)
+        {
+            Username = username;
+            EmailAddress = emailAddress;
+            AccountType = accountType;
+            Password = password;
+        }
     }
 }
