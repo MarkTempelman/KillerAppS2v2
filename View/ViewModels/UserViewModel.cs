@@ -8,7 +8,6 @@ namespace View.ViewModels
 {
     public class UserViewModel
     {
-        public int UserId { get; set; }
         public string Username { get; set; }
         public string EmailAddress { get; set; }
         public AccountType AccountType { get; set; }
