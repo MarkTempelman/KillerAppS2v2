@@ -18,12 +18,13 @@ namespace Logic
 
         public void CreateUser(UserModel userModel)
         {
+            userModel.Password = EncryptionLogic.GetEncryptedString(userModel.Password);
             _iUserContext.CreateUser(ToUserDTO(userModel));
         }
 
         public UserModel CheckUserValidity(string username, string password)
         {
-            return ToUserModel(_iUserContext.CheckUserValidity(username, password));
+            return ToUserModel(_iUserContext.CheckUserValidity(username, EncryptionLogic.GetEncryptedString(password)));
         }
 
         public UserDTO ToUserDTO(UserModel userModel)

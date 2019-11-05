@@ -26,7 +26,7 @@ namespace Data.SQLContext
 
                 command.Parameters.AddWithValue("@username", user.Username);
                 command.Parameters.AddWithValue("@emailAddress", user.EmailAddress);
-                command.Parameters.AddWithValue("@accountType", user.AccountType);
+                command.Parameters.AddWithValue("@accountType", user.AccountType.ToString());
                 command.Parameters.AddWithValue("password", user.Password);
 
                 command.ExecuteNonQuery();
