@@ -31,6 +31,7 @@ namespace Logic
 
         public IEnumerable<MovieModel> AddGenresToMovies(IEnumerable<MovieModel> movies)
         {
+            movies = movies.ToList();
             foreach (MovieModel movie in movies)
             {
                 movie.Genres.AddRange(_iGenreContext.GetGenresByMovieId(movie.MovieId).Select(ToGenreModel));
