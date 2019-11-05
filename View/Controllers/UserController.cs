@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -57,6 +58,12 @@ namespace View.Controllers
                 Console.WriteLine(e);
                 return View();
             }
+        }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Movie");
         }
 
         private UserModel ToUserModel(UserViewModel userViewModel)
