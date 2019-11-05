@@ -15,6 +15,7 @@ namespace View.Controllers
     public class MovieController : Controller
     {
         private readonly MovieLogic _movieLogic = new MovieLogic();
+        private static int _maxStringLength = 500;
 
         private string ShortenStringIfNecessary(string longString, int maxLength)
         {
@@ -37,7 +38,13 @@ namespace View.Controllers
             foreach (MovieModel movie in movies)
             {
                 List<GenreViewModel> genresViewModels = movie.Genres.Select(ToGenreViewModel).ToList();
-                movieViewModels.Add(new MovieViewModel(movie.Title, movie.Description, movie.ReleaseDate, ShortenStringIfNecessary(movie.Description, 200), genresViewModels, movie.MovieId));
+                movieViewModels.Add(new MovieViewModel(
+                    movie.Title, 
+                    movie.Description, 
+                    movie.ReleaseDate, 
+                    ShortenStringIfNecessary(movie.Description, _maxStringLength), 
+                    genresViewModels, 
+                    movie.MovieId));
             }
             return movieViewModels;
         }
@@ -93,7 +100,7 @@ namespace View.Controllers
             }
             List<GenreViewModel> genresViewModels = movieModel.Genres.Select(ToGenreViewModel).ToList();
             var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
-                ShortenStringIfNecessary(movieModel.Description, 200), genresViewModels, movieModel.MovieId);
+                ShortenStringIfNecessary(movieModel.Description, _maxStringLength), genresViewModels, movieModel.MovieId);
 
             return View(movieViewModel);
         }
