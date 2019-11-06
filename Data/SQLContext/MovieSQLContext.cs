@@ -159,5 +159,33 @@ namespace Data.SQLContext
                 throw;
             }
         }
+
+        public void CreateNewMovie(MovieDTO movie)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = _conn;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "sp_CreateMovie";
+
+                command.Parameters.AddWithValue("@title", movie.Title);
+                command.Parameters.AddWithValue("@description", movie.Description);
+                command.Parameters.AddWithValue("@releaseDate", movie.ReleaseDate);
+                command.Parameters.AddWithValue("@genreId", movie.Genres.First().GenreId);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

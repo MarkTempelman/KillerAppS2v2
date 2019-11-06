@@ -15,5 +15,7 @@ namespace Data.Interfaces
         MovieDTO GetMovieById(int id);
 
         IEnumerable<MovieDTO> GetMoviesBySearchModel(SearchDTO search);
+
+        void CreateNewMovie(MovieDTO movie);
     }
 }
