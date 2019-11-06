@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using KillerApp.ViewModels;
 using Logic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
 namespace View.Controllers
 {
+    [Authorize(Policy = "admin")]
     public class AdminController : Controller
     {
         private readonly GenreLogic _genreLogic = new GenreLogic();
