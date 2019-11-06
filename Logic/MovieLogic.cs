@@ -40,9 +40,19 @@ namespace Logic
             return _iMovieContext.GetMoviesBySearchModel(_searchLogic.ToSearchDTO(search)).Select(ToMovieModel);
         }
 
+        public void CreateNewMovie(MovieModel movieModel)
+        {
+            _iMovieContext.CreateNewMovie(ToMovieDTO(movieModel));
+        }
+
         private MovieDTO ToMovieDTO(MovieModel movieModel)
         {
-            return new MovieDTO(movieModel.MovieId, movieModel.Title, movieModel.Description, movieModel.ReleaseDate, movieModel.MediaId);
+            MovieDTO movieDTO = new MovieDTO(movieModel.MovieId, movieModel.Title, movieModel.Description, movieModel.ReleaseDate, movieModel.MediaId);
+            foreach (var genre in movieModel.Genres)
+            {
+                movieDTO.Genres.Add(_genreLogic.ToGenreDTO(genre));
+            }
+            return movieDTO;
         }
 
         private MovieModel ToMovieModel(MovieDTO movieDTO)
