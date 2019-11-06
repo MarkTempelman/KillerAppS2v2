@@ -18,6 +18,8 @@ namespace KillerApp.ViewModels
         public double AverageRating { get; set; }
         public List<GenreViewModel> Genres { get; set; }
         public int MovieId { get; set; }
+        public List<GenreViewModel> AllGenres { get; set; } = new List<GenreViewModel>();
+        public int GenreId { get; set; }
 
         public MovieViewModel(string title, string description, DateTime releaseDate, string shortDescription, List<GenreViewModel> genres, int movieId)
         {
