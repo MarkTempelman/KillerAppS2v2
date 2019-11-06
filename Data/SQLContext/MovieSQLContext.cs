@@ -168,7 +168,7 @@ namespace Data.SQLContext
                 MySqlCommand command = new MySqlCommand();
                 command.Connection = _conn;
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "sp_CreateMovie";
+                command.CommandText = "sp_CreateNewMovie";
 
                 command.Parameters.AddWithValue("@title", movie.Title);
                 command.Parameters.AddWithValue("@description", movie.Description);
