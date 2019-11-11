@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "HomePage";
 }
+
 <table class="table">
     <tr>
         <td width="80%">
@@ -19,6 +20,10 @@
             @foreach (GenreViewModel genre in Model.Genres)
             {
                 @Html.Partial("GenrePartial", genre)
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId">Add Genre</a>
             }
         </td>
     </tr>
