@@ -7,6 +7,7 @@ using Logic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using View.Helpers;
 using View.ViewModels;
 
 namespace View.Controllers
@@ -35,16 +36,21 @@ namespace View.Controllers
             return RedirectToAction("Index", "Movie");
         }
 
-        public IActionResult AddGenreToMovie(int movieId)
+        public IActionResult AddGenreToMovie(int id)
         {
             GenreViewModel genreViewModel = new GenreViewModel();
             foreach (GenreModel genre in _genreLogic.GetAllGenres())
             {
                 genreViewModel.AllGenres.Add(_movieController.ToGenreViewModel(genre));
             }
-
-            genreViewModel.MovieId = movieId;
             return View(genreViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddGenreToMovie(GenreViewModel genre)
+        {
+            _genreLogic.AddGenreToMovie(ViewModelToModel.ToGenreModel(genre));
+            return RedirectToAction("Index", "Movie");
         }
 
         private MovieModel ToMovieModel(MovieViewModel movieViewModel)

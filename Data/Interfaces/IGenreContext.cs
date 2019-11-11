@@ -11,5 +11,7 @@ namespace Data.Interfaces
         IEnumerable<GenreDTO> GetGenresByMovieId(int movieId);
 
         IEnumerable<GenreDTO> GetAllGenres();
+
+        void AddGenreToMovie(GenreDTO genre);
     }
 }

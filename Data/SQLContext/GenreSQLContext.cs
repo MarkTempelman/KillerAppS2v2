@@ -79,8 +79,7 @@ namespace Data.SQLContext
                 MySqlCommand command = new MySqlCommand
                 {
                     Connection = _conn,
-                    CommandType = CommandType.StoredProcedure,
-                    CommandText = "sp_GetAllGenres"
+                    CommandText = "INSERT INTO genre_movie(MovieId, GenreId) VALUES (@movieId, @genreId)"
                 };
 
                 command.Parameters.AddWithValue("@movieId", genre.MovieId);

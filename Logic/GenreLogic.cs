@@ -39,13 +39,23 @@ namespace Logic
             return movies;
         }
 
+        public void AddGenreToMovie(GenreModel genre)
+        {
+            _iGenreContext.AddGenreToMovie(ToGenreDTO(genre));
+        }
+
         public GenreDTO ToGenreDTO(GenreModel genreModel)
         {
             if (genreModel == null)
             {
                 return null;
             }
-            return new GenreDTO(genreModel.Genre, genreModel.GenreId);
+            GenreDTO genreDTO = new GenreDTO(genreModel.Genre, genreModel.GenreId);
+            if (genreModel.MovieId > 0)
+            {
+                genreDTO.MovieId = genreModel.MovieId;
+            }
+            return genreDTO;
         }
 
         public GenreModel ToGenreModel(GenreDTO genreDTO)
