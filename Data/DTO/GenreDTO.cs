@@ -8,6 +8,7 @@ namespace Data.DTO
     {
         public string Genre { get; set; }
         public int GenreId { get; set; }
+        public int MovieId { get; set; }
 
         public GenreDTO(string genre, int genreId)
         {

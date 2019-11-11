@@ -70,5 +70,33 @@ namespace Data.SQLContext
             }
             return genres;
         }
+
+        public void AddGenreToMovie(GenreDTO genre)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand
+                {
+                    Connection = _conn,
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "sp_GetAllGenres"
+                };
+
+                command.Parameters.AddWithValue("@movieId", genre.MovieId);
+                command.Parameters.AddWithValue("@genreId", genre.GenreId);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }
