@@ -186,5 +186,32 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
+        public void EditMovie(MovieDTO movie)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("UPDATE movie " +
+                                                        "SET Title = @title, Description = @description, ReleaseDate = @releaseDate " +
+                                                        "WHERE MovieId = @movieId");
+
+                command.Parameters.AddWithValue("@title", movie.Title);
+                command.Parameters.AddWithValue("@description", movie.Description);
+                command.Parameters.AddWithValue("@releaseDate", movie.ReleaseDate);
+                command.Parameters.AddWithValue("@movieId", movie.MovieId);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }
