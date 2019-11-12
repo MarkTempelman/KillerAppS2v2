@@ -18,14 +18,9 @@ namespace View.Controllers
         private readonly MovieLogic _movieLogic = new MovieLogic();
         private static int _maxStringLength = 500;
 
-        private IEnumerable<MovieModel> GetAllMovieModels()
-        {
-            return _movieLogic.GetAllMovies();
-        }
-
         public ActionResult Index()
         {
-            return View(ModelToViewModel.ToMovieViewModels(GetAllMovieModels(), _maxStringLength));
+            return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetAllMovies(), _maxStringLength));
         }
 
         public ActionResult MovieListPartial()
