@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using Data.DTO;
 using Data.Interfaces;
-using Models;
 using MySql.Data.MySqlClient;
 
 namespace Data.SQLContext

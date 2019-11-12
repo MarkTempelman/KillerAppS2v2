@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.Enums
+namespace Enums
 {
-    public enum SortBy
+    public enum AccountType
     {
-        Title,
-        Date
+        User,
+        Admin
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using Data.DTO;
 using Data.Interfaces;
 using Data.SQLContext;
-using Models;
+using Logic.Models;
 
 namespace Logic
 {

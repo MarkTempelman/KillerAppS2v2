@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using System.Text;
 using Enums;
 
-namespace Data.DTO
+namespace Logic.Models
 {
-    public class UserDTO
+    public class UserModel
     {
         public int UserId { get; set; }
         public string Username { get; set; }
         public string EmailAddress { get; set; }
-        public AccountType AccountType { get; set; }
+        public AccountType AccountType { get; set; } = AccountType.User;
         public string Password { get; set; }
 
-        public UserDTO()
+        public UserModel()
         {
 
         }
 
-        public UserDTO(string username, string emailAddress, AccountType accountType, string password)
+        public UserModel(string username, string emailAddress, string password)
+        {
+            Username = username;
+            EmailAddress = emailAddress;
+            Password = password;
+        }
+
+        public UserModel(string username, string emailAddress, AccountType accountType, string password)
         {
             Username = username;
             EmailAddress = emailAddress;

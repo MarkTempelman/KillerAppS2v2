@@ -4,7 +4,8 @@ using System.Text;
 using Data.DTO;
 using Data.Interfaces;
 using Data.SQLContext;
-using Models;
+using Logic.Models;
+using Enums;
 
 namespace Logic
 {

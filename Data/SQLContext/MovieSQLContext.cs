@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.DTO;
 using Data.Interfaces;
-using Models;
-using Models.Enums;
+using Enums;
 using MySql.Data.MySqlClient;
 
 namespace Data.SQLContext

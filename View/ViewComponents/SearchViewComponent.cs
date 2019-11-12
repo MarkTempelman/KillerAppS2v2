@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Logic;
+using Logic.Models;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 using View.Controllers;
 using View.Helpers;
 using View.ViewModels;
@@ -14,7 +14,6 @@ namespace View.ViewComponents
     public class SearchViewComponent : ViewComponent
     {
         private readonly GenreLogic _genreLogic = new GenreLogic();
-        private readonly MovieController _movieController = new MovieController();
 
         public async Task<IViewComponentResult> InvokeAsync()
         {

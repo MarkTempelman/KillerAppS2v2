@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Data.DTO;
 using Data.Interfaces;
-using Models.Enums;
+using Enums;
 using MySql.Data.MySqlClient;
 
 namespace Data.SQLContext

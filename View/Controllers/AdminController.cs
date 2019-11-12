@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using KillerApp.ViewModels;
 using Logic;
+using Logic.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 using View.Helpers;
 using View.ViewModels;
 
@@ -16,7 +15,6 @@ namespace View.Controllers
     public class AdminController : Controller
     {
         private readonly GenreLogic _genreLogic = new GenreLogic();
-        private readonly MovieController _movieController = new MovieController();
         private readonly MovieLogic _movieLogic = new MovieLogic();
 
         public IActionResult AddMovie()

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Models.Enums;
+using Enums;
 
 namespace Data.DTO
 {

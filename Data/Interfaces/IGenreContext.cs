@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Data.DTO;
-using Models;
 
 namespace Data.Interfaces
 {

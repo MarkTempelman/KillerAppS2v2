@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using Models;
 using View.ViewModels;
 
-namespace KillerApp.ViewModels
+namespace View.ViewModels
 {
     public class MovieViewModel
     {

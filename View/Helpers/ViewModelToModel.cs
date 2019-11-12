@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using KillerApp.ViewModels;
-using Models;
 using View.ViewModels;
+using Logic.Models;
 
 namespace View.Helpers
 {

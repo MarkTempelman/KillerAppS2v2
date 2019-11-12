@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Models;
 using Data;
 using Data.Interfaces;
 using Data.SQLContext;
 using Data.DTO;
+using Logic.Models;
 
 namespace Logic
 {
