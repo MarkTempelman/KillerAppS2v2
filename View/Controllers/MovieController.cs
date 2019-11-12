@@ -13,11 +13,10 @@ namespace View.Controllers
     public class MovieController : Controller
     {
         private readonly MovieLogic _movieLogic = new MovieLogic();
-        private static int _maxStringLength = 500;
 
         public ActionResult Index()
         {
-            return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetAllMovies(), _maxStringLength));
+            return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetAllMovies()));
         }
 
         public ActionResult MovieListPartial()
@@ -28,7 +27,7 @@ namespace View.Controllers
         [HttpPost]
         public ActionResult Index(SearchViewModel search)
         {
-            return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search)), _maxStringLength));
+            return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search))));
         }
 
         public ActionResult MovieInfo(int id)
@@ -40,7 +39,7 @@ namespace View.Controllers
             }
             List<GenreViewModel> genresViewModels = movieModel.Genres.Select(ModelToViewModel.ToGenreViewModel).ToList();
             var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
-                MiscHelper.ShortenStringIfNecessary(movieModel.Description, _maxStringLength), genresViewModels, movieModel.MovieId);
+                MiscHelper.ShortenStringIfNecessary(movieModel.Description), genresViewModels, movieModel.MovieId);
 
             return View(movieViewModel);
         }

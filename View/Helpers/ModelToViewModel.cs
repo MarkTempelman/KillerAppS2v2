@@ -20,7 +20,7 @@ namespace View.Helpers
             return new GenreViewModel(genre.Genre, genre.GenreId);
         }
 
-        public static IEnumerable<MovieViewModel> ToMovieViewModels(IEnumerable<MovieModel> movies, int maxStringLength)
+        public static IEnumerable<MovieViewModel> ToMovieViewModels(IEnumerable<MovieModel> movies)
         {
             List<MovieViewModel> movieViewModels = new List<MovieViewModel>();
             foreach (MovieModel movie in movies)
@@ -30,7 +30,7 @@ namespace View.Helpers
                     movie.Title,
                     movie.Description,
                     movie.ReleaseDate,
-                    MiscHelper.ShortenStringIfNecessary(movie.Description, maxStringLength),
+                    MiscHelper.ShortenStringIfNecessary(movie.Description),
                     genresViewModels,
                     movie.MovieId));
             }

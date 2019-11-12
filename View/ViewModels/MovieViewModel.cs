@@ -28,7 +28,16 @@ namespace View.ViewModels
             ShortDescription = shortDescription;
             Genres = genres;
             MovieId = movieId;
-        }   
+        }
+
+        public MovieViewModel(string title, string description, DateTime releaseDate, string shortDescription, int movieId)
+        {
+            Title = title;
+            Description = description;
+            ReleaseDate = releaseDate;
+            ShortDescription = shortDescription;
+            MovieId = movieId;
+        }
 
         public MovieViewModel()
         {

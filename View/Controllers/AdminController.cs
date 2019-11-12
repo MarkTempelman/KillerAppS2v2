@@ -50,5 +50,26 @@ namespace View.Controllers
             _genreLogic.AddGenreToMovie(ViewModelToModel.ToGenreModel(genre));
             return RedirectToAction("Index", "Movie");
         }
+
+        public IActionResult EditMovie(int id)
+        {
+            var movieModel = _movieLogic.GetMovieById(id);
+            if (movieModel == null)
+            {
+                return NotFound();
+            }
+            var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
+                MiscHelper.ShortenStringIfNecessary(movieModel.Description), movieModel.MovieId);
+
+            return View(movieViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditMovie(MovieViewModel movie)
+        {
+            _movieLogic.EditMovie(ViewModelToModel.ToMovieModel(movie));
+
+            return RedirectToAction("Index", "Movie");
+        }
     }
 }

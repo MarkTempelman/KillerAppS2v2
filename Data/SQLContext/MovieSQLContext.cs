@@ -194,7 +194,7 @@ namespace Data.SQLContext
                 _conn.Open();
                 MySqlCommand command = new MySqlCommand("UPDATE movie " +
                                                         "SET Title = @title, Description = @description, ReleaseDate = @releaseDate " +
-                                                        "WHERE MovieId = @movieId");
+                                                        "WHERE MovieId = @movieId", _conn);
 
                 command.Parameters.AddWithValue("@title", movie.Title);
                 command.Parameters.AddWithValue("@description", movie.Description);

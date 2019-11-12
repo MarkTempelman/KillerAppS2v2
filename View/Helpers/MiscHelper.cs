@@ -7,11 +7,12 @@ namespace View.Helpers
 {
     public static class MiscHelper
     {
-        public static string ShortenStringIfNecessary(string longString, int maxLength)
+        private static int _maxStringLength = 500;
+        public static string ShortenStringIfNecessary(string longString)
         {
-            if (longString.Length > maxLength)
+            if (longString.Length > _maxStringLength)
             {
-                string shortString = longString.Remove(maxLength);
+                string shortString = longString.Remove(_maxStringLength);
                 return shortString + "...";
             }
             return longString;
