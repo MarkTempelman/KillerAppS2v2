@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Enums;
+using View.Helpers;
 using View.ViewModels;
 
 namespace View.Controllers
@@ -54,27 +55,6 @@ namespace View.Controllers
             return new GenreViewModel(genre.Genre, genre.GenreId);
         }
 
-        public SearchModel ToSearchModel(SearchViewModel search)
-        {
-            var searchModel = new SearchModel();
-            if (search.GenreId != -1)
-            {
-                searchModel.Genre = new GenreModel(search.GenreId);
-            }
-
-            searchModel.ReleasedAfter = search.ReleasedAfter;
-            searchModel.ReleasedBefore = search.ReleasedBefore;
-
-            if (search.SearchTerm != null)
-            {
-                searchModel.SearchTerm = search.SearchTerm;
-            }
-
-            searchModel.SortBy = search.SortBy;
-
-            return searchModel;
-        }
-
         public ActionResult Index()
         {
             return View(ToMovieViewModels(GetAllMovieModels()));
@@ -88,7 +68,7 @@ namespace View.Controllers
         [HttpPost]
         public ActionResult Index(SearchViewModel search)
         {
-            return View(ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(ToSearchModel(search))));
+            return View(ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search))));
         }
 
         public ActionResult MovieInfo(int id)

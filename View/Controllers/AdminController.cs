@@ -32,7 +32,7 @@ namespace View.Controllers
         [HttpPost]
         public IActionResult AddMovie(MovieViewModel movie)
         {
-            _movieLogic.CreateNewMovie(ToMovieModel(movie));
+            _movieLogic.CreateNewMovie(ViewModelToModel.ToMovieModel(movie));
             return RedirectToAction("Index", "Movie");
         }
 
@@ -51,14 +51,6 @@ namespace View.Controllers
         {
             _genreLogic.AddGenreToMovie(ViewModelToModel.ToGenreModel(genre));
             return RedirectToAction("Index", "Movie");
-        }
-
-        private MovieModel ToMovieModel(MovieViewModel movieViewModel)
-        {
-            MovieModel movieModel = new MovieModel(movieViewModel.Title, movieViewModel.Description, movieViewModel.ReleaseDate);
-            movieModel.Genres.Add(new GenreModel(movieViewModel.GenreId));
-
-            return movieModel;
         }
     }
 }

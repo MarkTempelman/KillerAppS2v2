@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using View.Helpers;
 using View.ViewModels;
 
 namespace View.Controllers
@@ -25,7 +26,7 @@ namespace View.Controllers
         [HttpPost]
         public IActionResult Register(UserViewModel user)
         {
-            _userLogic.CreateUser(ToUserModel(user));
+            _userLogic.CreateUser(ViewModelToModel.ToUserModel(user));
             return View();
         }
 
@@ -64,11 +65,6 @@ namespace View.Controllers
         {
             HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Movie");
-        }
-
-        private UserModel ToUserModel(UserViewModel userViewModel)
-        {
-            return new UserModel(userViewModel.Username, userViewModel.EmailAddress, userViewModel.Password);
         }
 
         private UserViewModel ToUserViewModel(UserModel userModel)
