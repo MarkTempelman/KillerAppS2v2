@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using Data.DTO;
 using Data.Interfaces;
-using Models;
-using Models.Enums;
+using Enums;
 
 namespace LogicTests.MemoryContext
 {
@@ -65,6 +64,16 @@ namespace LogicTests.MemoryContext
                 movies = movies.OrderBy(m => m.ReleaseDate).ToList();
             }
             return movies;
+        }
+
+        public void CreateNewMovie(MovieDTO movie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditMovie(MovieDTO movie)
+        {
+            throw new NotImplementedException();
         }
     }
 }

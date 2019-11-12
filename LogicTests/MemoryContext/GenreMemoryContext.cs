@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Data.DTO;
 using Data.Interfaces;
-using Models;
 
 namespace LogicTests.MemoryContext
 {
@@ -32,6 +31,11 @@ namespace LogicTests.MemoryContext
                 new GenreDTO("TestGenre2", 2)
             };
             return genres;
+        }
+
+        public void AddGenreToMovie(GenreDTO genre)
+        {
+            throw new NotImplementedException();
         }
     }
 }

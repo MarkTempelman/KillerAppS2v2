@@ -4,7 +4,7 @@ using System.Linq;
 using Data.Interfaces;
 using LogicTests.MemoryContext;
 using Logic;
-using Models;
+using Logic.Models;
 using NUnit.Framework;
 using Renci.SshNet;
 
