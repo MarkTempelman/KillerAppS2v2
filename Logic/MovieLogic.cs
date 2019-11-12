@@ -45,6 +45,11 @@ namespace Logic
             _iMovieContext.CreateNewMovie(ToMovieDTO(movieModel));
         }
 
+        public void EditMovie(MovieModel movieModel)
+        {
+            _iMovieContext.EditMovie(ToMovieDTO(movieModel));
+        }
+
         private MovieDTO ToMovieDTO(MovieModel movieModel)
         {
             MovieDTO movieDTO = new MovieDTO(movieModel.MovieId, movieModel.Title, movieModel.Description, movieModel.ReleaseDate, movieModel.MediaId);
