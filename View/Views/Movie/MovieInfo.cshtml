@@ -4,31 +4,18 @@
     ViewData["Title"] = "MovieInfo";
 }
 
-<h2>MovieInfo</h2>
 
 <div>
-    <h4>MovieViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
-        <dd>
+    <br/>
+    <br/>
+    <h3>
+        @Html.DisplayFor(model => model.Title)
+        <small class="text-muted">
             @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
-    </dl>
+        </small>
+    </h3>
+
+    @Html.DisplayFor(model => model.Description)
 </div>
 <div>
     <a asp-action="Index">Back to List</a>

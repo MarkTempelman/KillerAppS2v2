@@ -6,34 +6,22 @@
     ViewData["Title"] = "HomePage";
 }
 
-<table class="table">
-    <tr>
-        <td width="80%">
-            <a asp-controller="Movie" asp-action="MovieInfo" asp-route-id="@Model.MovieId"><h3><B>@Html.DisplayFor(modelItem => Model.Title)</B></h3></a>
-            @if (User.IsInRole("Admin"))
-            {
-                <a asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId">Edit Movie</a>
-            }
-        </td>
-        <td width="20%" style="text-align: right;">
-            <span>Release date: </span> @Html.DisplayFor(modelItem => Model.ReleaseDate)
-        </td>
-    </tr>
-    <tr>
-        <td width="100%" colspan="2">
+<hr/>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title"><a asp-controller="Movie" asp-action="MovieInfo" asp-route-id="@Model.MovieId"><B>@Html.DisplayFor(modelItem => Model.Title)</B></a></h4>
+        <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => Model.ReleaseDate)</h6>
+        <p class="card-text">@Html.DisplayFor(modelItem => Model.ShortDescription)</p>
+        <p class="card-text">
             @foreach (GenreViewModel genre in Model.Genres)
             {
                 @Html.Partial("GenrePartial", genre)
             }
-            @if (User.IsInRole("Admin"))
-            {
-                <a asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId">Add Genre</a>
-            }
-        </td>
-    </tr>
-    <tr>
-        <td width="100%" colspan="2">
-            @Html.DisplayFor(modelItem => Model.ShortDescription)
-        </td>
-    </tr>
-</table>
+        </p>
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="card-link" asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId">Edit Movie</a>
+            <a class="card-link" asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId">Add Genre</a>
+        }
+    </div>
+</div>
