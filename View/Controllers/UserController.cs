@@ -40,7 +40,7 @@ namespace View.Controllers
         {
             try
             {
-                UserViewModel newUser = ToUserViewModel(_userLogic.CheckUserValidity(userViewModel.Username, userViewModel.Password));
+                UserViewModel newUser = ModelToViewModel.ToUserViewModel(_userLogic.CheckUserValidity(userViewModel.Username, userViewModel.Password));
 
                 var identity = new ClaimsIdentity(new[]
                 {
@@ -65,11 +65,6 @@ namespace View.Controllers
         {
             HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Movie");
-        }
-
-        private UserViewModel ToUserViewModel(UserModel userModel)
-        {
-            return new UserViewModel(userModel.Username, userModel.EmailAddress, userModel.AccountType, userModel.Password);
         }
     }
 }

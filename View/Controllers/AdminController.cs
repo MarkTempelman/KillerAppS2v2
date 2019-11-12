@@ -24,7 +24,7 @@ namespace View.Controllers
             MovieViewModel movie = new MovieViewModel();
             foreach (GenreModel genre in _genreLogic.GetAllGenres())
             {
-                movie.AllGenres.Add(_movieController.ToGenreViewModel(genre));
+                movie.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
             }
             return View(movie);
         }
@@ -41,7 +41,7 @@ namespace View.Controllers
             GenreViewModel genreViewModel = new GenreViewModel();
             foreach (GenreModel genre in _genreLogic.GetAllGenres())
             {
-                genreViewModel.AllGenres.Add(_movieController.ToGenreViewModel(genre));
+                genreViewModel.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
             }
             return View(genreViewModel);
         }

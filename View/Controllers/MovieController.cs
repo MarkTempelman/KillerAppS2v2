@@ -18,46 +18,14 @@ namespace View.Controllers
         private readonly MovieLogic _movieLogic = new MovieLogic();
         private static int _maxStringLength = 500;
 
-        private string ShortenStringIfNecessary(string longString, int maxLength)
-        {
-            if (longString.Length > maxLength)
-            {
-                string shortString = longString.Remove(maxLength);
-                return shortString + "...";
-            }
-            return longString;
-        }
-
         private IEnumerable<MovieModel> GetAllMovieModels()
         {
             return _movieLogic.GetAllMovies();
         }
 
-        private IEnumerable<MovieViewModel> ToMovieViewModels(IEnumerable<MovieModel> movies)
-        {
-            List<MovieViewModel> movieViewModels = new List<MovieViewModel>();
-            foreach (MovieModel movie in movies)
-            {
-                List<GenreViewModel> genresViewModels = movie.Genres.Select(ToGenreViewModel).ToList();
-                movieViewModels.Add(new MovieViewModel(
-                    movie.Title, 
-                    movie.Description, 
-                    movie.ReleaseDate, 
-                    ShortenStringIfNecessary(movie.Description, _maxStringLength), 
-                    genresViewModels, 
-                    movie.MovieId));
-            }
-            return movieViewModels;
-        }
-
-        public GenreViewModel ToGenreViewModel(GenreModel genre)
-        {
-            return new GenreViewModel(genre.Genre, genre.GenreId);
-        }
-
         public ActionResult Index()
         {
-            return View(ToMovieViewModels(GetAllMovieModels()));
+            return View(ModelToViewModel.ToMovieViewModels(GetAllMovieModels(), _maxStringLength));
         }
 
         public ActionResult MovieListPartial()
@@ -68,7 +36,7 @@ namespace View.Controllers
         [HttpPost]
         public ActionResult Index(SearchViewModel search)
         {
-            return View(ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search))));
+            return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search)), _maxStringLength));
         }
 
         public ActionResult MovieInfo(int id)
@@ -78,9 +46,9 @@ namespace View.Controllers
             {
                 return NotFound();
             }
-            List<GenreViewModel> genresViewModels = movieModel.Genres.Select(ToGenreViewModel).ToList();
+            List<GenreViewModel> genresViewModels = movieModel.Genres.Select(ModelToViewModel.ToGenreViewModel).ToList();
             var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
-                ShortenStringIfNecessary(movieModel.Description, _maxStringLength), genresViewModels, movieModel.MovieId);
+                MiscHelper.ShortenStringIfNecessary(movieModel.Description, _maxStringLength), genresViewModels, movieModel.MovieId);
 
             return View(movieViewModel);
         }
