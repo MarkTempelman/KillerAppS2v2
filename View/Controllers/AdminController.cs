@@ -15,7 +15,12 @@ namespace View.Controllers
     public class AdminController : Controller
     {
         private readonly GenreLogic _genreLogic = new GenreLogic();
-        private readonly MovieLogic _movieLogic = new MovieLogic();
+        private readonly MovieLogic _movieLogic;
+
+        public AdminController(MovieLogic movieLogic)
+        {
+            _movieLogic = movieLogic;
+        }
 
         public IActionResult AddMovie()
         {

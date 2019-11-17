@@ -36,7 +36,30 @@ namespace View
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<IMovieContext, MovieSQLContext>();
+
+            services.AddTransient<IMovieContext, MovieSQLContext>();
+            services.AddTransient<IGenreContext, GenreSQLContext>();
+            services.AddTransient<IUserContext, UserSQLContext>();
+
+            services.AddTransient(m =>
+            {
+                IMovieContext mc = m.GetService<IMovieContext>();
+                GenreLogic gl = m.GetService<GenreLogic>();
+                SearchLogic sl = m.GetService<SearchLogic>();
+                return new MovieLogic(mc, gl, sl);
+            });
+
+            services.AddTransient(g =>
+            {
+                IGenreContext gc = g.GetService<IGenreContext>();
+                return new GenreLogic(gc);
+            });
+
+            services.AddTransient(s =>
+            {
+                GenreLogic gl = s.GetService<GenreLogic>();
+                return new SearchLogic(gl);
+            });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

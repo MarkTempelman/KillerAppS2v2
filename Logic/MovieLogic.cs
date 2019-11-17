@@ -11,18 +11,20 @@ namespace Logic
     public class MovieLogic
     {
         private readonly IMovieContext _iMovieContext;
-        private readonly GenreLogic _genreLogic = new GenreLogic();
+        private readonly GenreLogic _genreLogic;
         private readonly SearchLogic _searchLogic = new SearchLogic();
-
-        public MovieLogic()
-        {
-            _iMovieContext = new MovieSQLContext();
-        }
 
         public MovieLogic(IMovieContext movieContext, IGenreContext genreContext)
         {
             _iMovieContext = movieContext;
             _genreLogic = new GenreLogic(genreContext);
+        }
+
+        public MovieLogic(IMovieContext movieContext, GenreLogic genreLogic, SearchLogic searchLogic)
+        {
+            _iMovieContext = movieContext;
+            _genreLogic = genreLogic;
+            _searchLogic = searchLogic;
         }
 
         public IEnumerable<MovieModel> GetAllMovies()

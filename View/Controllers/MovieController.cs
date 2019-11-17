@@ -12,7 +12,12 @@ namespace View.Controllers
 {
     public class MovieController : Controller
     {
-        private readonly MovieLogic _movieLogic = new MovieLogic();
+        private readonly MovieLogic _movieLogic;
+
+        public MovieController(MovieLogic movieLogic)
+        {
+            _movieLogic = movieLogic;
+        }
 
         public ActionResult Index()
         {
