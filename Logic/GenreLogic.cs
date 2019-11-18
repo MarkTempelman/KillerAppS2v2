@@ -21,7 +21,8 @@ namespace Logic
 
         public IEnumerable<GenreModel> GetAllGenres()
         {
-            return _iGenreContext.GetAllGenres().Select(ToGenreModel);
+            return _iGenreContext.GetAllGenres()
+                .Select(ToGenreModel);
         }
 
         public IEnumerable<MovieModel> AddGenresToMovies(IEnumerable<MovieModel> movies)
@@ -29,7 +30,8 @@ namespace Logic
             movies = movies.ToList();
             foreach (MovieModel movie in movies)
             {
-                movie.Genres.AddRange(_iGenreContext.GetGenresByMovieId(movie.MovieId).Select(ToGenreModel));
+                movie.Genres
+                    .AddRange(_iGenreContext.GetGenresByMovieId(movie.MovieId).Select(ToGenreModel));
             }
             return movies;
         }
