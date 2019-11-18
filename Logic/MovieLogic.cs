@@ -12,7 +12,7 @@ namespace Logic
     {
         private readonly IMovieContext _iMovieContext;
         private readonly GenreLogic _genreLogic;
-        private readonly SearchLogic _searchLogic = new SearchLogic();
+        private readonly SearchLogic _searchLogic;
 
         public MovieLogic(IMovieContext movieContext, IGenreContext genreContext)
         {

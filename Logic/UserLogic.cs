@@ -12,9 +12,10 @@ namespace Logic
     public class UserLogic
     {
         private readonly IUserContext _iUserContext;
-        public UserLogic()
+
+        public UserLogic(IUserContext iUserContext)
         {
-            _iUserContext = new UserSQLContext();
+            _iUserContext = iUserContext;
         }
 
         public void CreateUser(UserModel userModel)

@@ -14,12 +14,13 @@ namespace View.Controllers
     [Authorize(Policy = "admin")]
     public class AdminController : Controller
     {
-        private readonly GenreLogic _genreLogic = new GenreLogic();
+        private readonly GenreLogic _genreLogic;
         private readonly MovieLogic _movieLogic;
 
-        public AdminController(MovieLogic movieLogic)
+        public AdminController(MovieLogic movieLogic, GenreLogic genreLogic)
         {
             _movieLogic = movieLogic;
+            _genreLogic = genreLogic;
         }
 
         public IActionResult AddMovie()

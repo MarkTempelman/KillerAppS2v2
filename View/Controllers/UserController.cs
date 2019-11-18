@@ -15,7 +15,12 @@ namespace View.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserLogic _userLogic = new UserLogic();
+        private readonly UserLogic _userLogic;
+
+        public UserController(UserLogic userLogic)
+        {
+            _userLogic = userLogic;
+        }
         public IActionResult Register()
         {
             UserViewModel user = new UserViewModel();

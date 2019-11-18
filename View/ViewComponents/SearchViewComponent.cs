@@ -13,7 +13,12 @@ namespace View.ViewComponents
 {
     public class SearchViewComponent : ViewComponent
     {
-        private readonly GenreLogic _genreLogic = new GenreLogic();
+        private readonly GenreLogic _genreLogic;
+
+        public SearchViewComponent(GenreLogic genreLogic)
+        {
+            _genreLogic = genreLogic;
+        }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {

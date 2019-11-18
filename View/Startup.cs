@@ -61,6 +61,12 @@ namespace View
                 return new SearchLogic(gl);
             });
 
+            services.AddTransient(s =>
+            {
+                IUserContext uc = s.GetService<IUserContext>();
+                return new UserLogic(uc);
+            });
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

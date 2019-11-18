@@ -9,16 +9,11 @@ namespace Logic
 {
     public class SearchLogic
     {
-        private readonly GenreLogic _genreLogic = new GenreLogic();
+        private readonly GenreLogic _genreLogic;
 
         public SearchLogic(GenreLogic genreLogic)
         {
             _genreLogic = genreLogic;
-        }
-
-        public SearchLogic()
-        {
-
         }
 
         public SearchDTO ToSearchDTO(SearchModel searchModel)

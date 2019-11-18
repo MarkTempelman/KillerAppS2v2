@@ -19,11 +19,6 @@ namespace Logic
             _iGenreContext = iGenreContext;
         }
 
-        public GenreLogic()
-        {
-            _iGenreContext = new GenreSQLContext();
-        }
-
         public IEnumerable<GenreModel> GetAllGenres()
         {
             return _iGenreContext.GetAllGenres().Select(ToGenreModel);
