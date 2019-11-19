@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Logic;
 using Logic.Models;
@@ -34,10 +35,20 @@ namespace View.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddMovie(MovieViewModel movie)
         {
-            _movieLogic.CreateNewMovie(ViewModelToModel.ToMovieModel(movie));
-            return RedirectToAction("Index", "Movie");
+            if (ModelState.IsValid)
+            {
+                _movieLogic.CreateNewMovie(ViewModelToModel.ToMovieModel(movie));
+                return RedirectToAction("Index", "Movie");
+            }
+
+            foreach (GenreModel genre in _genreLogic.GetAllGenres())
+            {
+                movie.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
+            }
+            return View(movie);
         }
 
         public IActionResult AddGenreToMovie(int id)
@@ -51,6 +62,7 @@ namespace View.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddGenreToMovie(GenreViewModel genre)
         {
             _genreLogic.AddGenreToMovie(ViewModelToModel.ToGenreModel(genre));

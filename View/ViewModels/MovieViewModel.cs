@@ -10,6 +10,7 @@ namespace View.ViewModels
     public class MovieViewModel
     {
         [Required]
+        [StringLength(45, ErrorMessage = "Title cannot be longer than 45 characters")]
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
