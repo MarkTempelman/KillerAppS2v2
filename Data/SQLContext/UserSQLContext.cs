@@ -19,17 +19,54 @@ namespace Data.SQLContext
             try
             {
                 _conn.Open();
-                MySqlCommand command = new MySqlCommand();
-                command.Connection = _conn;
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "sp_CreateUser";
+                MySqlCommand command = new MySqlCommand("INSERT INTO `user` (Username, EmailAddress, AccountType, Password) " +
+                                                        "VALUES (@username, @emailAddress, @accountType, @password)", 
+                                                        _conn);
 
                 command.Parameters.AddWithValue("@username", user.Username);
                 command.Parameters.AddWithValue("@emailAddress", user.EmailAddress);
                 command.Parameters.AddWithValue("@accountType", user.AccountType.ToString());
-                command.Parameters.AddWithValue("password", user.Password);
+                command.Parameters.AddWithValue("@password", user.Password);
 
                 command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+
+        public UserDTO GetUserByUsername(string username)
+        {
+            try
+            {
+                UserDTO user = new UserDTO();
+
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = _conn;
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "sp_GetUserByUsername";
+                command.Parameters.AddWithValue("@username", username);
+
+                _conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    user = new UserDTO(
+                        reader.GetString(reader.GetOrdinal("Username")),
+                        reader.GetString(reader.GetOrdinal("EmailAddress")),
+                        (AccountType)Enum.Parse(typeof(AccountType),
+                            reader.GetString(reader.GetOrdinal("AccountType"))),
+                        reader.GetString(reader.GetOrdinal("Password"))
+                    );
+                }
+
+                return user;
             }
             catch (Exception e)
             {

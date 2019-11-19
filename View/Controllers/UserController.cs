@@ -33,7 +33,7 @@ namespace View.Controllers
             if (ModelState.IsValid)
             {
                 _userLogic.CreateUser(ViewModelToModel.ToUserModel(user));
-                return RedirectToAction("Index", "Movie");
+                return RedirectToAction("Login", "User");
             }
 
             return View(user);
