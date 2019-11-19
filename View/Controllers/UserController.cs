@@ -30,8 +30,13 @@ namespace View.Controllers
         [HttpPost]
         public IActionResult Register(UserViewModel user)
         {
-            _userLogic.CreateUser(ViewModelToModel.ToUserModel(user));
-            return View();
+            if (ModelState.IsValid)
+            {
+                _userLogic.CreateUser(ViewModelToModel.ToUserModel(user));
+                return RedirectToAction("Index", "Movie");
+            }
+
+            return View(user);
         }
 
         public IActionResult Login()

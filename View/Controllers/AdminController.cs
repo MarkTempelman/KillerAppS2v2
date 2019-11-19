@@ -83,11 +83,16 @@ namespace View.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditMovie(MovieViewModel movie)
         {
-            _movieLogic.EditMovie(ViewModelToModel.ToMovieModel(movie));
+            if (ModelState.IsValid)
+            {
+                _movieLogic.EditMovie(ViewModelToModel.ToMovieModel(movie));
+                return RedirectToAction("Index", "Movie");
+            }
 
-            return RedirectToAction("Index", "Movie");
+            return View(movie);
         }
     }
 }
