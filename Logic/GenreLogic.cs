@@ -25,6 +25,12 @@ namespace Logic
                 .Select(ToGenreModel);
         }
 
+        public IEnumerable<GenreModel> GetGenreModelsNotAssignedToThisMovie(int movieId)
+        {
+            return _iGenreContext.GetAllGenres().Select(ToGenreModel)
+                .Except(_iGenreContext.GetGenresByMovieId(movieId).Select(ToGenreModel));
+        }
+
         public IEnumerable<MovieModel> AddGenresToMovies(IEnumerable<MovieModel> movies)
         {
             movies = movies.ToList();

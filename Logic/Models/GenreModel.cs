@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Logic.Models
 {
-    public class GenreModel
+    public class GenreModel: IEquatable<GenreModel>
     {
         public string Genre { get; set; }
-        public int GenreId { get; set; }
+        public int GenreId { get; }
         public int MovieId { get; set; }
 
         public GenreModel(string genre, int genreId)
@@ -20,5 +20,15 @@ namespace Logic.Models
         {
             GenreId = genreId;
         }
+
+        public bool Equals(GenreModel otherGenre)
+        {
+            if (otherGenre is null)
+                return false;
+            return GenreId == otherGenre.GenreId;
+        }
+
+        public override bool Equals(object obj) => Equals(obj as GenreModel);
+        public override int GetHashCode() => (GenreId).GetHashCode();
     }
 }

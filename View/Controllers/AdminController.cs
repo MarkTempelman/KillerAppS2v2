@@ -43,7 +43,7 @@ namespace View.Controllers
         public IActionResult AddGenreToMovie(int id)
         {
             GenreViewModel genreViewModel = new GenreViewModel();
-            foreach (GenreModel genre in _genreLogic.GetAllGenres())
+            foreach (GenreModel genre in _genreLogic.GetGenreModelsNotAssignedToThisMovie(id))
             {
                 genreViewModel.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
             }
