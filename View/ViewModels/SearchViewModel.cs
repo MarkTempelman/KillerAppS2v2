@@ -17,7 +17,7 @@ namespace View.ViewModels
         [DisplayName("Released after:")]
         [DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime ReleasedAfter { get; set; } = DateTime.MinValue;
+        public DateTime ReleasedAfter { get; set; } = new DateTime(1887, 01, 01);
 
         [DisplayName("Released before:")]
         [DataType(DataType.Date)]
