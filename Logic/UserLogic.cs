@@ -36,6 +36,16 @@ namespace Logic
             return null;
         }
 
+        public bool DoesUserNameExist(string username)
+        {
+            return _iUserContext.DoesUsernameExist(username);
+        }
+
+        public bool DoesEmailAddressExist(string emailAddress)
+        {
+            return _iUserContext.DoesEmailAddressExist(emailAddress);
+        }
+
         public UserDTO ToUserDTO(UserModel userModel)
         {
             return new UserDTO(userModel.Username, userModel.EmailAddress, userModel.AccountType, userModel.Password);

@@ -9,5 +9,8 @@ namespace Data.Interfaces
     {
         void CreateUser(UserDTO user);
         UserDTO GetUserByUsername(string username);
+        bool DoesUsernameExist(string username);
+        bool DoesEmailAddressExist(string emailAddress);
+
     }
 }

@@ -32,6 +32,17 @@ namespace View.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_userLogic.DoesUserNameExist(user.Username))
+                {
+                    ModelState.AddModelError("Username", "This username is already taken");
+                    return View(user);
+                }
+
+                if (_userLogic.DoesEmailAddressExist(user.EmailAddress))
+                {
+                    ModelState.AddModelError("EmailAddress", "This email address is already taken");
+                    return View(user);
+                }
                 _userLogic.CreateUser(ViewModelToModel.ToUserModel(user));
                 return RedirectToAction("Login", "User");
             }

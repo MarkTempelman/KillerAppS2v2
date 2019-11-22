@@ -78,5 +78,53 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
+        public bool DoesUsernameExist(string username)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `user` WHERE Username = @username",
+                    _conn);
+
+                command.Parameters.AddWithValue("@username", username);
+
+                var result = int.Parse(command.ExecuteScalar().ToString());
+                return result > 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+
+        public bool DoesEmailAddressExist(string emailAddress)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `user` WHERE EmailAddress = @emailAddress",
+                    _conn);
+
+                command.Parameters.AddWithValue("@emailAddress", emailAddress);
+
+                var result = int.Parse(command.ExecuteScalar().ToString());
+                return result > 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }
