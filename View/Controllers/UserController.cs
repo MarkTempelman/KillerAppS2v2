@@ -66,7 +66,8 @@ namespace View.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return View();
+                ModelState.AddModelError("Username", "Password or username is incorrect");
+                return View(userViewModel);
             }
         }
 
