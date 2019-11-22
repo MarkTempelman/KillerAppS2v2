@@ -65,6 +65,16 @@ namespace View.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddGenreToMovie(GenreViewModel genre)
         {
+            if (genre.GenreId < 1)
+            {
+                foreach (GenreModel genreModel in _genreLogic.GetGenreModelsNotAssignedToThisMovie(genre.MovieId))
+                {
+                    genre.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genreModel));
+                }
+
+                ModelState.AddModelError("Genre", "Please select a genre");
+                return View(genre);
+            }
             _genreLogic.AddGenreToMovie(ViewModelToModel.ToGenreModel(genre));
             return RedirectToAction("Index", "Movie");
         }
