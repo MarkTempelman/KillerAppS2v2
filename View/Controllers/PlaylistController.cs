@@ -9,17 +9,17 @@ namespace View.Controllers
 {
     public class PlaylistController : Controller
     {
-        private PlaylistLogic _playlistLogic;
+        private readonly PlaylistLogic _playlistLogic;
 
         public PlaylistController(PlaylistLogic playlistLogic)
         {
             _playlistLogic = playlistLogic;
         }
 
-        [HttpPost]
         public IActionResult AddMovieToFavourites(int id)
         {
-            
+            //hardcoded userId is a place holder
+            _playlistLogic.AddMovieToFavourites(id, 12);
 
             return RedirectToAction("Index", "Movie");
         }

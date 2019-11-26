@@ -26,7 +26,7 @@
         }
         @if (User.Identity.IsAuthenticated)
         {
-            <a class="card-link" asp-controller="Movie" asp-action="Index" asp-route-id="@Model.MovieId">Add to favourites</a>
+            <a class="card-link" asp-controller="Playlist" asp-action="AddMovieToFavourites" asp-route-id="@Model.MovieId">Add to favourites</a>
         }
     </div>
 </div>

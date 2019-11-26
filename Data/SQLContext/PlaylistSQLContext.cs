@@ -57,7 +57,6 @@ namespace Data.SQLContext
             finally
             {
                 _conn.Close();
-                
             }
             return playlistId;
         }

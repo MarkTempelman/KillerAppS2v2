@@ -7,10 +7,20 @@ namespace Logic
 {
     public class PlaylistLogic
     {
-        private IPlaylistContext _iPlaylistContext;
-        public PlaylistLogic(IPlaylistContext iPlaylistContext)
+        private readonly IPlaylistContext _iPlaylistContext;
+        private readonly IMediaContext _iMediaContext;
+
+        public PlaylistLogic(IPlaylistContext iPlaylistContext, IMediaContext iMediaContext)
         {
             _iPlaylistContext = iPlaylistContext;
+            _iMediaContext = iMediaContext;
+        }
+
+        public void AddMovieToFavourites(int movieId, int userId)
+        {
+            int playlistId = _iPlaylistContext.GetFavouritesPlaylistIdFromUserId(userId);
+            int mediaId = _iMediaContext.GetMediaIdFromMovieId(movieId);
+            _iPlaylistContext.AddMovieToPlaylist(mediaId, playlistId);
         }
     }
 }

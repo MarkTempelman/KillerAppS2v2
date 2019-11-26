@@ -41,6 +41,7 @@ namespace View
             services.AddTransient<IGenreContext, GenreSQLContext>();
             services.AddTransient<IUserContext, UserSQLContext>();
             services.AddTransient<IPlaylistContext, PlaylistSQLContext>();
+            services.AddTransient<IMediaContext, MediaSQLContext>();
 
             services.AddTransient(m =>
             {
@@ -71,7 +72,8 @@ namespace View
             services.AddTransient(p =>
             {
                 IPlaylistContext pl = p.GetService<IPlaylistContext>();
-                return new PlaylistLogic(pl);
+                IMediaContext m = p.GetService<IMediaContext>();
+                return new PlaylistLogic(pl, m);
             });
 
             
