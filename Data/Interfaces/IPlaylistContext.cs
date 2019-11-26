@@ -7,5 +7,6 @@ namespace Data.Interfaces
     public interface IPlaylistContext
     {
         void AddMovieToPlaylist(int mediaId, int playlistId);
+        int GetFavouritesPlaylistIdFromUserId(int userId);
     }
 }
