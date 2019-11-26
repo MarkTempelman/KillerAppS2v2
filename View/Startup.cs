@@ -40,6 +40,7 @@ namespace View
             services.AddTransient<IMovieContext, MovieSQLContext>();
             services.AddTransient<IGenreContext, GenreSQLContext>();
             services.AddTransient<IUserContext, UserSQLContext>();
+            services.AddTransient<IPlaylistContext, PlaylistSQLContext>();
 
             services.AddTransient(m =>
             {
@@ -66,6 +67,14 @@ namespace View
                 IUserContext uc = s.GetService<IUserContext>();
                 return new UserLogic(uc);
             });
+
+            services.AddTransient(p =>
+            {
+                IPlaylistContext pl = p.GetService<IPlaylistContext>();
+                return new PlaylistLogic(pl);
+            });
+
+            
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

@@ -1,4 +1,5 @@
-﻿@using Org.BouncyCastle.Asn1.Cmp
+﻿@using System.Net
+@using Org.BouncyCastle.Asn1.Cmp
 @using View.ViewModels
 @model View.ViewModels.MovieViewModel
 
@@ -22,6 +23,10 @@
         {
             <a class="card-link" asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId">Edit Movie</a>
             <a class="card-link" asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId">Add Genre</a>
+        }
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a class="card-link" asp-controller="Movie" asp-action="Index" asp-route-id="@Model.MovieId">Add to favourites</a>
         }
     </div>
 </div>
