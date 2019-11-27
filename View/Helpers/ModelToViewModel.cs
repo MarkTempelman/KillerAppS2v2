@@ -12,7 +12,7 @@ namespace View.Helpers
     {
         public static UserViewModel ToUserViewModel(UserModel userModel)
         {
-            return new UserViewModel(userModel.Username, userModel.EmailAddress, userModel.AccountType, userModel.Password);
+            return new UserViewModel(userModel.Username, userModel.EmailAddress, userModel.AccountType, userModel.Password, userModel.UserId);
         }
 
         public static GenreViewModel ToGenreViewModel(GenreModel genre)

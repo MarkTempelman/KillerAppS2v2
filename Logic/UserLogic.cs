@@ -53,7 +53,7 @@ namespace Logic
 
         public UserModel ToUserModel(UserDTO userDTO)
         {
-            return new UserModel(userDTO.Username, userDTO.EmailAddress, userDTO.AccountType, userDTO.Password);
+            return new UserModel(userDTO.Username, userDTO.EmailAddress, userDTO.AccountType, userDTO.Password, userDTO.UserId);
         }
     }
 }

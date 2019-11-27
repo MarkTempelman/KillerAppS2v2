@@ -14,7 +14,7 @@ namespace Data.SQLContext
             try
             {
                 _conn.Open();
-                MySqlCommand command = new MySqlCommand("INSERT INTO media_playlist (PlaylistId, MediaId) VALUES (@mediaId, @playlistId)",
+                MySqlCommand command = new MySqlCommand("INSERT INTO media_playlist (PlaylistId, MediaId) VALUES (@playlistId, @mediaId)",
                     _conn);
                 command.Parameters.AddWithValue("@mediaId", mediaId);
                 command.Parameters.AddWithValue("@playlistId", playlistId);

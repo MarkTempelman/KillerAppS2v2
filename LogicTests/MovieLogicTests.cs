@@ -15,15 +15,21 @@ namespace LogicTests
         private IMovieContext _iMovieContext;
         private IGenreContext _iGenreContext;
         private MovieLogic _movieLogic;
+        private GenreLogic _genreLogic;
+        private SearchLogic _searchLogic;
         private MovieModel _testMovie1;
         private MovieModel _testMovie2;
         private SearchModel _search;
+
+
         [SetUp]
         public void Setup()
         {
             _iMovieContext = new MovieMemoryContext();
             _iGenreContext = new GenreMemoryContext();
-            _movieLogic = new MovieLogic(_iMovieContext, _iGenreContext);
+            _genreLogic = new GenreLogic(_iGenreContext);
+            _searchLogic = new SearchLogic(_genreLogic);
+            _movieLogic = new MovieLogic(_iMovieContext, _genreLogic, _searchLogic);
             _testMovie1 = new MovieModel(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23), 1);
             _testMovie2 = new MovieModel(2, "TestTitle1", "TestDescription2", new DateTime(2019, 10, 15), 2);
         }

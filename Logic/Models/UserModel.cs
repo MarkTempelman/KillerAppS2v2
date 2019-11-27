@@ -25,12 +25,13 @@ namespace Logic.Models
             Password = password;
         }
 
-        public UserModel(string username, string emailAddress, AccountType accountType, string password)
+        public UserModel(string username, string emailAddress, AccountType accountType, string password, int userId)
         {
             Username = username;
             EmailAddress = emailAddress;
             AccountType = accountType;
             Password = password;
+            UserId = userId;
         }
     }
 }

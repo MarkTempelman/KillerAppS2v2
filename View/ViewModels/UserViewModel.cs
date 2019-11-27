@@ -20,18 +20,20 @@ namespace View.ViewModels
         public AccountType AccountType { get; set; }
         [Required]
         public string Password { get; set; }
+        public int Id { get; set; }
 
         public UserViewModel()
         {
 
         }
 
-        public UserViewModel(string username, string emailAddress, AccountType accountType, string password)
+        public UserViewModel(string username, string emailAddress, AccountType accountType, string password, int id)
         {
             Username = username;
             EmailAddress = emailAddress;
             AccountType = accountType;
             Password = password;
+            Id = id;
         }
     }
 }

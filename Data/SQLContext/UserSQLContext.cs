@@ -60,10 +60,10 @@ namespace Data.SQLContext
                     user = new UserDTO(
                         reader.GetString(reader.GetOrdinal("Username")),
                         reader.GetString(reader.GetOrdinal("EmailAddress")),
-                        (AccountType)Enum.Parse(typeof(AccountType),
+                        (AccountType) Enum.Parse(typeof(AccountType),
                             reader.GetString(reader.GetOrdinal("AccountType"))),
                         reader.GetString(reader.GetOrdinal("Password"))
-                    );
+                    ) {UserId = reader.GetInt32("UserId")};
                 }
 
                 return user;

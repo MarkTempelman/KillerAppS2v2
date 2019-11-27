@@ -14,12 +14,6 @@ namespace Logic
         private readonly GenreLogic _genreLogic;
         private readonly SearchLogic _searchLogic;
 
-        public MovieLogic(IMovieContext movieContext, IGenreContext genreContext)
-        {
-            _iMovieContext = movieContext;
-            _genreLogic = new GenreLogic(genreContext);
-        }
-
         public MovieLogic(IMovieContext movieContext, GenreLogic genreLogic, SearchLogic searchLogic)
         {
             _iMovieContext = movieContext;

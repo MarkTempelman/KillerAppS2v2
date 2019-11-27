@@ -66,7 +66,8 @@ namespace View.Controllers
                 {
                     new Claim(ClaimTypes.Name, newUser.Username),
                     new Claim(ClaimTypes.Email, newUser.EmailAddress),
-                    new Claim(ClaimTypes.Role, newUser.AccountType.ToString()) 
+                    new Claim(ClaimTypes.Role, newUser.AccountType.ToString()),
+                    new Claim(ClaimTypes.Sid, newUser.Id.ToString()) 
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 var principal = new ClaimsPrincipal(identity);
