@@ -7,5 +7,7 @@ namespace Data.Interfaces
     public interface IMediaContext
     {
         int GetMediaIdFromMovieId(int movieId);
+
+        List<int> GetMediaIdsFromPlaylistId(int playlistId);
     }
 }

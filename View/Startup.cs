@@ -48,7 +48,8 @@ namespace View
                 IMovieContext mc = m.GetService<IMovieContext>();
                 GenreLogic gl = m.GetService<GenreLogic>();
                 SearchLogic sl = m.GetService<SearchLogic>();
-                return new MovieLogic(mc, gl, sl);
+                PlaylistLogic p = m.GetService<PlaylistLogic>();
+                return new MovieLogic(mc, gl, sl, p);
             });
 
             services.AddTransient(g =>

@@ -13,12 +13,14 @@ namespace Logic
         private readonly IMovieContext _iMovieContext;
         private readonly GenreLogic _genreLogic;
         private readonly SearchLogic _searchLogic;
+        private readonly PlaylistLogic _playlistLogic;
 
-        public MovieLogic(IMovieContext movieContext, GenreLogic genreLogic, SearchLogic searchLogic)
+        public MovieLogic(IMovieContext movieContext, GenreLogic genreLogic, SearchLogic searchLogic, PlaylistLogic playlistLogic)
         {
             _iMovieContext = movieContext;
             _genreLogic = genreLogic;
             _searchLogic = searchLogic;
+            _playlistLogic = playlistLogic;
         }
 
         public IEnumerable<MovieModel> GetAllMovies()
@@ -44,6 +46,13 @@ namespace Logic
         public void EditMovie(MovieModel movieModel)
         {
             _iMovieContext.EditMovie(ToMovieDTO(movieModel));
+        }
+
+        public List<MovieModel> GetMoviesFromFavourites(int userId)
+        {
+            return _playlistLogic.GetMediaIdsFromFavourites(userId)
+                .Select(mediaId => ToMovieModel(_iMovieContext.GetMovieFromMediaId(mediaId)))
+                .ToList();
         }
 
         private MovieDTO ToMovieDTO(MovieModel movieModel)

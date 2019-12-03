@@ -213,5 +213,41 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
+        public MovieDTO GetMovieFromMediaId(int mediaId)
+        {
+            MovieDTO movie = new MovieDTO {MovieId = 0};
+            try
+            {
+                MySqlCommand command = new MySqlCommand("SELECT * FROM movie WHERE MediaId = @mediaId",
+                    _conn);
+
+                command.Parameters.AddWithValue("@mediaId", mediaId);
+
+                _conn.Open();
+
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    movie = new MovieDTO(
+                        reader.GetInt32("MovieId"),
+                        reader.GetString("Title"),
+                        reader.GetString("Description"),
+                        reader.GetDateTime("ReleaseDate"),
+                        reader.GetInt32("MediaId")
+                        );
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+            return movie;
+        }
     }
 }

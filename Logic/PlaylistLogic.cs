@@ -22,5 +22,11 @@ namespace Logic
             int mediaId = _iMediaContext.GetMediaIdFromMovieId(movieId);
             _iPlaylistContext.AddMovieToPlaylist(mediaId, playlistId);
         }
+
+        public List<int> GetMediaIdsFromFavourites(int userId)
+        {
+            return _iMediaContext.GetMediaIdsFromPlaylistId(
+                _iPlaylistContext.GetFavouritesPlaylistIdFromUserId(userId));
+        }
     }
 }

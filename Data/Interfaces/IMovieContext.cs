@@ -18,5 +18,8 @@ namespace Data.Interfaces
         void CreateNewMovie(MovieDTO movie);
 
         void EditMovie(MovieDTO movie);
+
+        MovieDTO GetMovieFromMediaId(int mediaId);
+
     }
 }
