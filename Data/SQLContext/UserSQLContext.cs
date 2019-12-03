@@ -19,9 +19,8 @@ namespace Data.SQLContext
             try
             {
                 _conn.Open();
-                MySqlCommand command = new MySqlCommand("INSERT INTO `user` (Username, EmailAddress, AccountType, Password) " +
-                                                        "VALUES (@username, @emailAddress, @accountType, @password)", 
-                                                        _conn);
+                MySqlCommand command = new MySqlCommand("sp_CreateUser",
+                    _conn) {CommandType = CommandType.StoredProcedure};
 
                 command.Parameters.AddWithValue("@username", user.Username);
                 command.Parameters.AddWithValue("@emailAddress", user.EmailAddress);
