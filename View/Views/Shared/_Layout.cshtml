@@ -32,6 +32,10 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Movie" asp-action="Index">Home</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Playlist" asp-action="Favourites">Favourites</a></li>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="AddMovie">Add Movie</a></li>

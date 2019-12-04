@@ -4,4 +4,12 @@
 }
 
 <h2>Favourites</h2>
+@foreach (var item in Model)
+{
+    @Html.Partial("MovieListPartial", item)
+}
+@if (!Model.Any())
+{
+    <p>No favourites have been found</p>
+}
 
