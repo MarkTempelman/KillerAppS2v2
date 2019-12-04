@@ -75,5 +75,10 @@ namespace LogicTests.MemoryContext
         {
             throw new NotImplementedException();
         }
+
+        public MovieDTO GetMovieFromMediaId(int mediaId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

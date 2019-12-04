@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data.Interfaces;
+using Data.SQLContext;
 using Enums;
 using LogicTests.MemoryContext;
 using Logic;
@@ -15,9 +16,13 @@ namespace LogicTests
     {
         private IMovieContext _iMovieContext;
         private IGenreContext _iGenreContext;
+        private IPlaylistContext _iPlaylistContext;
+        private IMediaContext _iMediaContext;
         private MovieLogic _movieLogic;
         private GenreLogic _genreLogic;
         private SearchLogic _searchLogic;
+        private PlaylistLogic _playlistLogic;
+        private MediaLogic _mediaLogic;
         private MovieModel _testMovie1;
         private MovieModel _testMovie2;
         private GenreModel _testGenre1;
@@ -30,9 +35,12 @@ namespace LogicTests
         {
             _iMovieContext = new MovieMemoryContext();
             _iGenreContext = new GenreMemoryContext();
+            
             _genreLogic = new GenreLogic(_iGenreContext);
             _searchLogic = new SearchLogic(_genreLogic);
-            _movieLogic = new MovieLogic(_iMovieContext, _genreLogic, _searchLogic);
+            _playlistLogic = new PlaylistLogic(_iPlaylistContext, _iMediaContext);
+            _mediaLogic = new MediaLogic(_iMediaContext);
+            _movieLogic = new MovieLogic(_iMovieContext, _genreLogic, _searchLogic, _playlistLogic, _mediaLogic);
             _testGenre1 = new GenreModel("test1", 1);
             _testGenre2 = new GenreModel("test2", 2);
             _testMovie1 = new MovieModel(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23), 1);
