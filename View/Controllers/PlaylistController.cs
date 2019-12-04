@@ -33,5 +33,12 @@ namespace View.Controllers
             return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetMoviesFromFavourites(int.Parse(User.Claims
                 .FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value))));
         }
+
+        public IActionResult RemoveMovieFromFavourites(int id)
+        {
+            _playlistLogic.RemoveMovieFromFavourites(id, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
+
+            return RedirectToAction("Index", "Movie");
+        }
     }
 }

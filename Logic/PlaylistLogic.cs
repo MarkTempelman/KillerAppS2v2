@@ -23,6 +23,12 @@ namespace Logic
             _iPlaylistContext.AddMovieToPlaylist(mediaId, playlistId);
         }
 
+        public void RemoveMovieFromFavourites(int movieId, int userId)
+        {
+            _iPlaylistContext.RemoveMovieFromPlaylist(_iMediaContext.GetMediaIdFromMovieId(movieId),
+                GetPlaylistIdFromUserId(userId));
+        }
+
         public List<int> GetMediaIdsFromFavourites(int userId)
         {
             return _iMediaContext.GetMediaIdsFromPlaylistId(

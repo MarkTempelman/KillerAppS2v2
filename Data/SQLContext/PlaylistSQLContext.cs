@@ -14,7 +14,8 @@ namespace Data.SQLContext
             try
             {
                 _conn.Open();
-                MySqlCommand command = new MySqlCommand("INSERT INTO media_playlist (PlaylistId, MediaId) VALUES (@playlistId, @mediaId)",
+                MySqlCommand command = new MySqlCommand("INSERT INTO media_playlist (PlaylistId, MediaId) " +
+                                                        "VALUES (@playlistId, @mediaId)",
                     _conn);
                 command.Parameters.AddWithValue("@mediaId", mediaId);
                 command.Parameters.AddWithValue("@playlistId", playlistId);
@@ -75,6 +76,29 @@ namespace Data.SQLContext
 
                 var result = int.Parse(command.ExecuteScalar().ToString());
                 return result > 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+
+        public void RemoveMovieFromPlaylist(int mediaId, int playlistId)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM media_playlist WHERE PlaylistId = @playlistId AND MediaId = @mediaId",
+                    _conn);
+                command.Parameters.AddWithValue("@mediaId", mediaId);
+                command.Parameters.AddWithValue("@playlistId", playlistId);
+
+                command.ExecuteNonQuery();
             }
             catch (Exception e)
             {

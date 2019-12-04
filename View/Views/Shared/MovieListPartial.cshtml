@@ -28,7 +28,7 @@
         {
             @if (Model.IsFavourite)
             {
-                <a class="card-link" asp-controller="Playlist" asp-action="AddMovieToFavourites" asp-route-id="@Model.MovieId">Remove from favourites</a>
+                <a class="card-link" asp-controller="Playlist" asp-action="RemoveMovieFromFavourites" asp-route-id="@Model.MovieId">Remove from favourites</a>
             }
             @if (!Model.IsFavourite)
             {
