@@ -32,7 +32,9 @@ namespace View.Helpers
                     movie.ReleaseDate,
                     MiscHelper.ShortenStringIfNecessary(movie.Description),
                     genresViewModels,
-                    movie.MovieId));
+                    movie.MovieId)
+                    {IsFavourite = movie.IsFavourite}
+                );
             }
             return movieViewModels;
         }

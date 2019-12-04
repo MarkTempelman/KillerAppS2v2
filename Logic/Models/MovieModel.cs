@@ -14,6 +14,7 @@ namespace Logic.Models
         public DateTime ReleaseDate { get; set; }
         public List<GenreModel> Genres { get; set; } = new List<GenreModel>();
         public int MediaId { get; set; } = -1;
+        public bool IsFavourite { get; set; } = false;
 
         public MovieModel(int movieId, string title, string description, DateTime releaseDate, int mediaId)
         {

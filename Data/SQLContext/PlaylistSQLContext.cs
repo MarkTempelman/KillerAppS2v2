@@ -60,5 +60,31 @@ namespace Data.SQLContext
             }
             return playlistId;
         }
+
+        public bool IsMediaInPlaylist(int mediaId, int playlistId)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `media_playlist` " +
+                                                        "WHERE MediaId = @mediaId AND PlaylistId = @playlistId",
+                    _conn);
+
+                command.Parameters.AddWithValue("@mediaId", mediaId);
+                command.Parameters.AddWithValue("@playlistId", playlistId);
+
+                var result = int.Parse(command.ExecuteScalar().ToString());
+                return result > 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

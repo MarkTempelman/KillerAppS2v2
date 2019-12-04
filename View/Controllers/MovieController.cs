@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Logic;
+using Logic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using View.Helpers;
@@ -21,7 +22,12 @@ namespace View.Controllers
 
         public ActionResult Index()
         {
-            return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetAllMovies()));
+            List<MovieModel> movies = _movieLogic.GetAllMovies().ToList();
+            if (User.Identity.IsAuthenticated)
+            {
+                movies = _movieLogic.CheckIfMoviesAreFavourites(movies, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
+            }
+            return View(ModelToViewModel.ToMovieViewModels(movies));
         }
 
         public ActionResult MovieListPartial()
@@ -32,7 +38,12 @@ namespace View.Controllers
         [HttpPost]
         public ActionResult Index(SearchViewModel search)
         {
-            return View(ModelToViewModel.ToMovieViewModels(_movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search))));
+            List<MovieModel> movies = _movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search)).ToList();
+            if (User.Identity.IsAuthenticated)
+            {
+                movies = _movieLogic.CheckIfMoviesAreFavourites(movies, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
+            }
+            return View(ModelToViewModel.ToMovieViewModels(movies));
         }
 
         public ActionResult MovieInfo(int id)

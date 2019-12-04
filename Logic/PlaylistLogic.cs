@@ -28,5 +28,15 @@ namespace Logic
             return _iMediaContext.GetMediaIdsFromPlaylistId(
                 _iPlaylistContext.GetFavouritesPlaylistIdFromUserId(userId));
         }
+
+        public int GetPlaylistIdFromUserId(int userId)
+        {
+            return _iPlaylistContext.GetFavouritesPlaylistIdFromUserId(userId);
+        }
+
+        public bool IsMediaInPlaylist(int mediaId, int playlistId)
+        {
+            return _iPlaylistContext.IsMediaInPlaylist(mediaId, playlistId);
+        }
     }
 }

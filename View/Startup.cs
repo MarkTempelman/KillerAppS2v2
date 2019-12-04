@@ -49,7 +49,8 @@ namespace View
                 GenreLogic gl = m.GetService<GenreLogic>();
                 SearchLogic sl = m.GetService<SearchLogic>();
                 PlaylistLogic p = m.GetService<PlaylistLogic>();
-                return new MovieLogic(mc, gl, sl, p);
+                MediaLogic me = m.GetService<MediaLogic>();
+                return new MovieLogic(mc, gl, sl, p, me);
             });
 
             services.AddTransient(g =>
@@ -75,6 +76,12 @@ namespace View
                 IPlaylistContext pl = p.GetService<IPlaylistContext>();
                 IMediaContext m = p.GetService<IMediaContext>();
                 return new PlaylistLogic(pl, m);
+            });
+
+            services.AddTransient(me =>
+            {
+                IMediaContext m = me.GetService<IMediaContext>();
+                return new MediaLogic(m);
             });
 
             

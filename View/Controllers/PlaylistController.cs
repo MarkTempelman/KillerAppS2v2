@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
 using View.Helpers;
+using View.ViewModels;
 
 namespace View.Controllers
 {

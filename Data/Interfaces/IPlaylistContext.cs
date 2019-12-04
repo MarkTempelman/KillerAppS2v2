@@ -8,5 +8,6 @@ namespace Data.Interfaces
     {
         void AddMovieToPlaylist(int mediaId, int playlistId);
         int GetFavouritesPlaylistIdFromUserId(int userId);
+        bool IsMediaInPlaylist(int mediaId, int playlistId);
     }
 }
