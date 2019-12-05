@@ -100,6 +100,15 @@ namespace LogicTests
         }
 
         [Test]
+        public void TC06FilterByGenre()
+        {
+            _search = new SearchModel()
+            {
+                Genre = _testGenre1
+            };
+        }
+
+        [Test]
         public void GetMovieById()
         {
             var expected = 1;
