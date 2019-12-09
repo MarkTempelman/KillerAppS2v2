@@ -37,7 +37,7 @@ namespace Logic
 
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
         {
-            return _iMovieContext.GetMoviesBySearchModel(_searchLogic.ToSearchDTO(search)).Select(ToMovieModel);
+            return _genreLogic.AddGenresToMovies(_iMovieContext.GetMoviesBySearchModel(_searchLogic.ToSearchDTO(search)).Select(ToMovieModel));
         }
 
         public void CreateNewMovie(MovieModel movieModel)
