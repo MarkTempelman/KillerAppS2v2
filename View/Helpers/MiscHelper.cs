@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using View.ViewModels;
 
 namespace View.Helpers
 {
@@ -16,6 +17,18 @@ namespace View.Helpers
                 return shortString + "...";
             }
             return longString;
+        }
+
+        public static string GetStringFromGenreViewModels(List<GenreViewModel> genres)
+        {
+            string returnValue = "";
+            foreach (var genre in genres)
+            {
+                returnValue += genre.Genre;
+                returnValue += ", ";
+            }
+
+            return returnValue.Substring(0,(returnValue.Length - 2));
         }
     }
 }

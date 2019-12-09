@@ -23,6 +23,7 @@ namespace View.ViewModels
         public List<GenreViewModel> AllGenres { get; set; } = new List<GenreViewModel>();
         public int GenreId { get; set; }
         public bool IsFavourite { get; set; }
+        public string GenresString { get; set; }
 
         public MovieViewModel(string title, string description, DateTime releaseDate, string shortDescription, List<GenreViewModel> genres, int movieId)
         {

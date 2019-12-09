@@ -13,12 +13,7 @@
         <h4 class="card-title"><a asp-controller="Movie" asp-action="MovieInfo" asp-route-id="@Model.MovieId"><B>@Html.DisplayFor(modelItem => Model.Title)</B></a></h4>
         <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => Model.ReleaseDate)</h6>
         <p class="card-text">@Html.DisplayFor(modelItem => Model.ShortDescription)</p>
-        <p class="card-text">
-            @foreach (GenreViewModel genre in Model.Genres)
-            {
-                @Html.Partial("GenrePartial", genre)
-            }
-        </p>
+        <p class="card-text">@Html.DisplayFor(modelItem => Model.GenresString)</p>
         @if (User.IsInRole("Admin"))
         {
             <a class="card-link" asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId">Edit Movie</a>

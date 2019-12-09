@@ -22,17 +22,19 @@ namespace View.Controllers
 
         public ActionResult Index()
         {
-            List<MovieModel> movies = _movieLogic.GetAllMovies().ToList();
+            var movies = _movieLogic.GetAllMovies().ToList();
             if (User.Identity.IsAuthenticated)
             {
                 movies = _movieLogic.CheckIfMoviesAreFavourites(movies, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
             }
-            return View(ModelToViewModel.ToMovieViewModels(movies));
-        }
 
-        public ActionResult MovieListPartial()
-        {
-            return View();
+            var movieViewModels = ModelToViewModel.ToMovieViewModels(movies);
+
+            foreach (var movie in movieViewModels)
+            {
+                movie.GenresString = MiscHelper.GetStringFromGenreViewModels(movie.Genres);
+            }
+            return View(movieViewModels);
         }
 
         [HttpPost]
@@ -43,7 +45,14 @@ namespace View.Controllers
             {
                 movies = _movieLogic.CheckIfMoviesAreFavourites(movies, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
             }
-            return View(ModelToViewModel.ToMovieViewModels(movies));
+
+            var movieViewModels = ModelToViewModel.ToMovieViewModels(movies);
+
+            foreach (var movie in movieViewModels)
+            {
+                movie.GenresString = MiscHelper.GetStringFromGenreViewModels(movie.Genres);
+            }
+            return View(movieViewModels);
         }
 
         public ActionResult MovieInfo(int id)
