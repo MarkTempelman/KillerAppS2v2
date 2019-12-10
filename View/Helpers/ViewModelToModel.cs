@@ -46,6 +46,7 @@ namespace View.Helpers
             MovieModel movieModel = new MovieModel(movieViewModel.Title, movieViewModel.Description, movieViewModel.ReleaseDate);
             movieModel.Genres.Add(new GenreModel(movieViewModel.GenreId));
             movieModel.MovieId = movieViewModel.MovieId;
+            movieModel.ImagePath = movieViewModel.ImagePath;
             return movieModel;
         }
 

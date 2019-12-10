@@ -5,30 +5,39 @@
 
 @{
     ViewData["Title"] = "HomePage";
+    var imagePath = "~/Images/" + (Model.ImagePath ?? "NoImage.jpg");
 }
 
 <hr/>
 <div class="card">
-    <div class="card-body">
-        <h4 class="card-title"><a asp-controller="Movie" asp-action="MovieInfo" asp-route-id="@Model.MovieId"><B>@Html.DisplayFor(modelItem => Model.Title)</B></a></h4>
-        <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => Model.ReleaseDate)</h6>
-        <p class="card-text">@Html.DisplayFor(modelItem => Model.ShortDescription)</p>
-        <p class="card-text">@Html.DisplayFor(modelItem => Model.GenresString)</p>
-        @if (User.IsInRole("Admin"))
-        {
-            <a class="card-link" asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId">Edit Movie</a>
-            <a class="card-link" asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId">Add Genre</a>
-        }
-        @if (User.Identity.IsAuthenticated)
-        {
-            @if (Model.IsFavourite)
-            {
-                <a class="card-link" asp-controller="Playlist" asp-action="RemoveMovieFromFavourites" asp-route-id="@Model.MovieId">Remove from favourites</a>
-            }
-            @if (!Model.IsFavourite)
-            {
-                <a class="card-link" asp-controller="Playlist" asp-action="AddMovieToFavourites" asp-route-id="@Model.MovieId">Add to favourites</a>
-            }
-        }
+    <div class="card-body" style="margin: 0; padding: 0;">
+        <table><tr style="margin: 0; padding: 0;">
+            <td style="width:15%; height: 30%; vertical-align: top">
+                <img class="card-img" src="@imagePath" asp-append-version="true" style="max-height:95%; max-width:95%;"/>
+            </td>
+
+            <td>
+                <h4 class="card-title"><a asp-controller="Movie" asp-action="MovieInfo" asp-route-id="@Model.MovieId"><B>@Html.DisplayFor(modelItem => Model.Title)</B></a></h4>
+                <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => Model.ReleaseDate)</h6>
+                <p class="card-text">@Html.DisplayFor(modelItem => Model.ShortDescription)</p>
+                <p class="card-text">@Html.DisplayFor(modelItem => Model.GenresString)</p>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="card-link" asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId">Edit Movie</a>
+                    <a class="card-link" asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId">Add Genre</a>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @if (Model.IsFavourite)
+                    {
+                        <a class="card-link" asp-controller="Playlist" asp-action="RemoveMovieFromFavourites" asp-route-id="@Model.MovieId">Remove from favourites</a>
+                    }
+                    @if (!Model.IsFavourite)
+                    {
+                        <a class="card-link" asp-controller="Playlist" asp-action="AddMovieToFavourites" asp-route-id="@Model.MovieId">Add to favourites</a>
+                    }
+                }
+            </td>
+        </tr></table>
     </div>
 </div>

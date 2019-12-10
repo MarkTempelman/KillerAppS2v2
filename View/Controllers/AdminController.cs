@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Logic;
 using Logic.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using View.Helpers;
 using View.ViewModels;
@@ -17,11 +19,13 @@ namespace View.Controllers
     {
         private readonly GenreLogic _genreLogic;
         private readonly MovieLogic _movieLogic;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public AdminController(MovieLogic movieLogic, GenreLogic genreLogic)
+        public AdminController(MovieLogic movieLogic, GenreLogic genreLogic, IHostingEnvironment hostingEnvironment)
         {
             _movieLogic = movieLogic;
             _genreLogic = genreLogic;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult AddMovie()
@@ -40,6 +44,17 @@ namespace View.Controllers
         {
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+                if (movie.Image != null)
+                {
+                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath + "/images");
+                    uniqueFileName = Guid.NewGuid() + "_" + movie.Image.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    movie.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
+                movie.ImagePath = uniqueFileName;
+
                 _movieLogic.CreateNewMovie(ViewModelToModel.ToMovieModel(movie));
                 return RedirectToAction("Index", "Movie");
             }

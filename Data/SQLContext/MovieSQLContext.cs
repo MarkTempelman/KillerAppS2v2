@@ -30,13 +30,21 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    string imagePath = null;
+                    if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
+                    {
+                        imagePath = reader.GetString("ImagePath");
+                    }
                     movies.Add(new MovieDTO(
                         reader.GetInt32(reader.GetOrdinal("MovieId")),
                         reader.GetString(reader.GetOrdinal("Title")),
                         reader.GetString(reader.GetOrdinal("Description")),
                         reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
                         reader.GetInt32(reader.GetOrdinal("MediaId"))
-                    ));
+                    )
+                    {
+                        ImagePath = imagePath
+                    });
                 }
                 _conn.Close();
             }
@@ -68,7 +76,10 @@ namespace Data.SQLContext
                         reader.GetString(reader.GetOrdinal("Description")),
                         reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
                         reader.GetInt32(reader.GetOrdinal("MediaId"))
-                    ));
+                    )
+                    {
+                        ImagePath = reader.GetString(reader.GetOrdinal("ImagePath"))
+                    });
                 }
                 _conn.Close();
             }
@@ -141,7 +152,11 @@ namespace Data.SQLContext
                         reader.GetString(reader.GetOrdinal("Description")),
                         reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
                         reader.GetInt32(reader.GetOrdinal("MediaId"))
-                    );
+                        
+                    )
+                    {
+                        ImagePath = reader.GetString(reader.GetOrdinal("ImagePath"))
+                    };
                 }
                 _conn.Close();
                 if (movie.Title != null)
@@ -173,6 +188,7 @@ namespace Data.SQLContext
                 command.Parameters.AddWithValue("@description", movie.Description);
                 command.Parameters.AddWithValue("@releaseDate", movie.ReleaseDate);
                 command.Parameters.AddWithValue("@genreId", movie.Genres.First().GenreId);
+                command.Parameters.AddWithValue("@imagePath", movie.ImagePath);
 
                 command.ExecuteNonQuery();
             }

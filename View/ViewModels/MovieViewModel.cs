@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNetCore.Http;
 using View.ViewModels;
 
 namespace View.ViewModels
@@ -24,6 +25,8 @@ namespace View.ViewModels
         public int GenreId { get; set; }
         public bool IsFavourite { get; set; }
         public string GenresString { get; set; }
+        public string ImagePath { get; set; }
+        public IFormFile Image { get; set; }
 
         public MovieViewModel(string title, string description, DateTime releaseDate, string shortDescription, List<GenreViewModel> genres, int movieId)
         {

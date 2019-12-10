@@ -84,12 +84,18 @@ namespace Logic
             {
                 movieDTO.Genres.Add(_genreLogic.ToGenreDTO(genre));
             }
+            movieDTO.ImagePath = movieModel.ImagePath;
             return movieDTO;
         }
 
         private MovieModel ToMovieModel(MovieDTO movieDTO)
         {
-            return new MovieModel(movieDTO.MovieId, movieDTO.Title, movieDTO.Description, movieDTO.ReleaseDate, movieDTO.MediaId);
+            MovieModel movieModel = new MovieModel(movieDTO.MovieId, movieDTO.Title, movieDTO.Description, movieDTO.ReleaseDate, movieDTO.MediaId);
+            if (movieDTO.ImagePath != null)
+            {
+                movieModel.ImagePath = movieDTO.ImagePath;
+            }
+            return movieModel;
         }
     }
 }

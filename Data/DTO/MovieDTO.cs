@@ -12,6 +12,7 @@ namespace Data.DTO
         public DateTime ReleaseDate { get; set; }
         public List<GenreDTO> Genres { get; set; } = new List<GenreDTO>();
         public int MediaId { get; set; }
+        public string ImagePath { get; set; }
 
         public MovieDTO(int movieId, string title, string description, DateTime releaseDate, int mediaId)
         {

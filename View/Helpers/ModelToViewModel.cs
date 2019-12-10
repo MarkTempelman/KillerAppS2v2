@@ -25,6 +25,11 @@ namespace View.Helpers
             List<MovieViewModel> movieViewModels = new List<MovieViewModel>();
             foreach (MovieModel movie in movies)
             {
+                string imagePath = null;
+                if (movie.ImagePath != null)
+                {
+                    imagePath = movie.ImagePath;
+                }
                 List<GenreViewModel> genresViewModels = movie.Genres.Select(ToGenreViewModel).ToList();
                 movieViewModels.Add(new MovieViewModel(
                     movie.Title,
@@ -33,7 +38,10 @@ namespace View.Helpers
                     MiscHelper.ShortenStringIfNecessary(movie.Description),
                     genresViewModels,
                     movie.MovieId)
-                    {IsFavourite = movie.IsFavourite}
+                    {
+                        IsFavourite = movie.IsFavourite,
+                        ImagePath = imagePath
+                    }
                 );
             }
             return movieViewModels;
