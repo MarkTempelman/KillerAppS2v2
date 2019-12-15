@@ -28,11 +28,13 @@ namespace Logic
         public UserModel CheckUserValidity(string username, string password)
         {
             UserModel user = ToUserModel(_iUserContext.GetUserByUsername(username));
-            if (EncryptionLogic.ValidatePassword(password, user.Password))
+            if (user.UserId > 0)
             {
-                return user;
+                if (EncryptionLogic.ValidatePassword(password, user.Password))
+                {
+                    return user;
+                }
             }
-
             return null;
         }
 
