@@ -5,6 +5,7 @@ using System.Text;
 using Data.DTO;
 using Data.Interfaces;
 using Enums;
+using Logic.Models;
 
 namespace LogicTests.MemoryContext
 {
@@ -39,12 +40,31 @@ namespace LogicTests.MemoryContext
         {
             List<MovieDTO> movies = new List<MovieDTO>();
             movies.AddRange(GetAllMovies());
+            IGenreContext iGenreContext = new GenreMemoryContext();
+            foreach (var movie in movies)
+            {
+                movie.Genres
+                    .AddRange(iGenreContext.GetGenresByMovieId(movie.MovieId));
+            }
+
             if (search.Genre != null)
             {
-                movies = (List<MovieDTO>) from movie in movies
-                    from movieGenre in movie.Genres
-                    where movieGenre.GenreId == search.Genre.GenreId
-                    select movie;
+                List<MovieDTO> newMovies = new List<MovieDTO>();
+                foreach (var movie in movies)
+                {
+                    bool containsGenre = false;
+                    foreach (var genre in movie.Genres.Where(genre => genre.GenreId == search.Genre.GenreId))
+                    {
+                        containsGenre = true;
+                    }
+
+                    if (containsGenre)
+                    {
+                        newMovies.Add(movie);
+                    }
+                }
+
+                movies = newMovies;
             }
 
             movies = movies.Where(m => m.ReleaseDate > search.ReleasedAfter).ToList();

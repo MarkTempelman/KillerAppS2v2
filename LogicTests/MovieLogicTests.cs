@@ -106,7 +106,61 @@ namespace LogicTests
             {
                 Genre = _testGenre1
             };
+
+            var actual = _movieLogic.GetMoviesBySearchModel(_search);
+
+            Assert.AreEqual(_testGenre1.GenreId, actual.First().Genres.First().GenreId);
         }
+
+        [Test]
+        public void TC07_ExistingTitleSearch()
+        {
+            SearchModel search = new SearchModel { SearchTerm = "TestTitle1" };
+            List<int> expected = new List<int> { 2 };
+
+            List<int> actual = new List<int>();
+
+            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search))
+            {
+                actual.Add(movie.MovieId);
+            }
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void TC08_PartialTitleSearch()
+        {
+            SearchModel search = new SearchModel { SearchTerm = "Test" };
+            List<int> expected = new List<int> { 2, 1 };
+
+            List<int> actual = new List<int>();
+
+            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search))
+            {
+                actual.Add(movie.MovieId);
+            }
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void TC09_NonExistantTitleSearch()
+        {
+            SearchModel search = new SearchModel { SearchTerm = "aefa" };
+            List<int> expected = new List<int>();
+
+            List<int> actual = new List<int>();
+
+            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search))
+            {
+                actual.Add(movie.MovieId);
+            }
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
 
         [Test]
         public void GetMovieById()
@@ -116,20 +170,6 @@ namespace LogicTests
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
-        public void GetMoviesBySearchModel_ExistingTitle()
-        {
-            SearchModel search = new SearchModel {SearchTerm = "TestTitle1"};
-            List<int> expected = new List<int> {2};
-
-            List<int>actual = new List<int>();
-
-            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search))
-            {
-                actual.Add(movie.MovieId);
-            }
-            
-            Assert.AreEqual(expected, actual);
-        }
+        
     }
 }
