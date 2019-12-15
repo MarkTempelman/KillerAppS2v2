@@ -48,7 +48,7 @@ namespace LogicTests
         }
 
         [Test]
-        public void TC01GetAllMoviesTest()
+        public void GetAllMoviesTest()
         {
             IEnumerable<int> expected = new List<int> {1, 2};
             List<int> actual = _movieLogic.GetAllMovies().Select(movie => movie.MovieId).ToList();
@@ -57,7 +57,7 @@ namespace LogicTests
         }
 
         [Test]
-        public void TC03SortByReleaseDate()
+        public void SortByReleaseDate()
         {
             _search = new SearchModel {SortBy = SortBy.Date};
             List<int> expected = new List<int> {2, 1};
@@ -68,7 +68,7 @@ namespace LogicTests
         }
 
         [Test]
-        public void TC04SortByTitle()
+        public void SortByTitle()
         {
             _search = new SearchModel { SortBy = SortBy.Title };
             List<int> expected = new List<int> { 2, 1 };
@@ -79,7 +79,7 @@ namespace LogicTests
         }
 
         [Test]
-        public void TC05FilterByDate()
+        public void FilterByDate()
         {
             _search = new SearchModel
             {
@@ -100,7 +100,7 @@ namespace LogicTests
         }
 
         [Test]
-        public void TC06FilterByGenre()
+        public void FilterByGenre()
         {
             _search = new SearchModel()
             {
@@ -113,7 +113,7 @@ namespace LogicTests
         }
 
         [Test]
-        public void TC07_ExistingTitleSearch()
+        public void ExistingTitleSearch()
         {
             SearchModel search = new SearchModel { SearchTerm = "TestTitle1" };
             List<int> expected = new List<int> { 2 };
@@ -129,7 +129,7 @@ namespace LogicTests
         }
 
         [Test]
-        public void TC08_PartialTitleSearch()
+        public void PartialTitleSearch()
         {
             SearchModel search = new SearchModel { SearchTerm = "Test" };
             List<int> expected = new List<int> { 2, 1 };
@@ -145,7 +145,7 @@ namespace LogicTests
         }
 
         [Test]
-        public void TC09_NonExistantTitleSearch()
+        public void NonExistantTitleSearch()
         {
             SearchModel search = new SearchModel { SearchTerm = "aefa" };
             List<int> expected = new List<int>();
@@ -159,8 +159,6 @@ namespace LogicTests
 
             Assert.AreEqual(expected, actual);
         }
-
-
 
         [Test]
         public void GetMovieById()
