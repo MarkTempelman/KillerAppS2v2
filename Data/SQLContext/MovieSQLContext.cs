@@ -70,6 +70,11 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    string imagePath = null;
+                    if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
+                    {
+                        imagePath = reader.GetString("ImagePath");
+                    }
                     movies.Add(new MovieDTO(
                         reader.GetInt32(reader.GetOrdinal("MovieId")),
                         reader.GetString(reader.GetOrdinal("Title")),
@@ -78,7 +83,7 @@ namespace Data.SQLContext
                         reader.GetInt32(reader.GetOrdinal("MediaId"))
                     )
                     {
-                        ImagePath = reader.GetString(reader.GetOrdinal("ImagePath"))
+                        ImagePath = imagePath
                     });
                 }
                 _conn.Close();
@@ -95,9 +100,8 @@ namespace Data.SQLContext
         private MySqlCommand GetCommandFromSearchModel(SearchDTO search)
         {
             MySqlCommand command = new MySqlCommand();
-            string query ="SELECT movie.MovieId, movie.Title, movie.Description, movie.ReleaseDate, movie.MediaId FROM `movie`, `genre_movie` ";
+            string query = "SELECT * FROM `movie`, `genre_movie` WHERE movie.ReleaseDate BETWEEN @releasedAfter AND @releasedBefore ";
 
-            query+= "WHERE movie.ReleaseDate BETWEEN @releasedAfter AND @releasedBefore ";
             command.CommandText = query;
             command.Parameters.AddWithValue("@releasedAfter", search.ReleasedAfter);
             command.Parameters.AddWithValue("@releasedBefore", search.ReleasedBefore);
