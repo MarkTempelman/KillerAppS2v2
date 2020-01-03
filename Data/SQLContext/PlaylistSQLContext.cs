@@ -8,7 +8,12 @@ namespace Data.SQLContext
 {
     public class PlaylistSQLContext : IPlaylistContext
     {
-        private readonly MySqlConnection _conn = SQLDatabaseConnection.GetConnection();
+        private readonly MySqlConnection _conn;
+
+        public PlaylistSQLContext(string connectionString)
+        {
+            _conn = new MySqlConnection(connectionString);
+        }
         public void AddMovieToPlaylist(int mediaId, int playlistId)
         {
             try

@@ -9,8 +9,12 @@ namespace Data.SQLContext
 {
     public class GenreSQLContext : IGenreContext
     {
-        private readonly MySqlConnection _conn = SQLDatabaseConnection.GetConnection();
+        private readonly MySqlConnection _conn;
 
+        public GenreSQLContext(string connectionString)
+        {
+            _conn = new MySqlConnection(connectionString);
+        }
         public IEnumerable<GenreDTO> GetGenresByMovieId(int movieId)
         {
             List<GenreDTO> genres = new List<GenreDTO>();

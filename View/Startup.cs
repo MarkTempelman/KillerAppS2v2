@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
 using Data.SQLContext;
 using Data.Interfaces;
 using Logic;
@@ -37,11 +38,33 @@ namespace View
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<IMovieContext, MovieSQLContext>();
-            services.AddTransient<IGenreContext, GenreSQLContext>();
-            services.AddTransient<IUserContext, UserSQLContext>();
-            services.AddTransient<IPlaylistContext, PlaylistSQLContext>();
-            services.AddTransient<IMediaContext, MediaSQLContext>();
+            services.AddSingleton(Configuration);
+
+            services.AddTransient<IMovieContext, MovieSQLContext>(m =>
+            {
+                string c = Configuration.GetConnectionString("DefaultConnection");
+                return new MovieSQLContext(c);
+            });
+            services.AddTransient<IGenreContext, GenreSQLContext>(g =>
+            {
+                string c = Configuration.GetConnectionString("DefaultConnection");
+                return new GenreSQLContext(c);
+            });
+            services.AddTransient<IUserContext, UserSQLContext>(u =>
+            {
+                string c = Configuration.GetConnectionString("DefaultConnection");
+                return new UserSQLContext(c);
+            });
+            services.AddTransient<IPlaylistContext, PlaylistSQLContext>(p =>
+            {
+                string c = Configuration.GetConnectionString("DefaultConnection");
+                return new PlaylistSQLContext(c);
+            });
+            services.AddTransient<IMediaContext, MediaSQLContext>(m =>
+            {
+                string c = Configuration.GetConnectionString("DefaultConnection");
+                return new MediaSQLContext(c);
+            });
 
             services.AddTransient(m =>
             {

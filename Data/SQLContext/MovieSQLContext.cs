@@ -13,8 +13,12 @@ namespace Data.SQLContext
 {
     public class MovieSQLContext : IMovieContext
     {
-        private readonly MySqlConnection _conn = SQLDatabaseConnection.GetConnection();
+        private readonly MySqlConnection _conn;
 
+        public MovieSQLContext(string connectionString)
+        {
+            _conn = new MySqlConnection(connectionString);
+        }
         public IEnumerable<MovieDTO> GetAllMovies()
         {
             List<MovieDTO> movies = new List<MovieDTO>();

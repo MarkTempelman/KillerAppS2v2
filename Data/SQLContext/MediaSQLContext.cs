@@ -8,7 +8,13 @@ namespace Data.SQLContext
 {
     public class MediaSQLContext : IMediaContext
     {
-        private readonly MySqlConnection _conn = SQLDatabaseConnection.GetConnection();
+        private readonly MySqlConnection _conn;
+
+        public MediaSQLContext(string connectionString)
+        {
+            _conn = new MySqlConnection(connectionString);
+        }
+        
         public int GetMediaIdFromMovieId(int movieId)
         {
             try

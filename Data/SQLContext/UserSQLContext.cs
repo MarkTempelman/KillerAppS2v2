@@ -12,7 +12,12 @@ namespace Data.SQLContext
 {
     public class UserSQLContext : IUserContext
     {
-        private readonly MySqlConnection _conn = SQLDatabaseConnection.GetConnection();
+        private readonly MySqlConnection _conn;
+
+        public UserSQLContext(string connectionString)
+        {
+            _conn = new MySqlConnection(connectionString);
+        }
 
         public void CreateUser(UserDTO user)
         {
