@@ -33,25 +33,25 @@
             </div>
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Movie" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Movie" asp-action="Index" id="NavHome">Home</a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Playlist" asp-action="Favourites">Favourites</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Playlist" asp-action="Favourites" id="NavFavourites">Favourites</a></li>
                     }
                     @if (User.IsInRole("Admin"))
                     {
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="AddMovie">Add Movie</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="AddMovie" id="NavAddMovie">Add Movie</a></li>
                     }
                 </ul>
                 <ul class="navbar-nav" align="right">
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="User" asp-action="Login">Log in</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="User" asp-action="Register">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="User" asp-action="Login" id="NavLogin">Log in</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="User" asp-action="Register" id="NavRegister">Register</a></li>
                     }
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="User" asp-action="LogOut">Log out</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="User" asp-action="LogOut" id="NavLogOut">Log out</a></li>
                     }
                     @*<li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
         <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a></li>
