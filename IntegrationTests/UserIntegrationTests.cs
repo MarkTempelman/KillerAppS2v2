@@ -76,5 +76,12 @@ namespace IntegrationTests
 
             Assert.True(_driver.PageSource.Contains("Log out"));
         }
+
+        [TearDown]
+        public void TearDownTest()
+        {
+            _driver.Close();
+            _driver.Dispose();
+        }
     }
 }
