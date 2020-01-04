@@ -10,7 +10,7 @@ namespace IntegrationTests
     public class UserIntegrationTests
     {
         private IWebDriver _driver;
-        public string _homeURL;
+        private string _homeURL;
 
         [SetUp]
         public void Setup()
@@ -19,35 +19,14 @@ namespace IntegrationTests
             _driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
         }
 
-        private void LoadHome()
-        {
-            _driver.Manage().Window.Maximize();
-            _driver.Navigate().GoToUrl(_homeURL);
-        }
-
-        private void Login(string username, string password)
-        {
-            _driver.FindElement(By.Id("Username")).SendKeys(username);
-            _driver.FindElement(By.Id("Password")).SendKeys(password);
-            _driver.FindElement(By.Id("Login")).Click();
-        }
-
-        private void RegisterUser(string guid)
-        {
-            _driver.FindElement(By.Id("Username")).SendKeys(guid);
-            _driver.FindElement(By.Id("EmailAddress")).SendKeys(guid + "@mail.com");
-            _driver.FindElement(By.Id("Password")).SendKeys("testPassword");
-            _driver.FindElement(By.Id("Register")).Click();
-        }
-
         [Test]
         public void LoginAsUser()
         {
-            LoadHome();
+            TestHelpers.LoadHome(_driver);
 
             _driver.FindElement(By.Id("NavLogin")).Click();
 
-            Login("User", "user");
+            TestHelpers.Login(_driver, "User", "user");
 
             Assert.True(_driver.PageSource.Contains("Log out"));
         }
@@ -55,11 +34,11 @@ namespace IntegrationTests
         [Test]
         public void LoginAsAdmin()
         {
-            LoadHome();
+            TestHelpers.LoadHome(_driver);
 
             _driver.FindElement(By.Id("NavLogin")).Click();
 
-            Login("Admin", "admin");
+            TestHelpers.Login(_driver, "Admin", "admin");
 
             _driver.Navigate().GoToUrl(_homeURL);
 
@@ -70,11 +49,11 @@ namespace IntegrationTests
         [Test]
         public void LoginThenLogout()
         {
-            LoadHome();
+            TestHelpers.LoadHome(_driver);
 
             _driver.FindElement(By.Id("NavLogin")).Click();
 
-            Login("User", "user");
+            TestHelpers.Login(_driver, "User", "user");
 
             _driver.FindElement(By.Id("NavLogOut")).Click();
 
@@ -84,16 +63,16 @@ namespace IntegrationTests
         [Test]
         public void RegisterThenLogin()
         {
-            LoadHome();
+            TestHelpers.LoadHome(_driver);
 
             var guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
             guid = guid.Remove(guid.Length - 2);
 
             _driver.FindElement(By.Id("NavRegister")).Click();
-            RegisterUser(guid);
+            TestHelpers.RegisterUser(_driver, guid);
 
             _driver.FindElement(By.Id("NavLogin")).Click();
-            Login(guid, "testPassword");
+            TestHelpers.Login(_driver, guid, "testPassword");
 
             Assert.True(_driver.PageSource.Contains("Log out"));
         }
