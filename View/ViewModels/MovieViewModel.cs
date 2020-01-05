@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -16,12 +17,14 @@ namespace View.ViewModels
         [Required]
         public string Description { get; set; }
         [DataType(DataType.Date)]
+        [DisplayName("Release date")]
         public DateTime ReleaseDate { get; set; }
         public string ShortDescription { get; set; }
         public double AverageRating { get; set; }
         public List<GenreViewModel> Genres { get; set; }
         public int MovieId { get; set; }
         public List<GenreViewModel> AllGenres { get; set; } = new List<GenreViewModel>();
+        [DisplayName("Genre")]
         public int GenreId { get; set; }
         public bool IsFavourite { get; set; }
         public string GenresString { get; set; }
