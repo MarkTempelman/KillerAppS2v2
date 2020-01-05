@@ -47,16 +47,33 @@ namespace Logic
             _iGenreContext.AddGenreToMovie(ToGenreDTO(genre));
         }
 
+        public bool TryCreateNewGenre(GenreModel genre)
+        {
+            if (!_iGenreContext.DoesGenreExist(genre.Genre))
+            {
+                _iGenreContext.CreateNewGenre(ToGenreDTO(genre));
+                return true;
+            }
+
+            return false;
+        }
+
         public GenreDTO ToGenreDTO(GenreModel genreModel)
         {
             if (genreModel == null)
             {
                 return null;
             }
-            GenreDTO genreDTO = new GenreDTO(genreModel.Genre, genreModel.GenreId);
+
+            GenreDTO genreDTO = new GenreDTO(genreModel.Genre);
             if (genreModel.MovieId > 0)
             {
                 genreDTO.MovieId = genreModel.MovieId;
+            }
+
+            if (genreModel.GenreId > 0)
+            {
+                genreDTO.GenreId = genreModel.GenreId;
             }
             return genreDTO;
         }

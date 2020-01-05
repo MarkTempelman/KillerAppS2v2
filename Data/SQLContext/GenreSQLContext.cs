@@ -15,6 +15,7 @@ namespace Data.SQLContext
         {
             _conn = new MySqlConnection(connectionString);
         }
+
         public IEnumerable<GenreDTO> GetGenresByMovieId(int movieId)
         {
             List<GenreDTO> genres = new List<GenreDTO>();
@@ -34,6 +35,7 @@ namespace Data.SQLContext
                         reader.GetString(reader.GetOrdinal("Genre")),
                         reader.GetInt32(reader.GetOrdinal("GenreId"))));
                 }
+
                 _conn.Close();
             }
             catch (Exception e)
@@ -42,6 +44,7 @@ namespace Data.SQLContext
                 _conn.Close();
                 throw;
             }
+
             return genres;
         }
 
@@ -63,6 +66,7 @@ namespace Data.SQLContext
                         reader.GetString(reader.GetOrdinal("Genre")),
                         reader.GetInt32(reader.GetOrdinal("GenreId"))));
                 }
+
                 _conn.Close();
             }
             catch (Exception e)
@@ -71,6 +75,7 @@ namespace Data.SQLContext
                 Console.WriteLine(e);
                 throw;
             }
+
             return genres;
         }
 
@@ -89,6 +94,57 @@ namespace Data.SQLContext
                 command.Parameters.AddWithValue("@genreId", genre.GenreId);
 
                 command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+
+        public void CreateNewGenre(GenreDTO genre)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand
+                {
+                    Connection = _conn,
+                    CommandText = "INSERT INTO genre(Genre) VALUES (@genre)"
+                };
+
+                command.Parameters.AddWithValue("@genre", genre.Genre);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+
+            }
+        }
+
+        public bool DoesGenreExist(string genre)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `genre` WHERE Genre = @genre",
+                    _conn);
+
+                command.Parameters.AddWithValue("@genre", genre);
+
+                var result = int.Parse(command.ExecuteScalar().ToString());
+                return result > 0;
             }
             catch (Exception e)
             {

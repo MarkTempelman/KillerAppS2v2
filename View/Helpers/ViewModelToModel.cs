@@ -11,12 +11,16 @@ namespace View.Helpers
     {
         public static GenreModel ToGenreModel(GenreViewModel genreViewModel)
         {
-            GenreModel genreModel = new GenreModel(genreViewModel.Genre, genreViewModel.GenreId);
+            GenreModel genreModel = new GenreModel(genreViewModel.Genre);
             if (genreViewModel.MovieId > 0)
             {
                 genreModel.MovieId = genreViewModel.MovieId;
             }
 
+            if (genreViewModel.GenreId > 0)
+            {
+                genreModel.GenreId = genreViewModel.GenreId;
+            }
             return genreModel;
         }
 

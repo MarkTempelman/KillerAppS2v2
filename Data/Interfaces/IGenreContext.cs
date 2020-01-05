@@ -12,5 +12,9 @@ namespace Data.Interfaces
         IEnumerable<GenreDTO> GetAllGenres();
 
         void AddGenreToMovie(GenreDTO genre);
+
+        void CreateNewGenre(GenreDTO genre);
+
+        bool DoesGenreExist(string genre);
     }
 }

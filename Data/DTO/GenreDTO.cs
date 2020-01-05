@@ -20,5 +20,10 @@ namespace Data.DTO
         {
             GenreId = genreId;
         }
+
+        public GenreDTO(string genre)
+        {
+            Genre = genre;
+        }
     }
 }
