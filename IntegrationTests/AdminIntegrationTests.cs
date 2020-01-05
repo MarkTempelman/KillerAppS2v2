@@ -52,6 +52,9 @@ namespace IntegrationTests
             _driver.FindElement(By.Id("NavAddMovie")).Click();
             TestHelpers.AddMovie(_driver, guid);
 
+            IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
+            js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
+
             _driver.FindElement(By.Id("Edit " + guid)).Click();
             TestHelpers.EditMovie(_driver, guid);
 
