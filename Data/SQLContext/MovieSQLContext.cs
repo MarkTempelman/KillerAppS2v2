@@ -154,6 +154,11 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    string imagePath = null;
+                    if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
+                    {
+                        imagePath = reader.GetString("ImagePath");
+                    }
                     movie = new MovieDTO(
                         reader.GetInt32(reader.GetOrdinal("MovieId")),
                         reader.GetString(reader.GetOrdinal("Title")),
@@ -163,7 +168,7 @@ namespace Data.SQLContext
                         
                     )
                     {
-                        ImagePath = reader.GetString(reader.GetOrdinal("ImagePath"))
+                        ImagePath = imagePath
                     };
                 }
                 _conn.Close();
