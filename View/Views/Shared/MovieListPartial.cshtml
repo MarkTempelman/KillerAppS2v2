@@ -23,8 +23,8 @@
                 <p class="card-text">@Html.DisplayFor(modelItem => Model.GenresString)</p>
                 @if (User.IsInRole("Admin"))
                 {
-                    <a class="card-link" asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId">Edit Movie</a>
-                    <a class="card-link" asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId">Add Genre</a>
+                    <a class="card-link" asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId" id="Edit @Model.Title">Edit Movie</a>
+                    <a class="card-link" asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId" id="Genre @Model.Title">Add Genre</a>
                 }
                 @if (User.Identity.IsAuthenticated)
                 {
