@@ -59,25 +59,6 @@ namespace IntegrationTests
                 guid + " This movie was generated and edited by the automated testing system."));
         }
 
-        [Test]
-        public void Temp()
-        {
-            TestHelpers.LoadHome(_driver);
-
-            _driver.FindElement(By.Id("NavLogin")).Click();
-            TestHelpers.Login(_driver, "Admin", "admin");
-
-            _driver.FindElement(By.Id("Edit Avengers: Infinity War")).Click();
-
-            //var movieTitleElement = _driver.FindElement(By.LinkText("Avengers: Infinity War"));
-            //movieTitleElement = movieTitleElement.FindElement(By.XPath("./parent::"));
-            //movieTitleElement = movieTitleElement.FindElement(By.XPath("./parent::"));
-            //movieTitleElement = movieTitleElement.FindElement(By.XPath("./parent::"));
-
-            //movieTitleElement.Click();
-
-        }
-
         [TearDown]
         public void TearDownTest()
         {
