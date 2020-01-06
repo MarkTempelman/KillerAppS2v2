@@ -44,5 +44,10 @@ namespace Logic
         {
             return _iPlaylistContext.IsMediaInPlaylist(mediaId, playlistId);
         }
+
+        public void RemoveMediaFromAllPlaylists(int id)
+        {
+            _iPlaylistContext.RemoveMovieFromAllPlaylists(id);
+        }
     }
 }

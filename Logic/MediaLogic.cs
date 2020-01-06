@@ -14,6 +14,11 @@ namespace Logic
             _iMediaContext = iMediaContext;
         }
 
+        public void DeleteMediaById(int id)
+        {
+            _iMediaContext.DeleteMediaById(id);
+        }
+
         public int GetMediaIdFromMovieId(int movieId)
         {
             return _iMediaContext.GetMediaIdFromMovieId(movieId);
