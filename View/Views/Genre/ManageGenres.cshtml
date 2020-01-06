@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.GenreId)
             </td>
             <td>
-                <a class="btn btn-link" asp-controller="Genre" asp-action="RemoveGenre" asp-route-id="@item.GenreId">Delete</a>
+                <a class="btn btn-link" asp-controller="Genre" asp-action="RemoveGenre" asp-route-id="@item.GenreId" id="@item.Genre">Delete</a>
             </td>
         </tr>
 }
