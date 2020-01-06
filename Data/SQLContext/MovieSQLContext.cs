@@ -278,5 +278,31 @@ namespace Data.SQLContext
             }
             return movie;
         }
+
+        public void DeleteMovieById(int id)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM `genre_movie` WHERE MovieId = @movieId",
+                    _conn);
+                command.Parameters.AddWithValue("@movieId", id);
+                command.ExecuteNonQuery();
+
+                command = new MySqlCommand("DELETE FROM `movie` WHERE MovieId = @movieId",
+                    _conn);
+                command.Parameters.AddWithValue("@movieId", id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

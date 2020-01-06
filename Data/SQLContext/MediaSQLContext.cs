@@ -72,5 +72,27 @@ namespace Data.SQLContext
             }
             return ids;
         }
+
+
+        public void DeleteMediaById(int id)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM `media` WHERE MediaId = @mediaId",
+                    _conn);
+                command.Parameters.AddWithValue("@mediaId", id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

@@ -115,5 +115,27 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
+        public void RemoveMovieFromAllPlaylists(int mediaId)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM media_playlist WHERE MediaId = @mediaId",
+                    _conn);
+                command.Parameters.AddWithValue("@mediaId", mediaId);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace Data.Interfaces
         int GetFavouritesPlaylistIdFromUserId(int userId);
         bool IsMediaInPlaylist(int mediaId, int playlistId);
         void RemoveMovieFromPlaylist(int mediaId, int playlistId);
+        void RemoveMovieFromAllPlaylists(int mediaId);
     }
 }

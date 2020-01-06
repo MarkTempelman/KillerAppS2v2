@@ -9,5 +9,7 @@ namespace Data.Interfaces
         int GetMediaIdFromMovieId(int movieId);
 
         List<int> GetMediaIdsFromPlaylistId(int playlistId);
+
+        void DeleteMediaById(int id);
     }
 }

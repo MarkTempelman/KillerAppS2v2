@@ -21,5 +21,6 @@ namespace Data.Interfaces
 
         MovieDTO GetMovieFromMediaId(int mediaId);
 
+        void DeleteMovieById(int id);
     }
 }
