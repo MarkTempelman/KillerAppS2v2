@@ -24,8 +24,6 @@ namespace IntegrationTests
         {
             TestHelpers.LoadHome(_driver);
 
-            _driver.FindElement(By.Id("NavLogin")).Click();
-
             TestHelpers.Login(_driver, "User", "user");
 
             Assert.True(_driver.PageSource.Contains("Log out"));
@@ -35,8 +33,6 @@ namespace IntegrationTests
         public void LoginAsAdmin()
         {
             TestHelpers.LoadHome(_driver);
-
-            _driver.FindElement(By.Id("NavLogin")).Click();
 
             TestHelpers.Login(_driver, "Admin", "admin");
 
@@ -51,8 +47,6 @@ namespace IntegrationTests
         {
             TestHelpers.LoadHome(_driver);
 
-            _driver.FindElement(By.Id("NavLogin")).Click();
-
             TestHelpers.Login(_driver, "User", "user");
 
             _driver.FindElement(By.Id("NavLogOut")).Click();
@@ -65,13 +59,10 @@ namespace IntegrationTests
         {
             TestHelpers.LoadHome(_driver);
 
-            var guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-            guid = guid.Remove(guid.Length - 2);
+            var guid = TestHelpers.GetRandomGuid();
 
-            _driver.FindElement(By.Id("NavRegister")).Click();
             TestHelpers.RegisterUser(_driver, guid);
 
-            _driver.FindElement(By.Id("NavLogin")).Click();
             TestHelpers.Login(_driver, guid, "testPassword");
 
             Assert.True(_driver.PageSource.Contains("Log out"));

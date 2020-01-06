@@ -26,7 +26,6 @@ namespace IntegrationTests
         {
             TestHelpers.LoadHome(_driver);
 
-            _driver.FindElement(By.Id("NavLogin")).Click();
             TestHelpers.Login(_driver, "User", "user");
 
             _driver.Navigate().GoToUrl("https://localhost:44359/Playlist/AddMovieToFavourites/1");

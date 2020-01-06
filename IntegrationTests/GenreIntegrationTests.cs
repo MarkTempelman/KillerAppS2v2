@@ -24,12 +24,9 @@ namespace IntegrationTests
         [Test]
         public void AddNewGenreThenRemove()
         {
-            var guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-            guid = guid.Remove(guid.Length - 2);
+            var guid = TestHelpers.GetRandomGuid();
 
             TestHelpers.LoadHome(_driver);
-
-            _driver.FindElement(By.Id("NavLogin")).Click();
 
             TestHelpers.Login(_driver, "Admin", "admin");
 

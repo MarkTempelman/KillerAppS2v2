@@ -20,6 +20,7 @@ namespace IntegrationTests
 
         public static void Login(IWebDriver driver, string username, string password)
         {
+            driver.FindElement(By.Id("NavLogin")).Click();
             driver.FindElement(By.Id("Username")).SendKeys(username);
             driver.FindElement(By.Id("Password")).SendKeys(password);
             driver.FindElement(By.Id("Login")).Click();
@@ -27,6 +28,7 @@ namespace IntegrationTests
 
         public static void RegisterUser(IWebDriver driver, string guid)
         {
+            driver.FindElement(By.Id("NavRegister")).Click();
             driver.FindElement(By.Id("Username")).SendKeys(guid);
             driver.FindElement(By.Id("EmailAddress")).SendKeys(guid + "@mail.com");
             driver.FindElement(By.Id("Password")).SendKeys("testPassword");
@@ -45,6 +47,13 @@ namespace IntegrationTests
             driver.FindElement(By.Id("Description")).Clear();
             driver.FindElement(By.Id("Description")).SendKeys(guid + " This movie was generated and edited by the automated testing system.");
             driver.FindElement(By.Id("EditMovie")).Click();
+        }
+
+        public static string GetRandomGuid()
+        {
+            var guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            guid = guid.Remove(guid.Length - 2);
+            return guid;
         }
     }
 }
