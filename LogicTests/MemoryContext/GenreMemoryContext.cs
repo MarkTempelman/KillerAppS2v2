@@ -6,7 +6,7 @@ using Data.Interfaces;
 
 namespace LogicTests.MemoryContext
 {
-    class GenreMemoryContext : IGenreContext
+    public class GenreMemoryContext : IGenreContext
     {
         public IEnumerable<GenreDTO> GetGenresByMovieId(int movieId)
         {
@@ -34,6 +34,28 @@ namespace LogicTests.MemoryContext
         }
 
         public void AddGenreToMovie(GenreDTO genre)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateNewGenre(GenreDTO genre)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DoesGenreExist(string genre)
+        {
+            switch (genre)
+            {
+                case "TestGenre1":
+                case "TestGenre2":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public void RemoveGenreById(int id)
         {
             throw new NotImplementedException();
         }
