@@ -12,6 +12,7 @@ namespace View.Controllers
     public class GenreController : Controller
     {
         private GenreLogic _genreLogic;
+
         public GenreController(GenreLogic genreLogic)
         {
             _genreLogic = genreLogic;
@@ -29,8 +30,25 @@ namespace View.Controllers
             {
                 return RedirectToAction("Index", "Movie");
             }
+
             ModelState.AddModelError("Genre", "This genre already exists");
             return View(genreViewModel);
+        }
+
+        public IActionResult ManageGenres()
+        {
+            List<GenreViewModel> genres = new List<GenreViewModel>();
+            foreach (var genre in _genreLogic.GetAllGenres())
+            {
+                genres.Add(ModelToViewModel.ToGenreViewModel(genre));
+            }
+            return View(genres);
+        }
+
+        public IActionResult RemoveGenre(int id)
+        {
+            _genreLogic.RemoveGenreById(id);
+            return RedirectToAction("ManageGenres");
         }
     }
 }

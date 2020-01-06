@@ -16,5 +16,7 @@ namespace Data.Interfaces
         void CreateNewGenre(GenreDTO genre);
 
         bool DoesGenreExist(string genre);
+
+        void RemoveGenreById(int id);
     }
 }

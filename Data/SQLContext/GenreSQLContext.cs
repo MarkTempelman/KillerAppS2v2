@@ -156,5 +156,31 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
+        public void RemoveGenreById(int id)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM `genre_movie` WHERE GenreId = @genreId",
+                    _conn);
+                command.Parameters.AddWithValue("@genreId", id);
+                command.ExecuteNonQuery();
+
+                command = new MySqlCommand("DELETE FROM `genre` WHERE GenreId = @genreId",
+                    _conn);
+                command.Parameters.AddWithValue("@genreId", id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

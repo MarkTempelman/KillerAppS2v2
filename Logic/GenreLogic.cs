@@ -58,6 +58,11 @@ namespace Logic
             return false;
         }
 
+        public void RemoveGenreById(int id)
+        {
+            _iGenreContext.RemoveGenreById(id);
+        }
+
         public GenreDTO ToGenreDTO(GenreModel genreModel)
         {
             if (genreModel == null)
