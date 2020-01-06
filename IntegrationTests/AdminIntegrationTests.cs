@@ -22,7 +22,7 @@ namespace IntegrationTests
         }
 
         [Test]
-        public void AddMovie()
+        public void AddMovieThenDelete()
         {
             TestHelpers.LoadHome(_driver);
 
@@ -35,10 +35,14 @@ namespace IntegrationTests
             TestHelpers.AddMovie(_driver, guid);
 
             Assert.True(_driver.PageSource.Contains(guid));
+
+            _driver.FindElement(By.Id($"Delete {guid}")).Click();
+
+            Assert.False(_driver.PageSource.Contains(guid));
         }
 
         [Test]
-        public void AddMovieThenEdit()
+        public void AddMovieThenEditAndDelete()
         {
             var guid = TestHelpers.GetRandomGuid();
 
@@ -59,6 +63,8 @@ namespace IntegrationTests
 
             Assert.True(_driver.PageSource.Contains(
                 guid + " This movie was generated and edited by the automated testing system."));
+
+            _driver.FindElement(By.Id($"Delete {guid}")).Click();
         }
 
         [TearDown]
