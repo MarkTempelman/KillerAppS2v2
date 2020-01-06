@@ -119,5 +119,11 @@ namespace View.Controllers
 
             return View(movie);
         }
+
+        public IActionResult DeleteMovie(int id)
+        {
+            _movieLogic.DeleteMovieById(id);
+            return RedirectToAction("Index", "Movie");
+        }
     }
 }

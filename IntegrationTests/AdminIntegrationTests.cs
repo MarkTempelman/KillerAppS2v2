@@ -55,6 +55,8 @@ namespace IntegrationTests
             _driver.FindElement(By.Id("Edit " + guid)).Click();
             TestHelpers.EditMovie(_driver, guid);
 
+            js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
+
             Assert.True(_driver.PageSource.Contains(
                 guid + " This movie was generated and edited by the automated testing system."));
         }
