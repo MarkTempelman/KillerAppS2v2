@@ -49,5 +49,13 @@ namespace Logic
         {
             _iPlaylistContext.RemoveMovieFromAllPlaylists(id);
         }
+
+        public void DeleteAllPlaylistsOfUser(int userId)
+        {
+            foreach (var playlistId in _iPlaylistContext.GetAllPlaylistIdsFromUserId(userId))
+            {
+                _iPlaylistContext.DeletePlaylistById(playlistId);
+            }
+        }
     }
 }

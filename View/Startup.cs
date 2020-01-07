@@ -91,7 +91,8 @@ namespace View
             services.AddTransient(s =>
             {
                 IUserContext uc = s.GetService<IUserContext>();
-                return new UserLogic(uc);
+                PlaylistLogic pl = s.GetService<PlaylistLogic>();
+                return new UserLogic(uc, pl);
             });
 
             services.AddTransient(p =>

@@ -1,0 +1,57 @@
+﻿@using Enums
+@model IEnumerable<View.ViewModels.UserViewModel>
+
+@{
+    ViewData["Title"] = "ManageUsers";
+}
+
+<h2>Manage Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                <a class="btn btn-link" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@item.Id" id="Delete @item.Username">Delete</a>
+                @if (item.AccountType == AccountType.User)
+                {
+                    <a class="btn btn-link" asp-controller="Admin" asp-action="MakeUserAdmin" asp-route-id="@item.Id" id="MakeAdmin @item.Username">Make Admin</a>
+                }
+                else
+                {
+                    <a class="btn btn-link" asp-controller="Admin" asp-action="MakeAdminUser" asp-route-id="@item.Id" id="MakeUser @item.Username">Make User</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

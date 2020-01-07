@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Enums;
 using Logic;
 using Logic.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -20,12 +21,14 @@ namespace View.Controllers
         private readonly GenreLogic _genreLogic;
         private readonly MovieLogic _movieLogic;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly UserLogic _userLogic;
 
-        public AdminController(MovieLogic movieLogic, GenreLogic genreLogic, IHostingEnvironment hostingEnvironment)
+        public AdminController(MovieLogic movieLogic, GenreLogic genreLogic, IHostingEnvironment hostingEnvironment, UserLogic userLogic)
         {
             _movieLogic = movieLogic;
             _genreLogic = genreLogic;
             _hostingEnvironment = hostingEnvironment;
+            _userLogic = userLogic;
         }
 
         public IActionResult AddMovie()
@@ -124,6 +127,36 @@ namespace View.Controllers
         {
             _movieLogic.DeleteMovieById(id);
             return RedirectToAction("Index", "Movie");
+        }
+
+        public IActionResult ManageUsers()
+        {
+            List<UserViewModel> userViewModels = new List<UserViewModel>();
+            foreach (var user in _userLogic.GetAllUsersExceptCurrent(int.Parse(User.Claims
+                .FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value)))
+            {
+                userViewModels.Add(ModelToViewModel.ToUserViewModel(user));
+            }
+            
+            return View(userViewModels);
+        }
+
+        public IActionResult DeleteUser(int id)
+        {
+            _userLogic.DeleteUser(id);
+            return RedirectToAction("ManageUsers");
+        }
+
+        public IActionResult MakeUserAdmin(int id)
+        {
+            _userLogic.SetUserAccountType(id, AccountType.Admin);
+            return RedirectToAction("ManageUsers");
+        }
+
+        public IActionResult MakeAdminUser(int id)
+        {
+            _userLogic.SetUserAccountType(id, AccountType.User);
+            return RedirectToAction("ManageUsers");
         }
     }
 }

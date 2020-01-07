@@ -13,10 +13,12 @@ namespace Logic
     public class UserLogic
     {
         private readonly IUserContext _iUserContext;
+        private readonly PlaylistLogic _playlistLogic;
 
-        public UserLogic(IUserContext iUserContext)
+        public UserLogic(IUserContext iUserContext, PlaylistLogic playlistLogic)
         {
             _iUserContext = iUserContext;
+            _playlistLogic = playlistLogic;
         }
 
         public void CreateUser(UserModel userModel)
@@ -46,6 +48,29 @@ namespace Logic
         public bool DoesEmailAddressExist(string emailAddress)
         {
             return _iUserContext.DoesEmailAddressExist(emailAddress);
+        }
+
+        public List<UserModel> GetAllUsersExceptCurrent(int userId)
+        {
+            List<UserModel> users = new List<UserModel>();
+
+            foreach (var user in _iUserContext.GetAllUsersExceptCurrent(userId))
+            {
+                users.Add(ToUserModel(user));
+            }
+
+            return users;
+        }
+
+        public void DeleteUser(int userId)
+        {
+            _playlistLogic.DeleteAllPlaylistsOfUser(userId);
+            _iUserContext.DeleteUserById(userId);
+        }
+
+        public void SetUserAccountType(int userId, AccountType accountType)
+        {
+            _iUserContext.SetUserAccountType(userId, accountType);
         }
 
         public UserDTO ToUserDTO(UserModel userModel)

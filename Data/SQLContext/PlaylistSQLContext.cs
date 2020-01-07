@@ -137,5 +137,60 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
+        public List<int> GetAllPlaylistIdsFromUserId(int userId)
+        {
+            List<int> playlistIds = new List<int>();
+            try
+            {
+                MySqlCommand command = new MySqlCommand("SELECT PlaylistId FROM playlist " +
+                                                        "WHERE UserId = @userId",
+                    _conn);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                _conn.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    playlistIds.Add(reader.GetInt32("PlaylistId"));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                _conn.Close();
+            }
+
+            return playlistIds;
+        }
+
+        public void DeletePlaylistById(int playlistId)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM media_playlist WHERE PlaylistId = @playlistId",
+                    _conn);
+                command.Parameters.AddWithValue("@playlistId", playlistId);
+                command.ExecuteNonQuery();
+
+                command = new MySqlCommand("DELETE FROM playlist WHERE PlaylistId = @playlistId", 
+                    _conn);
+                command.Parameters.AddWithValue("@playlistId", playlistId);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

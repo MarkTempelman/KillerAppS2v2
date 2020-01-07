@@ -130,5 +130,84 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
+        public List<UserDTO> GetAllUsersExceptCurrent(int currentUserId)
+        {
+            List<UserDTO> users = new List<UserDTO>();
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("SELECT UserId, Username, EmailAddress, AccountType " +
+                                                        "FROM `user` WHERE UserId != @userId",
+                    _conn);
+
+                command.Parameters.AddWithValue("@userId", currentUserId);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    users.Add(new UserDTO(
+                        reader.GetInt32("UserId"),
+                        reader.GetString("Username"),
+                        reader.GetString("EmailAddress"),
+                        (AccountType)Enum.Parse(typeof(AccountType),
+                            reader.GetString(reader.GetOrdinal("AccountType")))
+                    ));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+            return users;
+        }
+
+        public void DeleteUserById(int userId)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("DELETE FROM user WHERE UserId = @userId",
+                    _conn);
+                command.Parameters.AddWithValue("@userId", userId);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+
+        public void SetUserAccountType(int userId, AccountType accountType)
+        {
+            try
+            {
+                _conn.Open();
+                MySqlCommand command = new MySqlCommand("UPDATE user SET AccountType = @accountType WHERE UserId = @userId",
+                    _conn);
+                command.Parameters.AddWithValue("@accountType", accountType);
+                command.Parameters.AddWithValue("@userId", userId);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

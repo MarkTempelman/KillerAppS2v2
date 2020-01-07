@@ -25,5 +25,13 @@ namespace Data.DTO
             AccountType = accountType;
             Password = password;
         }
+
+        public UserDTO(int userId, string username, string emailAddress, AccountType accountType)
+        {
+            UserId = userId;
+            Username = username;
+            EmailAddress = emailAddress;
+            AccountType = accountType;
+        }
     }
 }

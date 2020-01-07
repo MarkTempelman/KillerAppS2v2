@@ -11,5 +11,7 @@ namespace Data.Interfaces
         bool IsMediaInPlaylist(int mediaId, int playlistId);
         void RemoveMovieFromPlaylist(int mediaId, int playlistId);
         void RemoveMovieFromAllPlaylists(int mediaId);
+        List<int> GetAllPlaylistIdsFromUserId(int userId);
+        void DeletePlaylistById(int playlistId);
     }
 }
