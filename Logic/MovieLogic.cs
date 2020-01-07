@@ -82,7 +82,7 @@ namespace Logic
             int mediaId = _mediaLogic.GetMediaIdFromMovieId(movieId);
             _iMovieContext.DeleteMovieById(movieId);
             _playlistLogic.RemoveMediaFromAllPlaylists(mediaId);
-            _mediaLogic.DeleteMediaById(movieId);
+            _mediaLogic.DeleteMediaById(mediaId);
         }
 
         private MovieDTO ToMovieDTO(MovieModel movieModel)
