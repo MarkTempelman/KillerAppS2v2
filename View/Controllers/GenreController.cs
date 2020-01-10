@@ -18,30 +18,32 @@ namespace View.Controllers
             _genreLogic = genreLogic;
         }
 
-        public IActionResult AddNewGenre()
-        {
-            return View();
-        }
-
         [HttpPost]
         public IActionResult AddNewGenre(GenreViewModel genreViewModel)
         {
             if (_genreLogic.TryCreateNewGenre(ViewModelToModel.ToGenreModel(genreViewModel)))
             {
-                return RedirectToAction("Index", "Movie");
+                return RedirectToAction("ManageGenres");
             }
-
-            ModelState.AddModelError("Genre", "This genre already exists");
-            return View(genreViewModel);
+            return RedirectToAction("ManageGenres", new
+            {
+                addGenreErrorMessage = "This genre already exists"
+            });
         }
 
-        public IActionResult ManageGenres()
+        public IActionResult ManageGenres(string addGenreErrorMessage)
         {
             List<GenreViewModel> genres = new List<GenreViewModel>();
             foreach (var genre in _genreLogic.GetAllGenres())
             {
                 genres.Add(ModelToViewModel.ToGenreViewModel(genre));
             }
+
+            if (addGenreErrorMessage != null)
+            {
+                TempData["AddGenreError"] = addGenreErrorMessage;
+            }
+
             return View(genres);
         }
 

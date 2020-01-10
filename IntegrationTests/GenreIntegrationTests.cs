@@ -30,13 +30,11 @@ namespace IntegrationTests
 
             TestHelpers.Login(_driver, "Admin", "admin");
 
-            _driver.FindElement(By.Id("NavAddGenre")).Click();
+            _driver.FindElement(By.Id("NavManageGenres")).Click();
 
             _driver.FindElement(By.Id("Genre")).SendKeys(guid);
 
             _driver.FindElement(By.Id("CreateGenre")).Click();
-
-            _driver.FindElement(By.Id("NavManageGenres")).Click();
 
             Assert.True(_driver.PageSource.Contains(guid));
 
