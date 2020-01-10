@@ -5,6 +5,9 @@ using System.Reflection;
 using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
+
 
 namespace IntegrationTests
 {
@@ -44,7 +47,8 @@ namespace IntegrationTests
 
         public static void EditMovie(IWebDriver driver, string guid)
         {
-            driver.FindElement(By.Id("Description")).Clear();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("Description"))).Clear();
             driver.FindElement(By.Id("Description")).SendKeys(guid + " This movie was generated and edited by the automated testing system.");
             driver.FindElement(By.Id("EditMovie")).Click();
         }
@@ -54,6 +58,12 @@ namespace IntegrationTests
             var guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
             guid = guid.Remove(guid.Length - 2);
             return guid;
+        }
+
+        public static void WaitForPageLoad(IWebDriver driver)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
+            wait.Until(webDriver => ((IJavaScriptExecutor)webDriver).ExecuteScript("return document.readyState").Equals("complete"));
         }
     }
 }

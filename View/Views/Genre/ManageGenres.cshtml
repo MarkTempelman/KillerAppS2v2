@@ -1,4 +1,5 @@
-﻿@model IEnumerable<View.ViewModels.GenreViewModel>
+﻿@using View.ViewModels
+@model IEnumerable<View.ViewModels.GenreViewModel>
 
 @{
     ViewData["Title"] = "ManageGenres";
@@ -6,6 +7,10 @@
 
 <h2>Manage Genres</h2>
 
+@Html.Partial("AddNewGenre", new GenreViewModel())
+<span class="text-danger field-validation-error">@TempData["AddGenreError"]</span>
+<br/>
+<br />
 <table class="table">
     <thead>
         <tr>

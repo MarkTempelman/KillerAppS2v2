@@ -32,11 +32,17 @@ namespace IntegrationTests
 
             var guid = TestHelpers.GetRandomGuid();
 
+            TestHelpers.WaitForPageLoad(_driver);
+
             TestHelpers.AddMovie(_driver, guid);
+
+            TestHelpers.WaitForPageLoad(_driver);
 
             Assert.True(_driver.PageSource.Contains(guid));
 
             _driver.FindElement(By.Id($"Delete {guid}")).Click();
+
+            TestHelpers.WaitForPageLoad(_driver);
 
             Assert.False(_driver.PageSource.Contains(guid));
         }
@@ -51,13 +57,21 @@ namespace IntegrationTests
             TestHelpers.Login(_driver, "Admin", "admin");
 
             _driver.FindElement(By.Id("NavAddMovie")).Click();
+
+            TestHelpers.WaitForPageLoad(_driver);
+
             TestHelpers.AddMovie(_driver, guid);
+
+            TestHelpers.WaitForPageLoad(_driver);
 
             IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
             js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
 
             _driver.FindElement(By.Id("Edit " + guid)).Click();
+
             TestHelpers.EditMovie(_driver, guid);
+
+            TestHelpers.WaitForPageLoad(_driver);
 
             js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
 
@@ -65,6 +79,48 @@ namespace IntegrationTests
                 guid + " This movie was generated and edited by the automated testing system."));
 
             _driver.FindElement(By.Id($"Delete {guid}")).Click();
+        }
+
+        [Test]
+        public void RegisterThenDeleteUser()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid);
+
+            TestHelpers.Login(_driver, "Admin", "admin");
+
+            _driver.FindElement(By.Id("NavManageUsers")).Click();
+
+            Assert.True(_driver.PageSource.Contains(guid));
+
+            _driver.FindElement(By.Id("Delete " + guid)).Click();
+
+            Assert.False(_driver.PageSource.Contains(guid));
+        }
+
+        [Test]
+        public void RegisterThenMakeUserAdmin()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid);
+
+            TestHelpers.Login(_driver, "Admin", "admin");
+
+            _driver.FindElement(By.Id("NavManageUsers")).Click();
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("MakeAdmin " + guid));
+
+            _driver.FindElement(By.Id("MakeAdmin " + guid)).Click();
+
+            Assert.False(_driver.PageSource.Contains("MakeAdmin " + guid));
         }
 
         [TearDown]
