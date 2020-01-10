@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace IntegrationTests
 {
@@ -40,9 +43,12 @@ namespace IntegrationTests
 
             Assert.True(_driver.PageSource.Contains(guid));
 
+            Thread.Sleep(1000);
+
             _driver.FindElement(By.Id($"Delete {guid}")).Click();
 
-            TestHelpers.WaitForPageLoad(_driver);
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(60));
+            wait.Until(webDriver => !webDriver.PageSource.Contains("guid"));
 
             Assert.False(_driver.PageSource.Contains(guid));
         }
@@ -66,6 +72,8 @@ namespace IntegrationTests
 
             IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
             js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
+
+            Thread.Sleep(3000);
 
             _driver.FindElement(By.Id("Edit " + guid)).Click();
 
@@ -94,9 +102,17 @@ namespace IntegrationTests
 
             _driver.FindElement(By.Id("NavManageUsers")).Click();
 
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Thread.Sleep(3000);
+
             Assert.True(_driver.PageSource.Contains(guid));
 
+            Thread.Sleep(3000);
+
             _driver.FindElement(By.Id("Delete " + guid)).Click();
+
+            TestHelpers.WaitForPageLoad(_driver);
 
             Assert.False(_driver.PageSource.Contains(guid));
         }
@@ -116,7 +132,11 @@ namespace IntegrationTests
 
             TestHelpers.WaitForPageLoad(_driver);
 
+            Thread.Sleep(3000);
+
             Assert.True(_driver.PageSource.Contains("MakeAdmin " + guid));
+
+            Thread.Sleep(3000);
 
             _driver.FindElement(By.Id("MakeAdmin " + guid)).Click();
 

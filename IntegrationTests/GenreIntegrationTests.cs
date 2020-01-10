@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -36,7 +37,11 @@ namespace IntegrationTests
 
             _driver.FindElement(By.Id("CreateGenre")).Click();
 
+            Thread.Sleep(3000);
+
             Assert.True(_driver.PageSource.Contains(guid));
+
+            Thread.Sleep(3000);
 
             _driver.FindElement(By.Id(guid)).Click();
 
