@@ -27,6 +27,7 @@ namespace IntegrationTests
             TestHelpers.Login(_driver, "User", "user");
 
             Assert.True(_driver.PageSource.Contains("Log out"));
+            Assert.False(_driver.PageSource.Contains("Add Movie"));
         }
 
         [Test]
