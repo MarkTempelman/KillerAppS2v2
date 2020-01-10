@@ -81,6 +81,48 @@ namespace IntegrationTests
             _driver.FindElement(By.Id($"Delete {guid}")).Click();
         }
 
+        [Test]
+        public void RegisterThenDeleteUser()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid);
+
+            TestHelpers.Login(_driver, "Admin", "admin");
+
+            _driver.FindElement(By.Id("NavManageUsers")).Click();
+
+            Assert.True(_driver.PageSource.Contains(guid));
+
+            _driver.FindElement(By.Id("Delete " + guid)).Click();
+
+            Assert.False(_driver.PageSource.Contains(guid));
+        }
+
+        [Test]
+        public void RegisterThenMakeUserAdmin()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid);
+
+            TestHelpers.Login(_driver, "Admin", "admin");
+
+            _driver.FindElement(By.Id("NavManageUsers")).Click();
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("MakeAdmin " + guid));
+
+            _driver.FindElement(By.Id("MakeAdmin " + guid)).Click();
+
+            Assert.False(_driver.PageSource.Contains("MakeAdmin " + guid));
+        }
+
         [TearDown]
         public void TearDownTest()
         {
