@@ -63,19 +63,8 @@ namespace IntegrationTests
         [Test]
         public void AddMovieThenDelete()
         {
-            TestHelpers.LoadHome(_driver);
-
-            TestHelpers.WaitForPageLoad(_driver);
-
-            TestHelpers.Login(_driver, "Admin", "admin");
-
-            TestHelpers.WaitForPageLoad(_driver);
-
-            _driver.FindElement(By.Id("NavAddMovie")).Click();
-
             var guid = TestHelpers.GetRandomGuid();
-
-            TestHelpers.WaitForPageLoad(_driver);
+            TestHelpers.AddMovieSetup(_driver);
 
             TestHelpers.AddMovie(_driver, guid);
 
@@ -94,17 +83,35 @@ namespace IntegrationTests
         }
 
         [Test]
+        public void TryAddMovieWithoutTitle()
+        {
+            TestHelpers.AddMovieSetup(_driver);
+
+            TestHelpers.AddMovie(_driver, "", "test Description");
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("The Title field is required."));
+        }
+
+        [Test]
+        public void TryAddMovieWithoutDesc()
+        {
+            TestHelpers.AddMovieSetup(_driver);
+
+            TestHelpers.AddMovie(_driver, "test", "");
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("The Description field is required."));
+        }
+
+        [Test]
         public void AddMovieThenEditAndDelete()
         {
             var guid = TestHelpers.GetRandomGuid();
 
-            TestHelpers.LoadHome(_driver);
-
-            TestHelpers.Login(_driver, "Admin", "admin");
-
-            _driver.FindElement(By.Id("NavAddMovie")).Click();
-
-            TestHelpers.WaitForPageLoad(_driver);
+            TestHelpers.AddMovieSetup(_driver);
 
             TestHelpers.AddMovie(_driver, guid);
 

@@ -45,6 +45,28 @@ namespace IntegrationTests
             driver.FindElement(By.Id("CreateMovie")).Click();
         }
 
+        public static void AddMovie(IWebDriver driver, string title, string description)
+        {
+            driver.FindElement(By.Id("Title")).SendKeys(title);
+            driver.FindElement(By.Id("Description")).SendKeys(description);
+            driver.FindElement(By.Id("CreateMovie")).Click();
+        }
+
+        public static void AddMovieSetup(IWebDriver driver)
+        {
+            LoadHome(driver);
+
+            WaitForPageLoad(driver);
+
+            Login(driver, "Admin", "admin");
+
+            WaitForPageLoad(driver);
+
+            driver.FindElement(By.Id("NavAddMovie")).Click();
+
+            WaitForPageLoad(driver);
+        }
+
         public static void EditMovie(IWebDriver driver, string guid)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
