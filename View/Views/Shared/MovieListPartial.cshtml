@@ -23,9 +23,9 @@
                 <p class="card-text">@Html.DisplayFor(modelItem => Model.GenresString)</p>
                 @if (User.IsInRole("Admin"))
                 {
-                    <a class="card-link" asp-controller="Admin" asp-action="EditMovie" asp-route-id="@Model.MovieId" id="Edit @Model.Title">Edit Movie</a>
-                    <a class="card-link" asp-controller="Admin" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId" id="Genre @Model.Title">Add Genre</a>
-                    <a class="card-link" asp-controller="Admin" asp-action="DeleteMovie" asp-route-id="@Model.MovieId" id="Delete @Model.Title">Delete</a>
+                    <a class="card-link" asp-controller="Movie" asp-action="EditMovie" asp-route-id="@Model.MovieId" id="Edit @Model.Title">Edit Movie</a>
+                    <a class="card-link" asp-controller="Genre" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId" id="Genre @Model.Title">Add Genre</a>
+                    <a class="card-link" asp-controller="Movie" asp-action="DeleteMovie" asp-route-id="@Model.MovieId" id="Delete @Model.Title">Delete</a>
                 }
                 @if (User.Identity.IsAuthenticated)
                 {

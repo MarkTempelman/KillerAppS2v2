@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Logic;
+using Logic.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using View.Helpers;
 using View.ViewModels;
 
 namespace View.Controllers
 {
+    [Authorize(Policy = "admin")]
     public class GenreController : Controller
     {
         private GenreLogic _genreLogic;
@@ -19,6 +22,7 @@ namespace View.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AddNewGenre(GenreViewModel genreViewModel)
         {
             if (_genreLogic.TryCreateNewGenre(ViewModelToModel.ToGenreModel(genreViewModel)))
@@ -51,6 +55,34 @@ namespace View.Controllers
         {
             _genreLogic.RemoveGenreById(id);
             return RedirectToAction("ManageGenres");
+        }
+
+        public IActionResult AddGenreToMovie(int id)
+        {
+            GenreViewModel genreViewModel = new GenreViewModel();
+            foreach (GenreModel genre in _genreLogic.GetGenreModelsNotAssignedToThisMovie(id))
+            {
+                genreViewModel.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
+            }
+            return View(genreViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddGenreToMovie(GenreViewModel genre)
+        {
+            if (genre.GenreId < 1)
+            {
+                foreach (GenreModel genreModel in _genreLogic.GetGenreModelsNotAssignedToThisMovie(genre.MovieId))
+                {
+                    genre.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genreModel));
+                }
+
+                ModelState.AddModelError("Genre", "Please select a genre");
+                return View(genre);
+            }
+            _genreLogic.AddGenreToMovie(ViewModelToModel.ToGenreModel(genre));
+            return RedirectToAction("Index", "Movie");
         }
     }
 }

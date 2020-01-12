@@ -41,14 +41,14 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                <a class="btn btn-link" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@item.Id" id="Delete @item.Username">Delete</a>
+                <a class="btn btn-link" asp-controller="User" asp-action="DeleteUser" asp-route-id="@item.Id" id="Delete @item.Username">Delete</a>
                 @if (item.AccountType == AccountType.User)
                 {
-                    <a class="btn btn-link" asp-controller="Admin" asp-action="MakeUserAdmin" asp-route-id="@item.Id" id="MakeAdmin @item.Username">Make Admin</a>
+                    <a class="btn btn-link" asp-controller="User" asp-action="MakeUserAdmin" asp-route-id="@item.Id" id="MakeAdmin @item.Username">Make Admin</a>
                 }
                 else
                 {
-                    <a class="btn btn-link" asp-controller="Admin" asp-action="MakeAdminUser" asp-route-id="@item.Id" id="MakeUser @item.Username">Make User</a>
+                    <a class="btn btn-link" asp-controller="User" asp-action="MakeAdminUser" asp-route-id="@item.Id" id="MakeUser @item.Username">Make User</a>
                 }
             </td>
         </tr>

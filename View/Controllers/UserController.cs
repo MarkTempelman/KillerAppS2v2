@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Enums;
 using Logic;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using View.Helpers;
 using View.ViewModels;
@@ -55,7 +57,9 @@ namespace View.Controllers
             UserViewModel user = new UserViewModel();
             return View(user);
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(UserViewModel userViewModel)
         {
             try
@@ -83,10 +87,44 @@ namespace View.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Movie");
+        }
+
+        public IActionResult ManageUsers()
+        {
+            List<UserViewModel> userViewModels = new List<UserViewModel>();
+            foreach (var user in _userLogic.GetAllUsersExceptCurrent(int.Parse(User.Claims
+                .FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value)))
+            {
+                userViewModels.Add(ModelToViewModel.ToUserViewModel(user));
+            }
+
+            return View(userViewModels);
+        }
+
+        [Authorize(Policy = "admin")]
+        public IActionResult DeleteUser(int id)
+        {
+            _userLogic.DeleteUser(id);
+            return RedirectToAction("ManageUsers");
+        }
+
+        [Authorize(Policy = "admin")]
+        public IActionResult MakeUserAdmin(int id)
+        {
+            _userLogic.SetUserAccountType(id, AccountType.Admin);
+            return RedirectToAction("ManageUsers");
+        }
+
+        [Authorize(Policy = "admin")]
+        public IActionResult MakeAdminUser(int id)
+        {
+            _userLogic.SetUserAccountType(id, AccountType.User);
+            return RedirectToAction("ManageUsers");
         }
     }
 }
