@@ -12,7 +12,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input data-val="true" id="MovieId" name="MovieId" type="hidden" value="@Context.GetRouteData().Values["id"]">
 
-            <label asp-for="GenreId" class="control-label"></label>
+            <label asp-for="Genre" class="control-label"></label>
             <select class="form-control" id="Genre" name="GenreId">
                 <option value="-1">All Genres</option>
                 @foreach (GenreViewModel genre in Model.AllGenres)
@@ -21,9 +21,9 @@
                 }
             </select>
             <span asp-validation-for="Genre" class="text-danger"></span>
-
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Add to Movie" class="btn btn-default" />
+                <input type="submit" value="Add to Movie" class="btn btn-primary"/>
             </div>
         </form>
         }
