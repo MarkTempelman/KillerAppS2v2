@@ -107,7 +107,7 @@ namespace IntegrationTests
         }
 
         [Test]
-        public void AddMovieThenEditAndDelete()
+        public void AddMovieThenEditDescriptionAndDelete()
         {
             var guid = TestHelpers.GetRandomGuid();
 
@@ -124,7 +124,7 @@ namespace IntegrationTests
 
             _driver.FindElement(By.Id("Edit " + guid)).Click();
 
-            TestHelpers.EditMovie(_driver, guid);
+            TestHelpers.EditMovie(_driver, null, guid + " This movie was generated and edited by the automated testing system.");
 
             TestHelpers.WaitForPageLoad(_driver);
 
@@ -134,6 +134,37 @@ namespace IntegrationTests
                 guid + " This movie was generated and edited by the automated testing system."));
 
             _driver.FindElement(By.Id($"Delete {guid}")).Click();
+        }
+
+        [Test]
+        public void AddMovieThenEditTitleAndDelete()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.AddMovieSetup(_driver);
+
+            TestHelpers.AddMovie(_driver, guid);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            IJavaScriptExecutor js = (IJavaScriptExecutor)_driver;
+            js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
+
+            Thread.Sleep(1000);
+
+            _driver.FindElement(By.Id("Edit " + guid)).Click();
+
+            TestHelpers.EditMovie(_driver, "Edited " + guid, null);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Thread.Sleep(1000);
+
+            js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
+
+            Assert.True(_driver.PageSource.Contains("Edited " + guid));
+
+            _driver.FindElement(By.Id($"Delete Edited {guid}")).Click();
         }
     }
 }

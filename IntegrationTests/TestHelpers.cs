@@ -29,12 +29,26 @@ namespace IntegrationTests
             driver.FindElement(By.Id("Login")).Click();
         }
 
-        public static void RegisterUser(IWebDriver driver, string guid)
+        public static void RegisterUser(IWebDriver driver, string guid, string username, string email, string password)
         {
+            if (username == null)
+            {
+                username = guid;
+            }
+
+            if (email == null)
+            {
+                email += guid + "@mail.com";
+            }
+
+            if (password == null)
+            {
+                password = "testPassword";
+            }
             driver.FindElement(By.Id("NavRegister")).Click();
-            driver.FindElement(By.Id("Username")).SendKeys(guid);
-            driver.FindElement(By.Id("EmailAddress")).SendKeys(guid + "@mail.com");
-            driver.FindElement(By.Id("Password")).SendKeys("testPassword");
+            driver.FindElement(By.Id("Username")).SendKeys(username);
+            driver.FindElement(By.Id("EmailAddress")).SendKeys(email);
+            driver.FindElement(By.Id("Password")).SendKeys(password);
             driver.FindElement(By.Id("Register")).Click();
         }
 
@@ -67,11 +81,20 @@ namespace IntegrationTests
             WaitForPageLoad(driver);
         }
 
-        public static void EditMovie(IWebDriver driver, string guid)
+        public static void EditMovie(IWebDriver driver, string title, string description)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("Description"))).Clear();
-            driver.FindElement(By.Id("Description")).SendKeys(guid + " This movie was generated and edited by the automated testing system.");
+            if (title != null)
+            {
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("Title"))).Clear();
+                driver.FindElement(By.Id("Title")).SendKeys(title);
+            }
+
+            if (description != null)
+            {
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("Description"))).Clear();
+                driver.FindElement(By.Id("Description")).SendKeys(description);
+            }
             driver.FindElement(By.Id("EditMovie")).Click();
         }
 

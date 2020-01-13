@@ -63,7 +63,7 @@ namespace IntegrationTests
 
             var guid = TestHelpers.GetRandomGuid();
 
-            TestHelpers.RegisterUser(_driver, guid);
+            TestHelpers.RegisterUser(_driver, guid, null, null, null);
 
             TestHelpers.Login(_driver, guid, "testPassword");
 
@@ -77,7 +77,7 @@ namespace IntegrationTests
 
             TestHelpers.LoadHome(_driver);
 
-            TestHelpers.RegisterUser(_driver, guid);
+            TestHelpers.RegisterUser(_driver, guid, null, null, null);
 
             TestHelpers.Login(_driver, "Admin", "admin");
 
@@ -105,7 +105,7 @@ namespace IntegrationTests
 
             TestHelpers.LoadHome(_driver);
 
-            TestHelpers.RegisterUser(_driver, guid);
+            TestHelpers.RegisterUser(_driver, guid, null, null, null);
 
             TestHelpers.Login(_driver, "Admin", "admin");
 
@@ -124,6 +124,93 @@ namespace IntegrationTests
             Assert.False(_driver.PageSource.Contains("MakeAdmin " + guid));
         }
 
+        [Test]
+        public void TryRegisterTwiceWithSameName()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid, null, null, null);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid, null, guid + "2@mail.com", null);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("This username is already taken"));
+        }
+
+        [Test]
+        public void TryRegisterTwiceWithSameMail()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid, null, null, null);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid, guid + "2", null, null);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("This email address is already taken"));
+        }
+
+        [Test]
+        public void TryRegisterWithoutUsername()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid, "", null, null);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("The Username field is required."));
+        }
+
+        [Test]
+        public void TryRegisterWithoutEmail()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid, null, "", null);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("The EmailAddress field is required."));
+        }
+
+        [Test]
+        public void TryRegisterWithoutPassword()
+        {
+            var guid = TestHelpers.GetRandomGuid();
+
+            TestHelpers.LoadHome(_driver);
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            TestHelpers.RegisterUser(_driver, guid, null, null, "");
+
+            TestHelpers.WaitForPageLoad(_driver);
+
+            Assert.True(_driver.PageSource.Contains("The Password field is required."));
+        }
 
         [TearDown]
         public void TearDownTest()

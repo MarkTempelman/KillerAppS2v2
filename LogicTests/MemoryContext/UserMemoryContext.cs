@@ -54,5 +54,20 @@ namespace LogicTests.MemoryContext
         {
             return emailAddress == "admin@admin.com" || emailAddress == "user@user.com";
         }
+
+        public List<UserDTO> GetAllUsersExceptCurrent(int currentUserId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteUserById(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetUserAccountType(int userId, AccountType accountType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -33,5 +33,10 @@ namespace LogicTests.MemoryContext
             }
             return new List<int>();
         }
+
+        public void DeleteMediaById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

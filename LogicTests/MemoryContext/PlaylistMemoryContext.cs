@@ -60,5 +60,20 @@ namespace LogicTests.MemoryContext
         {
             throw new NotImplementedException();
         }
+
+        public void RemoveMovieFromAllPlaylists(int mediaId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<int> GetAllPlaylistIdsFromUserId(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeletePlaylistById(int playlistId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

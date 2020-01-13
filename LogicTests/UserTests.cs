@@ -12,11 +12,18 @@ namespace LogicTests
     {
         private IUserContext _iUserContext;
         private UserLogic _userLogic;
+        private PlaylistLogic _playlistLogic;
+        private IMediaContext _mediaContext;
+        private IPlaylistContext _playlistContext;
+        
         [SetUp]
         public void SetUp()
         {
             _iUserContext = new UserMemoryContext();
-            _userLogic = new UserLogic(_iUserContext);
+            _mediaContext = new MediaMemoryContext();
+            _playlistContext = new PlaylistMemoryContext();
+            _playlistLogic = new PlaylistLogic(_playlistContext, _mediaContext);
+            _userLogic = new UserLogic(_iUserContext, _playlistLogic);
         }
 
         [Test]

@@ -100,5 +100,10 @@ namespace LogicTests.MemoryContext
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteMovieById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
