@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +16,9 @@ namespace View.ViewModels
         [MaxLength(45, ErrorMessage = "Your username cannot be longer than 45 characters")]
         public string Username { get; set; }
         [Required]
-        [EmailAddress]
+        [RegularExpression(@"^(?:[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?)$", 
+            ErrorMessage = "Please enter a valid email address")]
+        [DisplayName("Email address")]
         public string EmailAddress { get; set; }
         public AccountType AccountType { get; set; }
         [Required]
