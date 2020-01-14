@@ -36,7 +36,7 @@ namespace View.Controllers
             }
 
             var movieViewModels = ModelToViewModel.ToMovieViewModels(movies);
-
+            
             foreach (var movie in movieViewModels)
             {
                 movie.GenresString = MiscHelper.GetStringFromGenreViewModels(movie.Genres);
@@ -47,7 +47,18 @@ namespace View.Controllers
         [HttpPost]
         public ActionResult Index(SearchViewModel search)
         {
-            List<MovieModel> movies = _movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search)).ToList();
+            List<MovieModel> movies;
+            if (search.ReleasedAfter > search.ReleasedBefore)
+            {
+                movies = _movieLogic.GetAllMovies().ToList();
+                
+                TempData["SearchError"] = "Released after must be lower than or equal to Released before";
+            }
+            else
+            {
+                movies = _movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search)).ToList();
+            }
+
             if (User.Identity.IsAuthenticated)
             {
                 movies = _movieLogic.CheckIfMoviesAreFavourites(movies, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
