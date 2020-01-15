@@ -20,29 +20,30 @@
                 <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => Model.ReleaseDate)</h6>
                 <p class="card-text">@Html.DisplayFor(modelItem => Model.ShortDescription)</p>
                 <p class="card-text">@Html.DisplayFor(modelItem => Model.GenresString)</p>
-                <p class="card-text">@Html.DisplayFor(modelItem => Model.PersonalRating)</p>
+
                 <p class="card-text">Average rating:</p>
+
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: @Model.AverageRating%" aria-valuenow="@Model.AverageRating" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a class="card-link" asp-controller="Movie" asp-action="EditMovie" asp-route-id="@Model.MovieId" id="Edit @Model.Title">Edit Movie</a>
-                    <a class="card-link" asp-controller="Genre" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId" id="Genre @Model.Title">Add Genre</a>
-                    <a class="card-link" asp-controller="Movie" asp-action="DeleteMovie" asp-route-id="@Model.MovieId" id="Delete @Model.Title">Delete</a>
-                }
-                @if (User.Identity.IsAuthenticated)
-                {
-                    @if (Model.IsFavourite)
-                    {
-                        <a class="card-link" asp-controller="Playlist" asp-action="RemoveMovieFromFavourites" asp-route-id="@Model.MovieId">Remove from favourites</a>
-                    }
-                    @if (!Model.IsFavourite)
-                    {
-                        <a class="card-link" asp-controller="Playlist" asp-action="AddMovieToFavourites" asp-route-id="@Model.MovieId">Add to favourites</a>
-                    }
-                }
-            </td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="card-link" asp-controller="Movie" asp-action="EditMovie" asp-route-id="@Model.MovieId" id="Edit @Model.Title">Edit Movie</a>
+                            <a class="card-link" asp-controller="Genre" asp-action="AddGenreToMovie" asp-route-id="@Model.MovieId" id="Genre @Model.Title">Add Genre</a>
+                            <a class="card-link" asp-controller="Movie" asp-action="DeleteMovie" asp-route-id="@Model.MovieId" id="Delete @Model.Title">Delete</a>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (Model.IsFavourite)
+                            {
+                                <a class="card-link" asp-controller="Playlist" asp-action="RemoveMovieFromFavourites" asp-route-id="@Model.MovieId">Remove from favourites</a>
+                            }
+                            @if (!Model.IsFavourite)
+                            {
+                                <a class="card-link" asp-controller="Playlist" asp-action="AddMovieToFavourites" asp-route-id="@Model.MovieId">Add to favourites</a>
+                            }
+                        }
+                </td>
         </tr></table>
     </div>
 </div>

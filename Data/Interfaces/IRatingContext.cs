@@ -11,5 +11,8 @@ namespace Data.Interfaces
         RatingDTO GetPersonalRatingOfMedia(int userId, int mediaId);
         void DeleteRatingsByMediaId(int id);
         void DeleteRatingsByUserId(int id);
+        void NewRating(RatingDTO rating);
+        void UpdateRating(RatingDTO rating);
+        bool DoesRatingExist(RatingDTO rating);
     }
 }

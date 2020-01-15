@@ -21,38 +21,37 @@ namespace Logic
 
         public List<MovieModel> AddRatingsToMovies(List<MovieModel> movies, int userId)
         {
-            movies = AddAverageRatingToMovies(movies);
-            movies = AddPersonalRatingToMovies(movies, userId);
-            return movies;
-        }
-
-        private List<MovieModel> AddAverageRatingToMovies(List<MovieModel> movies)
-        {
             foreach (var movie in movies)
             {
-                movie.AverageRating = CalculateAverageOfRatings(_iRatingContext.GetAllRatingsFromMediaId(
-                    _mediaLogic.GetMediaIdFromMovieId(movie.MovieId)).
-                    Select(ToRatingModel).ToList());
+                movie.AverageRating = GetAverageRatingForMovie(movie);
+                movie.PersonalRating = GetPersonalRatingForMovie(movie, userId);
             }
             return movies;
         }
 
-        private List<MovieModel> AddPersonalRatingToMovies(List<MovieModel> movies, int userId)
+        public MovieModel AddRatingsToMovie(MovieModel movie, int userId)
         {
-            foreach (var movie in movies)
+            movie.AverageRating = GetAverageRatingForMovie(movie);
+            movie.PersonalRating = GetPersonalRatingForMovie(movie, userId);
+            return movie;
+        }
+
+        private double GetAverageRatingForMovie(MovieModel movie)
+        {
+            return CalculateAverageOfRatings(
+                _iRatingContext.GetAllRatingsFromMediaId(_mediaLogic.GetMediaIdFromMovieId(movie.MovieId))
+                    .Select(ToRatingModel).ToList());
+        }
+
+        private double GetPersonalRatingForMovie(MovieModel movie, int userId)
+        {
+            var personalRating = _iRatingContext.GetPersonalRatingOfMedia(userId,
+                _mediaLogic.GetMediaIdFromMovieId(movie.MovieId));
+            if (personalRating != null)
             {
-                var personalRating = _iRatingContext.GetPersonalRatingOfMedia(userId,
-                    _mediaLogic.GetMediaIdFromMovieId(movie.MovieId));
-                if (personalRating != null)
-                {
-                    movie.PersonalRating = personalRating.Rating;
-                }
-                else
-                {
-                    movie.PersonalRating = 0;
-                }
+                return personalRating.Rating;
             }
-            return movies;
+            return 0;
         }
 
         private double CalculateAverageOfRatings(List<RatingModel> ratingModels)
@@ -73,6 +72,19 @@ namespace Logic
         public void DeleteRatingByUserId(int id)
         {
             _iRatingContext.DeleteRatingsByUserId(id);
+        }
+
+        public void RateMovie(RatingModel rating)
+        {
+            RatingDTO ratingDTO = ToRatingDTO(rating);
+            if (_iRatingContext.DoesRatingExist(ratingDTO))
+            {
+                _iRatingContext.UpdateRating(ratingDTO);
+            }
+            else
+            {
+                _iRatingContext.NewRating(ratingDTO);
+            }
         }
 
         public RatingDTO ToRatingDTO(RatingModel ratingModel)

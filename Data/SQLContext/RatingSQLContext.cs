@@ -116,5 +116,75 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
+        public void NewRating(RatingDTO rating)
+        {
+            try
+            {
+                MySqlCommand command = new MySqlCommand("INSERT INTO `rating` (UserId, MediaId, Rating) " +
+                                                        "VALUES (@userId, @mediaId, @rating)", _conn);
+                command.Parameters.AddWithValue("userId", rating.UserId);
+                command.Parameters.AddWithValue("mediaId", rating.MediaId);
+                command.Parameters.AddWithValue("rating", rating.Rating);
+                _conn.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+
+        public void UpdateRating(RatingDTO rating)
+        {
+            try
+            {
+                MySqlCommand command = new MySqlCommand("UPDATE `rating` SET Rating = @rating " +
+                                                        "WHERE UserId = @userId AND MediaId = @mediaId", _conn);
+                command.Parameters.AddWithValue("rating", rating.Rating);
+                command.Parameters.AddWithValue("userId", rating.UserId);
+                command.Parameters.AddWithValue("mediaId", rating.MediaId);
+                _conn.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+
+        public bool DoesRatingExist(RatingDTO rating)
+        {
+            try
+            {
+                MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `rating` " +
+                                                        "WHERE UserId = @userId AND MediaId = @mediaId", _conn);
+                command.Parameters.AddWithValue("userId", rating.UserId);
+                command.Parameters.AddWithValue("mediaId", rating.MediaId);
+                _conn.Open();
+
+                var result = int.Parse(command.ExecuteScalar().ToString());
+                return result > 0;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

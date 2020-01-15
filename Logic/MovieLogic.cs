@@ -37,9 +37,9 @@ namespace Logic
             return movies;
         }
 
-        public MovieModel GetMovieById(int id)
+        public MovieModel GetMovieById(int id, int userId)
         {
-            return ToMovieModel(_iMovieContext.GetMovieById(id));
+            return _ratingLogic.AddRatingsToMovie(ToMovieModel(_iMovieContext.GetMovieById(id)), userId);
         }
 
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search, int userId)

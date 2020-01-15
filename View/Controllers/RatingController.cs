@@ -8,7 +8,8 @@ namespace View.Controllers
 {
     public class RatingController : Controller
     {
-        public IActionResult Index()
+        [HttpPost]
+        public IActionResult RateMovie()
         {
             return View();
         }

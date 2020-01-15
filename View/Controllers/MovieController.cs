@@ -75,14 +75,18 @@ namespace View.Controllers
 
         public ActionResult MovieInfo(int id)
         {
-            var movieModel = _movieLogic.GetMovieById(id);
+            var movieModel = _movieLogic.GetMovieById(id, MiscHelper.GetCurrentUserIdOrZero(this));
             if (movieModel == null)
             {
                 return NotFound();
             }
             List<GenreViewModel> genresViewModels = movieModel.Genres.Select(ModelToViewModel.ToGenreViewModel).ToList();
             var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
-                MiscHelper.ShortenStringIfNecessary(movieModel.Description), genresViewModels, movieModel.MovieId);
+                MiscHelper.ShortenStringIfNecessary(movieModel.Description), genresViewModels, movieModel.MovieId)
+            {
+                AverageRating = Convert.ToInt32(movieModel.AverageRating * 10),
+                PersonalRating = Convert.ToInt32(movieModel.PersonalRating * 10)
+            };
 
             return View(movieViewModel);
         }
@@ -130,7 +134,7 @@ namespace View.Controllers
         [Authorize(Policy = "admin")]
         public IActionResult EditMovie(int id)
         {
-            var movieModel = _movieLogic.GetMovieById(id);
+            var movieModel = _movieLogic.GetMovieById(id, MiscHelper.GetCurrentUserIdOrZero(this));
             if (movieModel == null)
             {
                 return NotFound();
