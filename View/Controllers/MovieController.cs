@@ -29,7 +29,7 @@ namespace View.Controllers
 
         public ActionResult Index()
         {
-            var movies = _movieLogic.GetAllMovies().ToList();
+            var movies = _movieLogic.GetAllMovies(MiscHelper.GetCurrentUserIdOrZero(this)).ToList();
             if (User.Identity.IsAuthenticated)
             {
                 movies = _movieLogic.CheckIfMoviesAreFavourites(movies, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
@@ -50,13 +50,13 @@ namespace View.Controllers
             List<MovieModel> movies;
             if (search.ReleasedAfter > search.ReleasedBefore)
             {
-                movies = _movieLogic.GetAllMovies().ToList();
+                movies = _movieLogic.GetAllMovies(MiscHelper.GetCurrentUserIdOrZero(this)).ToList();
                 
                 TempData["SearchError"] = "Released after must be lower than or equal to Released before";
             }
             else
             {
-                movies = _movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search)).ToList();
+                movies = _movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search), MiscHelper.GetCurrentUserIdOrZero(this)).ToList();
             }
 
             if (User.Identity.IsAuthenticated)

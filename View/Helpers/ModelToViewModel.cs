@@ -41,7 +41,8 @@ namespace View.Helpers
                     {
                         IsFavourite = movie.IsFavourite,
                         ImagePath = imagePath,
-                        AverageRating = Convert.ToInt32(movie.AverageRating * 10)
+                        AverageRating = Convert.ToInt32(movie.AverageRating * 10),
+                        PersonalRating = Convert.ToInt32(movie.PersonalRating * 10)
                     }
                 );
             }

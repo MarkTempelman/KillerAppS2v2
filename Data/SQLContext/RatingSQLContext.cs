@@ -52,10 +52,10 @@ namespace Data.SQLContext
             RatingDTO rating = null;
             try
             {
-                MySqlCommand command = new MySqlCommand("SELECT * WHERE UserId = @userId AND MediaId = @mediaId", _conn);
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `rating` WHERE UserId = @userId AND MediaId = @mediaId", _conn);
                 command.Parameters.AddWithValue("userId", userId);
                 command.Parameters.AddWithValue("mediaId", mediaId);
-
+                _conn.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {

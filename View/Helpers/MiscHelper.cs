@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using View.ViewModels;
+
 
 namespace View.Helpers
 {
@@ -29,6 +35,16 @@ namespace View.Helpers
             }
 
             return returnValue.Substring(0,(returnValue.Length - 2));
+        }
+
+        public static int GetCurrentUserIdOrZero(Controller controller)
+        {
+            if (controller.User.IsInRole("Admin") || controller.User.IsInRole("User"))
+            {
+                return int.Parse(controller.User.Claims.FirstOrDefault(c =>
+                    c.Type == System.Security.Claims.ClaimTypes.Sid).Value);
+            }
+            return 0;
         }
     }
 }
