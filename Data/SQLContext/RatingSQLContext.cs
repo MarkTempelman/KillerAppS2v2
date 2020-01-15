@@ -47,6 +47,38 @@ namespace Data.SQLContext
             return ratings;
         }
 
+        public RatingDTO GetPersonalRatingOfMedia(int userId, int mediaId)
+        {
+            RatingDTO rating = null;
+            try
+            {
+                MySqlCommand command = new MySqlCommand("SELECT * WHERE UserId = @userId AND MediaId = @mediaId", _conn);
+                command.Parameters.AddWithValue("userId", userId);
+                command.Parameters.AddWithValue("mediaId", mediaId);
+
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    rating = new RatingDTO(
+                        reader.GetInt32("UserId"),
+                        reader.GetInt32("MediaId"),
+                        reader.GetInt32("Rating")
+                        );
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+
+            return rating;
+        }
+
         public void DeleteRatingsByMediaId(int id)
         {
             try
@@ -65,6 +97,7 @@ namespace Data.SQLContext
                 _conn.Close();
             }
         }
+
         public void DeleteRatingsByUserId(int id)
         {
             try

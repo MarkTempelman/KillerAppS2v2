@@ -19,13 +19,38 @@ namespace Logic
             _mediaLogic = mediaLogic;
         }
 
-        public List<MovieModel> AddAverageRatingToMovies(List<MovieModel> movies)
+        public List<MovieModel> AddRatingsToMovies(List<MovieModel> movies, int userId)
+        {
+            movies = AddAverageRatingToMovies(movies);
+            movies = AddPersonalRatingToMovies(movies, userId);
+            return movies;
+        }
+
+        private List<MovieModel> AddAverageRatingToMovies(List<MovieModel> movies)
         {
             foreach (var movie in movies)
             {
                 movie.AverageRating = CalculateAverageOfRatings(_iRatingContext.GetAllRatingsFromMediaId(
                     _mediaLogic.GetMediaIdFromMovieId(movie.MovieId)).
                     Select(ToRatingModel).ToList());
+            }
+            return movies;
+        }
+
+        private List<MovieModel> AddPersonalRatingToMovies(List<MovieModel> movies, int userId)
+        {
+            foreach (var movie in movies)
+            {
+                var personalRating = _iRatingContext.GetPersonalRatingOfMedia(userId,
+                    _mediaLogic.GetMediaIdFromMovieId(movie.MovieId));
+                if (personalRating != null)
+                {
+                    movie.PersonalRating = personalRating.Rating;
+                }
+                else
+                {
+                    movie.PersonalRating = 0;
+                }
             }
             return movies;
         }

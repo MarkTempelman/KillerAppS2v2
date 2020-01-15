@@ -30,7 +30,7 @@ namespace Logic
 
         public IEnumerable<MovieModel> GetAllMovies()
         {
-            return _ratingLogic.AddAverageRatingToMovies(
+            return _ratingLogic.AddRatingsToMovies(
                 _genreLogic.AddGenresToMovies(
                     _iMovieContext.GetAllMovies()
                         .Select(ToMovieModel))
@@ -44,7 +44,7 @@ namespace Logic
 
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
         {
-            return _ratingLogic.AddAverageRatingToMovies(
+            return _ratingLogic.AddRatingsToMovies(
                 _genreLogic.AddGenresToMovies(
                     _iMovieContext.GetMoviesBySearchModel(
                         _searchLogic.ToSearchDTO(search))
@@ -64,7 +64,7 @@ namespace Logic
 
         public List<MovieModel> GetMoviesFromFavourites(int userId)
         {
-            List<MovieModel> movies = _ratingLogic.AddAverageRatingToMovies(
+            List<MovieModel> movies = _ratingLogic.AddRatingsToMovies(
                 _playlistLogic.GetMediaIdsFromFavourites(userId)
                 .Select(mediaId => ToMovieModel(_iMovieContext.GetMovieFromMediaId(mediaId)))
                 .ToList());
