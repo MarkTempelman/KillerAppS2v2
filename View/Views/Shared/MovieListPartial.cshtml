@@ -15,12 +15,14 @@
             <td style="width:15%; height: 30%; vertical-align: top">
                 <img class="card-img" src="@imagePath" asp-append-version="true" style="max-height:95%; max-width:95%; width:auto; height:auto;"/>
             </td>
-
             <td>
                 <h4 class="card-title"><a asp-controller="Movie" asp-action="MovieInfo" asp-route-id="@Model.MovieId"><B>@Html.DisplayFor(modelItem => Model.Title)</B></a></h4>
                 <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => Model.ReleaseDate)</h6>
                 <p class="card-text">@Html.DisplayFor(modelItem => Model.ShortDescription)</p>
                 <p class="card-text">@Html.DisplayFor(modelItem => Model.GenresString)</p>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: @Model.AverageRating%" aria-valuenow="@Model.AverageRating" aria-valuemin="10" aria-valuemax="100"></div>
+                </div>
                 @if (User.IsInRole("Admin"))
                 {
                     <a class="card-link" asp-controller="Movie" asp-action="EditMovie" asp-route-id="@Model.MovieId" id="Edit @Model.Title">Edit Movie</a>

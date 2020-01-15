@@ -16,6 +16,7 @@ namespace Logic.Models
         public int MediaId { get; set; } = -1;
         public bool IsFavourite { get; set; } = false;
         public string ImagePath { get; set; }
+        public double AverageRating { get; set; }
 
         public MovieModel(int movieId, string title, string description, DateTime releaseDate, int mediaId)
         {

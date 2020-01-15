@@ -40,7 +40,8 @@ namespace View.Helpers
                     movie.MovieId)
                     {
                         IsFavourite = movie.IsFavourite,
-                        ImagePath = imagePath
+                        ImagePath = imagePath,
+                        AverageRating = Convert.ToInt32(movie.AverageRating * 10)
                     }
                 );
             }

@@ -78,7 +78,8 @@ namespace View
                 SearchLogic sl = m.GetService<SearchLogic>();
                 PlaylistLogic p = m.GetService<PlaylistLogic>();
                 MediaLogic me = m.GetService<MediaLogic>();
-                return new MovieLogic(mc, gl, sl, p, me);
+                RatingLogic rl = m.GetService<RatingLogic>();
+                return new MovieLogic(mc, gl, sl, p, me, rl);
             });
 
             services.AddTransient(g =>
@@ -111,6 +112,13 @@ namespace View
             {
                 IMediaContext m = me.GetService<IMediaContext>();
                 return new MediaLogic(m);
+            });
+
+            services.AddTransient(r =>
+            {
+                IRatingContext rc = r.GetService<IRatingContext>();
+                MediaLogic m = r.GetService<MediaLogic>();
+                return new RatingLogic(rc, m);
             });
 
             

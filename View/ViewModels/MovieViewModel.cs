@@ -20,7 +20,7 @@ namespace View.ViewModels
         [DisplayName("Release date")]
         public DateTime ReleaseDate { get; set; }
         public string ShortDescription { get; set; }
-        public double AverageRating { get; set; }
+        public int AverageRating { get; set; }
         public List<GenreViewModel> Genres { get; set; }
         public int MovieId { get; set; }
         public List<GenreViewModel> AllGenres { get; set; } = new List<GenreViewModel>();

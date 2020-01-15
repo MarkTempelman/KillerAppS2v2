@@ -15,19 +15,26 @@ namespace Logic
         private readonly SearchLogic _searchLogic;
         private readonly PlaylistLogic _playlistLogic;
         private readonly MediaLogic _mediaLogic;
+        private readonly RatingLogic _ratingLogic;
 
-        public MovieLogic(IMovieContext movieContext, GenreLogic genreLogic, SearchLogic searchLogic, PlaylistLogic playlistLogic, MediaLogic mediaLogic)
+        public MovieLogic(IMovieContext movieContext, GenreLogic genreLogic, SearchLogic searchLogic, 
+            PlaylistLogic playlistLogic, MediaLogic mediaLogic, RatingLogic ratingLogic)
         {
             _iMovieContext = movieContext;
             _genreLogic = genreLogic;
             _searchLogic = searchLogic;
             _playlistLogic = playlistLogic;
             _mediaLogic = mediaLogic;
+            _ratingLogic = ratingLogic;
         }
 
         public IEnumerable<MovieModel> GetAllMovies()
         {
-            return _genreLogic.AddGenresToMovies(_iMovieContext.GetAllMovies().Select(ToMovieModel));
+            return _ratingLogic.AddAverageRatingToMovies(
+                _genreLogic.AddGenresToMovies(
+                    _iMovieContext.GetAllMovies()
+                        .Select(ToMovieModel))
+                    .ToList());
         }
 
         public MovieModel GetMovieById(int id)
@@ -37,7 +44,12 @@ namespace Logic
 
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search)
         {
-            return _genreLogic.AddGenresToMovies(_iMovieContext.GetMoviesBySearchModel(_searchLogic.ToSearchDTO(search)).Select(ToMovieModel));
+            return _ratingLogic.AddAverageRatingToMovies(
+                _genreLogic.AddGenresToMovies(
+                    _iMovieContext.GetMoviesBySearchModel(
+                        _searchLogic.ToSearchDTO(search))
+                        .Select(ToMovieModel))
+                    .ToList());
         }
 
         public void CreateNewMovie(MovieModel movieModel)
@@ -52,9 +64,10 @@ namespace Logic
 
         public List<MovieModel> GetMoviesFromFavourites(int userId)
         {
-            List<MovieModel> movies = _playlistLogic.GetMediaIdsFromFavourites(userId)
+            List<MovieModel> movies = _ratingLogic.AddAverageRatingToMovies(
+                _playlistLogic.GetMediaIdsFromFavourites(userId)
                 .Select(mediaId => ToMovieModel(_iMovieContext.GetMovieFromMediaId(mediaId)))
-                .ToList();
+                .ToList());
             foreach (var movie in movies)
             {
                 movie.IsFavourite = true;
