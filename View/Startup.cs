@@ -65,6 +65,11 @@ namespace View
                 string c = Configuration.GetConnectionString("DefaultConnection");
                 return new MediaSQLContext(c);
             });
+            services.AddTransient<IRatingContext, RatingSQLContext>(r =>
+            {
+                string c = Configuration.GetConnectionString("DefaultConnection");
+                return new RatingSQLContext(c);
+            });
 
             services.AddTransient(m =>
             {
