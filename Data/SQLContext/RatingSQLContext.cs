@@ -46,5 +46,42 @@ namespace Data.SQLContext
 
             return ratings;
         }
+
+        public void DeleteRatingsByMediaId(int id)
+        {
+            try
+            {
+                MySqlCommand command = new MySqlCommand("DELETE FROM `rating` WHERE MediaId = @mediaId", _conn);
+                command.Parameters.AddWithValue("mediaId", id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+        public void DeleteRatingsByUserId(int id)
+        {
+            try
+            {
+                MySqlCommand command = new MySqlCommand("DELETE FROM `rating` WHERE UserId = @userId", _conn);
+                command.Parameters.AddWithValue("userId", id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
     }
 }

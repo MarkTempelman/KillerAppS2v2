@@ -40,6 +40,16 @@ namespace Logic
             return Math.Round(ratingModels.Select(r => r.Rating).Average(), 1);
         }
 
+        public void DeleteRatingByMediaId(int id)
+        {
+            _iRatingContext.DeleteRatingsByMediaId(id);
+        }
+
+        public void DeleteRatingByUserId(int id)
+        {
+            _iRatingContext.DeleteRatingsByUserId(id);
+        }
+
         public RatingDTO ToRatingDTO(RatingModel ratingModel)
         {
             return new RatingDTO(ratingModel.UserId, ratingModel.MediaId, ratingModel.Rating);

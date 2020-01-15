@@ -98,7 +98,8 @@ namespace View
             {
                 IUserContext uc = s.GetService<IUserContext>();
                 PlaylistLogic pl = s.GetService<PlaylistLogic>();
-                return new UserLogic(uc, pl);
+                RatingLogic rl = s.GetService<RatingLogic>();
+                return new UserLogic(uc, pl, rl);
             });
 
             services.AddTransient(p =>

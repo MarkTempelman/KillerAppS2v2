@@ -14,11 +14,13 @@ namespace Logic
     {
         private readonly IUserContext _iUserContext;
         private readonly PlaylistLogic _playlistLogic;
+        private readonly RatingLogic _ratingLogic;
 
-        public UserLogic(IUserContext iUserContext, PlaylistLogic playlistLogic)
+        public UserLogic(IUserContext iUserContext, PlaylistLogic playlistLogic, RatingLogic ratingLogic)
         {
             _iUserContext = iUserContext;
             _playlistLogic = playlistLogic;
+            _ratingLogic = ratingLogic;
         }
 
         public void CreateUser(UserModel userModel)
@@ -65,6 +67,7 @@ namespace Logic
         public void DeleteUser(int userId)
         {
             _playlistLogic.DeleteAllPlaylistsOfUser(userId);
+            _ratingLogic.DeleteRatingByUserId(userId);
             _iUserContext.DeleteUserById(userId);
         }
 
