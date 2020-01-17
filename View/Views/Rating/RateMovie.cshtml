@@ -9,9 +9,6 @@
             <div class="form-group">
                 <label asp-for="Rating">Personal rating:</label>
                 <input asp-for="Rating" type="range" class="custom-range form-control" step="1" max="100" value="@Model.Rating" min="0" id="customRange1">
-                @*<label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
