@@ -6,8 +6,8 @@
 
 
 <div>
-    <br/>
-    <br/>
+    <br />
+    <br />
     <h3>
         @Html.DisplayFor(model => model.Title)
         <small class="text-muted">
@@ -17,24 +17,16 @@
 
     <p>Average rating:</p>
     <div class="progress">
-        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: @Model.AverageRating%" aria-valuenow="@Model.AverageRating" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width:@Model.AverageRating%" aria-valuenow="@Model.AverageRating" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     @if (User.Identity.IsAuthenticated)
     {
-        <form>
-            <fieldset class="form-group">
-                <label for="customRange1">Personal rating:</label>
-                <input type="range" class="custom-range" max="100" value="@Model.PersonalRating" min="0" id="customRange1">
-            </fieldset>
-            <div class="form-group" align="left">
-                <button type="submit" class="btn btn-primary" id="Save">Save</button>
-            </div>
-        </form>
+        @Html.Partial("../Rating/RateMovie", Model.PersonalRating)
     }
     @Html.DisplayFor(model => model.Description)
-    
 
- 
+
+
 </div>
 <div>
     <a asp-action="Index">Back to List</a>

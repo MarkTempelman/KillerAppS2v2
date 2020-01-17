@@ -84,8 +84,8 @@ namespace View.Controllers
             var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
                 MiscHelper.ShortenStringIfNecessary(movieModel.Description), genresViewModels, movieModel.MovieId)
             {
-                AverageRating = Convert.ToInt32(movieModel.AverageRating * 10),
-                PersonalRating = Convert.ToInt32(movieModel.PersonalRating * 10)
+                AverageRating = movieModel.AverageRating,
+                PersonalRating = new RatingViewModel(movieModel.MovieId, movieModel.PersonalRating)
             };
 
             return View(movieViewModel);

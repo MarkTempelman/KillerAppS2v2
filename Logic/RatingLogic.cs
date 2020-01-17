@@ -36,14 +36,14 @@ namespace Logic
             return movie;
         }
 
-        private double GetAverageRatingForMovie(MovieModel movie)
+        private int GetAverageRatingForMovie(MovieModel movie)
         {
             return CalculateAverageOfRatings(
                 _iRatingContext.GetAllRatingsFromMediaId(_mediaLogic.GetMediaIdFromMovieId(movie.MovieId))
                     .Select(ToRatingModel).ToList());
         }
 
-        private double GetPersonalRatingForMovie(MovieModel movie, int userId)
+        private int GetPersonalRatingForMovie(MovieModel movie, int userId)
         {
             var personalRating = _iRatingContext.GetPersonalRatingOfMedia(userId,
                 _mediaLogic.GetMediaIdFromMovieId(movie.MovieId));
@@ -54,14 +54,14 @@ namespace Logic
             return 0;
         }
 
-        private double CalculateAverageOfRatings(List<RatingModel> ratingModels)
+        private int CalculateAverageOfRatings(List<RatingModel> ratingModels)
         {
             if (ratingModels.Count < 1)
             {
-                return 0.0;
+                return 0;
             }
             
-            return Math.Round(ratingModels.Select(r => r.Rating).Average(), 1);
+            return Convert.ToInt32(Math.Round(ratingModels.Select(r => r.Rating).Average(), 1));
         }
 
         public void DeleteRatingByMediaId(int id)

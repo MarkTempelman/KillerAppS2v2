@@ -21,7 +21,7 @@ namespace View.ViewModels
         public DateTime ReleaseDate { get; set; }
         public string ShortDescription { get; set; }
         public int AverageRating { get; set; }
-        public int PersonalRating { get; set; }
+        public RatingViewModel PersonalRating { get; set; }
         public List<GenreViewModel> Genres { get; set; }
         public int MovieId { get; set; }
         public List<GenreViewModel> AllGenres { get; set; } = new List<GenreViewModel>();

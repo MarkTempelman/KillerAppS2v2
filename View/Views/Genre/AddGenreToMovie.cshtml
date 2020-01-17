@@ -8,7 +8,7 @@
     <div class="col-md-4">
         @if (Model.AllGenres.Count > 0)
         {
-        <form asp-action="AddGenreToMovie" asp-controller="Admin">
+        <form asp-action="AddGenreToMovie" asp-controller="Genre">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input data-val="true" id="MovieId" name="MovieId" type="hidden" value="@Context.GetRouteData().Values["id"]">
 

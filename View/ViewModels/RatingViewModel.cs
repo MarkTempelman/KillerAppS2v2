@@ -2,19 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace View.ViewModels
 {
     public class RatingViewModel
     {
         public int UserId { get; set; }
-        public int MediaId { get; set; }
-        public double Rating { get; set; }
+        public int MovieId { get; set; }
+        [DisplayName("Rating")]
+        public int Rating { get; set; }
 
-        public RatingViewModel(int userId, int mediaId, double rating)
+        public RatingViewModel()
         {
-            UserId = userId;
-            MediaId = mediaId;
+
+        }
+
+        public RatingViewModel(int movieId, int rating)
+        {
+            MovieId = movieId;
             Rating = rating;
         }
     }

@@ -58,5 +58,10 @@ namespace View.Helpers
         {
             return new UserModel(userViewModel.Username, userViewModel.EmailAddress, userViewModel.Password);
         }
+
+        public static RatingModel ToRatingModel(RatingViewModel ratingViewModel)
+        {
+            return new RatingModel(ratingViewModel.UserId, ratingViewModel.Rating);
+        }
     }
 }

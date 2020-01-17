@@ -8,14 +8,14 @@ namespace Data.DTO
     {
         public int UserId { get; set; }
         public int MediaId { get; set; }
-        public double Rating { get; set; }
+        public int Rating { get; set; }
 
         public RatingDTO()
         {
 
         }
 
-        public RatingDTO(int userId, int mediaId, double rating)
+        public RatingDTO(int userId, int mediaId, int rating)
         {
             UserId = userId;
             MediaId = mediaId;
