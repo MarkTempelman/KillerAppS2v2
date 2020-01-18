@@ -258,13 +258,22 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
+                    string imagePath = null;
+                    if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
+                    {
+                        imagePath = reader.GetString("ImagePath");
+                    }
+
                     movie = new MovieDTO(
                         reader.GetInt32("MovieId"),
                         reader.GetString("Title"),
                         reader.GetString("Description"),
                         reader.GetDateTime("ReleaseDate"),
                         reader.GetInt32("MediaId")
-                        );
+                    )
+                    {
+                        ImagePath = imagePath
+                    };
                 }
             }
             catch (Exception e)
