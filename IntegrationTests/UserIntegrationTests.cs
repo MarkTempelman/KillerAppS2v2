@@ -193,7 +193,7 @@ namespace IntegrationTests
 
             TestHelpers.WaitForPageLoad(_driver);
 
-            Assert.True(_driver.PageSource.Contains("The EmailAddress field is required."));
+            Assert.True(_driver.PageSource.Contains("The Email address field is required."));
         }
 
         [Test]
