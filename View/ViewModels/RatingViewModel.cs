@@ -11,7 +11,7 @@ namespace View.ViewModels
     {
         public int UserId { get; set; }
         public int MovieId { get; set; }
-        [DisplayName("Rating")]
+        [Range(0, 100)]
         public int Rating { get; set; }
 
         public RatingViewModel()

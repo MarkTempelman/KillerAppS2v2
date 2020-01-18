@@ -30,6 +30,10 @@ namespace View.Controllers
         [HttpPost]
         public ActionResult RateMovie(RatingViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("MovieInfo", "Movie", new { id = model.MovieId });
+            }
             model.UserId = MiscHelper.GetCurrentUserIdOrZero(this);
             RatingModel ratingModel = ViewModelToModel.ToRatingModel(model);
             ratingModel.MediaId = _mediaLogic.GetMediaIdFromMovieId(model.MovieId);
