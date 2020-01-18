@@ -61,13 +61,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    user = new UserDTO(
-                        reader.GetString(reader.GetOrdinal("Username")),
-                        reader.GetString(reader.GetOrdinal("EmailAddress")),
-                        (AccountType) Enum.Parse(typeof(AccountType),
-                            reader.GetString(reader.GetOrdinal("AccountType"))),
-                        reader.GetString(reader.GetOrdinal("Password"))
-                    ) {UserId = reader.GetInt32("UserId")};
+                    user = GetUserFromReader(reader);
                 }
 
                 return user;
@@ -146,13 +140,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    users.Add(new UserDTO(
-                        reader.GetInt32("UserId"),
-                        reader.GetString("Username"),
-                        reader.GetString("EmailAddress"),
-                        (AccountType)Enum.Parse(typeof(AccountType),
-                            reader.GetString(reader.GetOrdinal("AccountType")))
-                    ));
+                    users.Add(GetUserFromReader(reader));
                 }
             }
             catch (Exception e)
@@ -208,6 +196,19 @@ namespace Data.SQLContext
             {
                 _conn.Close();
             }
+        }
+
+        private UserDTO GetUserFromReader(MySqlDataReader reader)
+        {
+            return new UserDTO(
+                reader.GetInt32("UserId"),
+                reader.GetString("Username"),
+                reader.GetString("EmailAddress"),
+                (AccountType) Enum.Parse(typeof(AccountType),
+                    reader.GetString(reader.GetOrdinal("AccountType"))))
+            {
+                Password = reader.GetString("Password")
+            };
         }
     }
 }
