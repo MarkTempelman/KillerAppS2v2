@@ -25,28 +25,33 @@ namespace View.Helpers
             List<MovieViewModel> movieViewModels = new List<MovieViewModel>();
             foreach (MovieModel movie in movies)
             {
-                string imagePath = null;
-                if (movie.ImagePath != null)
-                {
-                    imagePath = movie.ImagePath;
-                }
-                List<GenreViewModel> genresViewModels = movie.Genres.Select(ToGenreViewModel).ToList();
-                movieViewModels.Add(new MovieViewModel(
+                movieViewModels.Add(ToMovieViewModel(movie));
+            }
+            return movieViewModels;
+        }
+
+        public static MovieViewModel ToMovieViewModel(MovieModel movie)
+        {
+            string imagePath = null;
+            if (movie.ImagePath != null)
+            {
+                imagePath = movie.ImagePath;
+            }
+            List<GenreViewModel> genresViewModels = movie.Genres.Select(ToGenreViewModel).ToList();
+            MovieViewModel movieViewModel = new MovieViewModel(
                     movie.Title,
                     movie.Description,
                     movie.ReleaseDate,
                     MiscHelper.ShortenStringIfNecessary(movie.Description),
                     genresViewModels,
                     movie.MovieId)
-                    {
-                        IsFavourite = movie.IsFavourite,
-                        ImagePath = imagePath,
-                        AverageRating = movie.AverageRating,
-                        PersonalRating = new RatingViewModel(movie.MovieId, movie.PersonalRating)
-                    }
-                );
-            }
-            return movieViewModels;
+                {
+                    IsFavourite = movie.IsFavourite,
+                    ImagePath = imagePath,
+                    AverageRating = movie.AverageRating,
+                    PersonalRating = new RatingViewModel(movie.MovieId, movie.PersonalRating)
+                };
+            return movieViewModel;
         }
     }
 }

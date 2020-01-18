@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using View.Helpers;
 using View.ViewModels;
 
@@ -32,7 +33,7 @@ namespace View.Controllers
             var movies = _movieLogic.GetAllMovies(MiscHelper.GetCurrentUserIdOrZero(this)).ToList();
             if (User.Identity.IsAuthenticated)
             {
-                movies = _movieLogic.CheckIfMoviesAreFavourites(movies, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
+                movies = _movieLogic.CheckIfMoviesAreFavourites(movies, MiscHelper.GetCurrentUserIdOrZero(this));
             }
 
             var movieViewModels = ModelToViewModel.ToMovieViewModels(movies);
@@ -61,7 +62,7 @@ namespace View.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                movies = _movieLogic.CheckIfMoviesAreFavourites(movies, int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Sid).Value));
+                movies = _movieLogic.CheckIfMoviesAreFavourites(movies, MiscHelper.GetCurrentUserIdOrZero(this));
             }
 
             var movieViewModels = ModelToViewModel.ToMovieViewModels(movies);
@@ -80,13 +81,8 @@ namespace View.Controllers
             {
                 return NotFound();
             }
-            List<GenreViewModel> genresViewModels = movieModel.Genres.Select(ModelToViewModel.ToGenreViewModel).ToList();
-            var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
-                MiscHelper.ShortenStringIfNecessary(movieModel.Description), genresViewModels, movieModel.MovieId)
-            {
-                AverageRating = movieModel.AverageRating,
-                PersonalRating = new RatingViewModel(movieModel.MovieId, movieModel.PersonalRating)
-            };
+
+            var movieViewModel = ModelToViewModel.ToMovieViewModel(movieModel);
 
             return View(movieViewModel);
         }
@@ -139,8 +135,8 @@ namespace View.Controllers
             {
                 return NotFound();
             }
-            var movieViewModel = new MovieViewModel(movieModel.Title, movieModel.Description, movieModel.ReleaseDate,
-                MiscHelper.ShortenStringIfNecessary(movieModel.Description), movieModel.MovieId);
+
+            var movieViewModel = ModelToViewModel.ToMovieViewModel(movieModel);
 
             return View(movieViewModel);
         }
