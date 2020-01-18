@@ -85,6 +85,7 @@ namespace Data.SQLContext
             {
                 MySqlCommand command = new MySqlCommand("DELETE FROM `rating` WHERE MediaId = @mediaId", _conn);
                 command.Parameters.AddWithValue("mediaId", id);
+                _conn.Open();
                 command.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -104,6 +105,7 @@ namespace Data.SQLContext
             {
                 MySqlCommand command = new MySqlCommand("DELETE FROM `rating` WHERE UserId = @userId", _conn);
                 command.Parameters.AddWithValue("userId", id);
+                _conn.Open();
                 command.ExecuteNonQuery();
             }
             catch (Exception e)

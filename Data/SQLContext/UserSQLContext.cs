@@ -131,7 +131,7 @@ namespace Data.SQLContext
             try
             {
                 _conn.Open();
-                MySqlCommand command = new MySqlCommand("SELECT UserId, Username, EmailAddress, AccountType " +
+                MySqlCommand command = new MySqlCommand("SELECT * " +
                                                         "FROM `user` WHERE UserId != @userId",
                     _conn);
 
