@@ -34,21 +34,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    string imagePath = null;
-                    if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
-                    {
-                        imagePath = reader.GetString("ImagePath");
-                    }
-                    movies.Add(new MovieDTO(
-                        reader.GetInt32(reader.GetOrdinal("MovieId")),
-                        reader.GetString(reader.GetOrdinal("Title")),
-                        reader.GetString(reader.GetOrdinal("Description")),
-                        reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
-                        reader.GetInt32(reader.GetOrdinal("MediaId"))
-                    )
-                    {
-                        ImagePath = imagePath
-                    });
+                    movies.Add(GetMovieFromReader(reader));
                 }
                 _conn.Close();
             }
@@ -74,21 +60,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    string imagePath = null;
-                    if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
-                    {
-                        imagePath = reader.GetString("ImagePath");
-                    }
-                    movies.Add(new MovieDTO(
-                        reader.GetInt32(reader.GetOrdinal("MovieId")),
-                        reader.GetString(reader.GetOrdinal("Title")),
-                        reader.GetString(reader.GetOrdinal("Description")),
-                        reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
-                        reader.GetInt32(reader.GetOrdinal("MediaId"))
-                    )
-                    {
-                        ImagePath = imagePath
-                    });
+                    movies.Add(GetMovieFromReader(reader));
                 }
                 _conn.Close();
             }
@@ -154,22 +126,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    string imagePath = null;
-                    if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
-                    {
-                        imagePath = reader.GetString("ImagePath");
-                    }
-                    movie = new MovieDTO(
-                        reader.GetInt32(reader.GetOrdinal("MovieId")),
-                        reader.GetString(reader.GetOrdinal("Title")),
-                        reader.GetString(reader.GetOrdinal("Description")),
-                        reader.GetDateTime(reader.GetOrdinal("ReleaseDate")),
-                        reader.GetInt32(reader.GetOrdinal("MediaId"))
-                        
-                    )
-                    {
-                        ImagePath = imagePath
-                    };
+                    movie = GetMovieFromReader(reader);
                 }
                 _conn.Close();
                 if (movie.Title != null)
@@ -258,22 +215,7 @@ namespace Data.SQLContext
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    string imagePath = null;
-                    if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
-                    {
-                        imagePath = reader.GetString("ImagePath");
-                    }
-
-                    movie = new MovieDTO(
-                        reader.GetInt32("MovieId"),
-                        reader.GetString("Title"),
-                        reader.GetString("Description"),
-                        reader.GetDateTime("ReleaseDate"),
-                        reader.GetInt32("MediaId")
-                    )
-                    {
-                        ImagePath = imagePath
-                    };
+                    movie = GetMovieFromReader(reader);
                 }
             }
             catch (Exception e)
@@ -312,6 +254,27 @@ namespace Data.SQLContext
             {
                 _conn.Close();
             }
+        }
+
+        private MovieDTO GetMovieFromReader(MySqlDataReader reader)
+        {
+            string imagePath = null;
+            if (!reader.IsDBNull(reader.GetOrdinal("ImagePath")))
+            {
+                imagePath = reader.GetString("ImagePath");
+            }
+
+            var movie = new MovieDTO(
+                reader.GetInt32("MovieId"),
+                reader.GetString("Title"),
+                reader.GetString("Description"),
+                reader.GetDateTime("ReleaseDate"),
+                reader.GetInt32("MediaId")
+            )
+            {
+                ImagePath = imagePath
+            };
+            return movie;
         }
     }
 }
