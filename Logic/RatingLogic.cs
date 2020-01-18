@@ -24,6 +24,7 @@ namespace Logic
             foreach (var movie in movies)
             {
                 movie.AverageRating = GetAverageRatingForMovie(movie);
+                
                 movie.PersonalRating = GetPersonalRatingForMovie(movie, userId);
             }
             return movies;
@@ -45,11 +46,14 @@ namespace Logic
 
         private int GetPersonalRatingForMovie(MovieModel movie, int userId)
         {
-            var personalRating = _iRatingContext.GetPersonalRatingOfMedia(userId,
-                _mediaLogic.GetMediaIdFromMovieId(movie.MovieId));
-            if (personalRating != null)
+            if (userId > 0)
             {
-                return personalRating.Rating;
+                var personalRating = _iRatingContext.GetPersonalRatingOfMedia(userId,
+                    _mediaLogic.GetMediaIdFromMovieId(movie.MovieId));
+                if (personalRating != null)
+                {
+                    return personalRating.Rating;
+                }
             }
             return 0;
         }

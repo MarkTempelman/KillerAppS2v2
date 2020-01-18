@@ -15,15 +15,21 @@ namespace LogicTests
         private PlaylistLogic _playlistLogic;
         private IMediaContext _mediaContext;
         private IPlaylistContext _playlistContext;
+        private IRatingContext _ratingContext;
+        private RatingLogic _ratingLogic;
+        private MediaLogic _mediaLogic;
         
         [SetUp]
         public void SetUp()
         {
             _iUserContext = new UserMemoryContext();
             _mediaContext = new MediaMemoryContext();
+            _ratingContext = new RatingMemoryContext();
             _playlistContext = new PlaylistMemoryContext();
             _playlistLogic = new PlaylistLogic(_playlistContext, _mediaContext);
-            _userLogic = new UserLogic(_iUserContext, _playlistLogic);
+            _mediaLogic = new MediaLogic(_mediaContext);
+            _ratingLogic = new RatingLogic(_ratingContext, _mediaLogic);
+            _userLogic = new UserLogic(_iUserContext, _playlistLogic, _ratingLogic);
         }
 
         [Test]

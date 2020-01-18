@@ -18,16 +18,15 @@ namespace LogicTests
         private IGenreContext _iGenreContext;
         private IPlaylistContext _iPlaylistContext;
         private IMediaContext _iMediaContext;
+        private IRatingContext _iRatingContext;
         private MovieLogic _movieLogic;
         private GenreLogic _genreLogic;
         private SearchLogic _searchLogic;
         private PlaylistLogic _playlistLogic;
         private MediaLogic _mediaLogic;
-        private MovieModel _testMovie1;
-        private MovieModel _testMovie2;
         private GenreModel _testGenre1;
-        private GenreModel _testGenre2;
         private SearchModel _search;
+        private RatingLogic _ratingLogic;
 
 
         [SetUp]
@@ -35,23 +34,23 @@ namespace LogicTests
         {
             _iMovieContext = new MovieMemoryContext();
             _iGenreContext = new GenreMemoryContext();
-            
+            _iPlaylistContext = new PlaylistMemoryContext();
+            _iMediaContext = new MediaMemoryContext();
+            _iRatingContext = new RatingMemoryContext();
             _genreLogic = new GenreLogic(_iGenreContext);
             _searchLogic = new SearchLogic(_genreLogic);
             _playlistLogic = new PlaylistLogic(_iPlaylistContext, _iMediaContext);
             _mediaLogic = new MediaLogic(_iMediaContext);
-            _movieLogic = new MovieLogic(_iMovieContext, _genreLogic, _searchLogic, _playlistLogic, _mediaLogic);
+            _ratingLogic = new RatingLogic(_iRatingContext, _mediaLogic);
+            _movieLogic = new MovieLogic(_iMovieContext, _genreLogic, _searchLogic, _playlistLogic, _mediaLogic, _ratingLogic);
             _testGenre1 = new GenreModel("test1", 1);
-            _testGenre2 = new GenreModel("test2", 2);
-            _testMovie1 = new MovieModel(1, "TestTitle2", "TestDescription1", new DateTime(2019, 10, 23), 1);
-            _testMovie2 = new MovieModel(2, "TestTitle1", "TestDescription2", new DateTime(2019, 10, 15), 2);
         }
 
         [Test]
         public void GetAllMoviesTest()
         {
             IEnumerable<int> expected = new List<int> {1, 2};
-            List<int> actual = _movieLogic.GetAllMovies().Select(movie => movie.MovieId).ToList();
+            List<int> actual = _movieLogic.GetAllMovies(0).Select(movie => movie.MovieId).ToList();
 
             Assert.AreEqual(expected, actual);
         }
@@ -62,7 +61,7 @@ namespace LogicTests
             _search = new SearchModel {SortBy = SortBy.Date};
             List<int> expected = new List<int> {2, 1};
 
-            List<int> actual = _movieLogic.GetMoviesBySearchModel(_search).Select(movie => movie.MovieId).ToList();
+            List<int> actual = _movieLogic.GetMoviesBySearchModel(_search, 0).Select(movie => movie.MovieId).ToList();
 
             Assert.AreEqual(expected, actual);
         }
@@ -73,7 +72,7 @@ namespace LogicTests
             _search = new SearchModel { SortBy = SortBy.Title };
             List<int> expected = new List<int> { 2, 1 };
 
-            List<int> actual = _movieLogic.GetMoviesBySearchModel(_search).Select(movie => movie.MovieId).ToList();
+            List<int> actual = _movieLogic.GetMoviesBySearchModel(_search, 0).Select(movie => movie.MovieId).ToList();
 
             Assert.AreEqual(expected, actual);
         }
@@ -87,7 +86,7 @@ namespace LogicTests
                 ReleasedBefore = new DateTime(2019, 10, 25)
             };
 
-            var actual = _movieLogic.GetMoviesBySearchModel(_search);
+            var actual = _movieLogic.GetMoviesBySearchModel(_search, 0);
             
             Assert.Multiple(() =>
                 {
@@ -107,7 +106,7 @@ namespace LogicTests
                 Genre = _testGenre1
             };
 
-            var actual = _movieLogic.GetMoviesBySearchModel(_search);
+            var actual = _movieLogic.GetMoviesBySearchModel(_search, 0);
 
             Assert.AreEqual(_testGenre1.GenreId, actual.First().Genres.First().GenreId);
         }
@@ -120,7 +119,7 @@ namespace LogicTests
 
             List<int> actual = new List<int>();
 
-            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search))
+            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search, 0))
             {
                 actual.Add(movie.MovieId);
             }
@@ -136,7 +135,7 @@ namespace LogicTests
 
             List<int> actual = new List<int>();
 
-            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search))
+            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search, 0))
             {
                 actual.Add(movie.MovieId);
             }
@@ -152,7 +151,7 @@ namespace LogicTests
 
             List<int> actual = new List<int>();
 
-            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search))
+            foreach (var movie in _movieLogic.GetMoviesBySearchModel(search, 0))
             {
                 actual.Add(movie.MovieId);
             }
@@ -164,7 +163,7 @@ namespace LogicTests
         public void GetMovieById()
         {
             var expected = 1;
-            var actual = _movieLogic.GetMovieById(1).MovieId;
+            var actual = _movieLogic.GetMovieById(1, 0).MovieId;
             Assert.AreEqual(expected, actual);
         }
 
