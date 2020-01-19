@@ -13,13 +13,13 @@ namespace LogicTests
     public class GenreTests
     {
         private IGenreContext _genreContext;
-        private GenreCollection _genreCollection;
+        private GenreLogic _genreLogic;
 
         [SetUp]
         public void Setup()
         {
             _genreContext = new GenreMemoryContext();
-            _genreCollection = new GenreCollection(_genreContext);
+            _genreLogic = new GenreLogic(_genreContext);
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace LogicTests
         {
             List<int> expected = new List<int> {1, 2};
             List<int> actual = new List<int>();
-            foreach (var genre in _genreCollection.GetAllGenres())
+            foreach (var genre in _genreLogic.GetAllGenres())
             {
                 actual.Add(genre.GenreId);
             }

@@ -13,11 +13,11 @@ namespace View.ViewComponents
 {
     public class SearchViewComponent : ViewComponent
     {
-        private readonly GenreCollection _genreCollection;
+        private readonly GenreLogic _genreLogic;
 
-        public SearchViewComponent(GenreCollection genreCollection)
+        public SearchViewComponent(GenreLogic genreLogic)
         {
-            _genreCollection = genreCollection;
+            _genreLogic = genreLogic;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -25,7 +25,7 @@ namespace View.ViewComponents
             return await Task.Run<IViewComponentResult>(() =>
             {
                 SearchViewModel searchViewModel = new SearchViewModel();
-                foreach (GenreModel genre in _genreCollection.GetAllGenres())
+                foreach (GenreModel genre in _genreLogic.GetAllGenres())
                 {
                     searchViewModel.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
                 }

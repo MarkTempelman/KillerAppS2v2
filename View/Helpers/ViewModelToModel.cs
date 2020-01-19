@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Logic;
 using View.ViewModels;
 using Logic.Models;
 
@@ -10,29 +9,27 @@ namespace View.Helpers
 {
     public static class ViewModelToModel
     {
-        public static GenreModel ToGenreModel(GenreViewModel genreViewModel, GenreCollection genreCollection)
+        public static GenreModel ToGenreModel(GenreViewModel genreViewModel)
         {
-            int genreId = 0;
-            int movieId = 0;
+            GenreModel genreModel = new GenreModel(genreViewModel.Genre);
+            if (genreViewModel.MovieId > 0)
+            {
+                genreModel.MovieId = genreViewModel.MovieId;
+            }
 
             if (genreViewModel.GenreId > 0)
             {
-                genreId = genreViewModel.GenreId;
+                genreModel.GenreId = genreViewModel.GenreId;
             }
-
-            if (genreViewModel.MovieId > 0)
-            {
-                movieId = genreViewModel.MovieId;
-            }
-            return genreCollection.CreateNewGenreModel(genreViewModel.Genre, genreId, movieId);
+            return genreModel;
         }
 
-        public static SearchModel ToSearchModel(SearchViewModel search, GenreCollection genreCollection)
+        public static SearchModel ToSearchModel(SearchViewModel search)
         {
             var searchModel = new SearchModel();
             if (search.GenreId != -1)
             {
-                searchModel.Genre = genreCollection.CreateNewGenreModel(null, search.GenreId, 0);
+                searchModel.Genre = new GenreModel(search.GenreId);
             }
 
             searchModel.ReleasedAfter = search.ReleasedAfter;
@@ -48,10 +45,10 @@ namespace View.Helpers
             return searchModel;
         }
 
-        public static MovieModel ToMovieModel(MovieViewModel movieViewModel, GenreCollection genreCollection)
+        public static MovieModel ToMovieModel(MovieViewModel movieViewModel)
         {
             MovieModel movieModel = new MovieModel(movieViewModel.Title, movieViewModel.Description, movieViewModel.ReleaseDate);
-            movieModel.Genres.Add(genreCollection.CreateNewGenreModel(null, movieViewModel.GenreId, 0));
+            movieModel.Genres.Add(new GenreModel(movieViewModel.GenreId));
             movieModel.MovieId = movieViewModel.MovieId;
             movieModel.ImagePath = movieViewModel.ImagePath;
             return movieModel;

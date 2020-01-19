@@ -11,17 +11,17 @@ namespace Logic
     public class MovieLogic
     {
         private readonly IMovieContext _iMovieContext;
-        private readonly GenreCollection _genreCollection;
+        private readonly GenreLogic _genreLogic;
         private readonly SearchLogic _searchLogic;
         private readonly PlaylistLogic _playlistLogic;
         private readonly MediaLogic _mediaLogic;
         private readonly RatingLogic _ratingLogic;
 
-        public MovieLogic(IMovieContext movieContext, GenreCollection genreCollection, SearchLogic searchLogic, 
+        public MovieLogic(IMovieContext movieContext, GenreLogic genreLogic, SearchLogic searchLogic, 
             PlaylistLogic playlistLogic, MediaLogic mediaLogic, RatingLogic ratingLogic)
         {
             _iMovieContext = movieContext;
-            _genreCollection = genreCollection;
+            _genreLogic = genreLogic;
             _searchLogic = searchLogic;
             _playlistLogic = playlistLogic;
             _mediaLogic = mediaLogic;
@@ -31,7 +31,7 @@ namespace Logic
         public IEnumerable<MovieModel> GetAllMovies(int userId)
         {
             var movies = _iMovieContext.GetAllMovies().Select(ToMovieModel).ToList();
-            movies = _genreCollection.AddGenresToMovies(movies).ToList();
+            movies = _genreLogic.AddGenresToMovies(movies).ToList();
             movies = _ratingLogic.AddRatingsToMovies(movies, userId);
 
             return movies;
@@ -45,7 +45,7 @@ namespace Logic
         public IEnumerable<MovieModel> GetMoviesBySearchModel(SearchModel search, int userId)
         {
             var movies = _iMovieContext.GetMoviesBySearchModel(_searchLogic.ToSearchDTO(search)).Select(ToMovieModel).ToList();
-            movies = _genreCollection.AddGenresToMovies(movies).ToList();
+            movies = _genreLogic.AddGenresToMovies(movies).ToList();
             movies = _ratingLogic.AddRatingsToMovies(movies, userId);
             return movies;
         }
@@ -66,7 +66,7 @@ namespace Logic
                 .Select(mediaId => ToMovieModel(_iMovieContext.GetMovieFromMediaId(mediaId)))
                 .ToList();
 
-            movies = _genreCollection.AddGenresToMovies(movies).ToList();
+            movies = _genreLogic.AddGenresToMovies(movies).ToList();
             movies = _ratingLogic.AddRatingsToMovies(movies, userId);
 
             foreach (var movie in movies)
@@ -105,7 +105,7 @@ namespace Logic
             MovieDTO movieDTO = new MovieDTO(movieModel.MovieId, movieModel.Title, movieModel.Description, movieModel.ReleaseDate, movieModel.MediaId);
             foreach (var genre in movieModel.Genres)
             {
-                movieDTO.Genres.Add(genre.ToGenreDTO());
+                movieDTO.Genres.Add(_genreLogic.ToGenreDTO(genre));
             }
             movieDTO.ImagePath = movieModel.ImagePath;
             return movieDTO;

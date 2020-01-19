@@ -9,16 +9,16 @@ namespace Logic
 {
     public class SearchLogic
     {
-        private readonly GenreCollection _genreCollection;
+        private readonly GenreLogic _genreLogic;
 
-        public SearchLogic(GenreCollection genreCollection)
+        public SearchLogic(GenreLogic genreLogic)
         {
-            _genreCollection = genreCollection;
+            _genreLogic = genreLogic;
         }
 
         public SearchDTO ToSearchDTO(SearchModel searchModel)
         {
-            return new SearchDTO(searchModel.Genre.ToGenreDTO(), searchModel.ReleasedAfter, searchModel.ReleasedBefore, searchModel.SearchTerm, searchModel.SortBy);
+            return new SearchDTO(_genreLogic.ToGenreDTO(searchModel.Genre), searchModel.ReleasedAfter, searchModel.ReleasedBefore, searchModel.SearchTerm, searchModel.SortBy);
         }
     }
 }
