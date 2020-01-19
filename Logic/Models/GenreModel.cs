@@ -1,29 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Data.DTO;
+using Data.Interfaces;
 
 namespace Logic.Models
 {
     public class GenreModel: IEquatable<GenreModel>
     {
+        private IGenreContext _iGenreContext;
         public string Genre { get; set; }
         public int GenreId { get; set; }
         public int MovieId { get; set; }
 
-        public GenreModel(string genre, int genreId)
+        public GenreModel(string genre, int genreId, int movieId, IGenreContext iGenreContext)
         {
             Genre = genre;
             GenreId = genreId;
+            MovieId = movieId;
+            _iGenreContext = iGenreContext;
         }
 
-        public GenreModel(int genreId)
+        public void AddGenreToMovie()
         {
-            GenreId = genreId;
+            _iGenreContext.AddGenreToMovie(ToGenreDTO());
         }
 
-        public GenreModel(string genre)
+        public bool TryCreateNewGenre()
         {
-            Genre = genre;
+            if (!_iGenreContext.DoesGenreExist(Genre))
+            {
+                _iGenreContext.CreateNewGenre(ToGenreDTO());
+                return true;
+            }
+
+            return false;
+        }
+
+        public GenreDTO ToGenreDTO()
+        {
+            GenreDTO genreDTO = new GenreDTO(Genre);
+            if (MovieId > 0)
+            {
+                genreDTO.MovieId = MovieId;
+            }
+
+            if (GenreId > 0)
+            {
+                genreDTO.GenreId = GenreId;
+            }
+            return genreDTO;
         }
 
         public bool Equals(GenreModel otherGenre)

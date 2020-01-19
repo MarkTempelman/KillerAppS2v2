@@ -20,7 +20,7 @@ namespace LogicTests
         private IMediaContext _iMediaContext;
         private IRatingContext _iRatingContext;
         private MovieLogic _movieLogic;
-        private GenreLogic _genreLogic;
+        private GenreCollection _genreCollection;
         private SearchLogic _searchLogic;
         private PlaylistLogic _playlistLogic;
         private MediaLogic _mediaLogic;
@@ -37,13 +37,13 @@ namespace LogicTests
             _iPlaylistContext = new PlaylistMemoryContext();
             _iMediaContext = new MediaMemoryContext();
             _iRatingContext = new RatingMemoryContext();
-            _genreLogic = new GenreLogic(_iGenreContext);
-            _searchLogic = new SearchLogic(_genreLogic);
+            _genreCollection = new GenreCollection(_iGenreContext);
+            _searchLogic = new SearchLogic(_genreCollection);
             _playlistLogic = new PlaylistLogic(_iPlaylistContext, _iMediaContext);
             _mediaLogic = new MediaLogic(_iMediaContext);
             _ratingLogic = new RatingLogic(_iRatingContext, _mediaLogic);
-            _movieLogic = new MovieLogic(_iMovieContext, _genreLogic, _searchLogic, _playlistLogic, _mediaLogic, _ratingLogic);
-            _testGenre1 = new GenreModel("test1", 1);
+            _movieLogic = new MovieLogic(_iMovieContext, _genreCollection, _searchLogic, _playlistLogic, _mediaLogic, _ratingLogic);
+            _testGenre1 = new GenreModel("test1", 1, 0, _iGenreContext);
         }
 
         [Test]

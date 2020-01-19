@@ -18,13 +18,13 @@ namespace View.Controllers
     public class MovieController : Controller
     {
         private readonly MovieLogic _movieLogic;
-        private readonly GenreLogic _genreLogic;
+        private readonly GenreCollection _genreCollection;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public MovieController(MovieLogic movieLogic, GenreLogic genreLogic, IHostingEnvironment hostingEnvironment)
+        public MovieController(MovieLogic movieLogic, GenreCollection genreCollection, IHostingEnvironment hostingEnvironment)
         {
             _movieLogic = movieLogic;
-            _genreLogic = genreLogic;
+            _genreCollection = genreCollection;
             _hostingEnvironment = hostingEnvironment;
         }
 
@@ -57,7 +57,7 @@ namespace View.Controllers
             }
             else
             {
-                movies = _movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search), MiscHelper.GetCurrentUserIdOrZero(this)).ToList();
+                movies = _movieLogic.GetMoviesBySearchModel(ViewModelToModel.ToSearchModel(search, _genreCollection), MiscHelper.GetCurrentUserIdOrZero(this)).ToList();
             }
 
             if (User.Identity.IsAuthenticated)
@@ -91,7 +91,7 @@ namespace View.Controllers
         public IActionResult AddMovie()
         {
             MovieViewModel movie = new MovieViewModel();
-            foreach (GenreModel genre in _genreLogic.GetAllGenres())
+            foreach (GenreModel genre in _genreCollection.GetAllGenres())
             {
                 movie.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
             }
@@ -116,11 +116,11 @@ namespace View.Controllers
 
                 movie.ImagePath = uniqueFileName;
 
-                _movieLogic.CreateNewMovie(ViewModelToModel.ToMovieModel(movie));
+                _movieLogic.CreateNewMovie(ViewModelToModel.ToMovieModel(movie, _genreCollection));
                 return RedirectToAction("Index", "Movie");
             }
 
-            foreach (GenreModel genre in _genreLogic.GetAllGenres())
+            foreach (GenreModel genre in _genreCollection.GetAllGenres())
             {
                 movie.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
             }
@@ -148,7 +148,7 @@ namespace View.Controllers
         {
             if (ModelState.IsValid)
             {
-                _movieLogic.EditMovie(ViewModelToModel.ToMovieModel(movie));
+                _movieLogic.EditMovie(ViewModelToModel.ToMovieModel(movie, _genreCollection));
                 return RedirectToAction("Index", "Movie");
             }
 

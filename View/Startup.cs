@@ -74,7 +74,7 @@ namespace View
             services.AddTransient(m =>
             {
                 IMovieContext mc = m.GetService<IMovieContext>();
-                GenreLogic gl = m.GetService<GenreLogic>();
+                GenreCollection gl = m.GetService<GenreCollection>();
                 SearchLogic sl = m.GetService<SearchLogic>();
                 PlaylistLogic p = m.GetService<PlaylistLogic>();
                 MediaLogic me = m.GetService<MediaLogic>();
@@ -85,12 +85,12 @@ namespace View
             services.AddTransient(g =>
             {
                 IGenreContext gc = g.GetService<IGenreContext>();
-                return new GenreLogic(gc);
+                return new GenreCollection(gc);
             });
 
             services.AddTransient(s =>
             {
-                GenreLogic gl = s.GetService<GenreLogic>();
+                GenreCollection gl = s.GetService<GenreCollection>();
                 return new SearchLogic(gl);
             });
 

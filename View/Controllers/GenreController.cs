@@ -14,18 +14,18 @@ namespace View.Controllers
     [Authorize(Policy = "admin")]
     public class GenreController : Controller
     {
-        private GenreLogic _genreLogic;
+        private GenreCollection _genreCollection;
 
-        public GenreController(GenreLogic genreLogic)
+        public GenreController(GenreCollection genreCollection)
         {
-            _genreLogic = genreLogic;
+            _genreCollection = genreCollection;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddNewGenre(GenreViewModel genreViewModel)
         {
-            if (_genreLogic.TryCreateNewGenre(ViewModelToModel.ToGenreModel(genreViewModel)))
+            if (ViewModelToModel.ToGenreModel(genreViewModel, _genreCollection).TryCreateNewGenre())
             {
                 return RedirectToAction("ManageGenres");
             }
@@ -38,7 +38,7 @@ namespace View.Controllers
         public IActionResult ManageGenres(string addGenreErrorMessage)
         {
             List<GenreViewModel> genres = new List<GenreViewModel>();
-            foreach (var genre in _genreLogic.GetAllGenres())
+            foreach (var genre in _genreCollection.GetAllGenres())
             {
                 genres.Add(ModelToViewModel.ToGenreViewModel(genre));
             }
@@ -53,14 +53,14 @@ namespace View.Controllers
 
         public IActionResult RemoveGenre(int id)
         {
-            _genreLogic.RemoveGenreById(id);
+            _genreCollection.RemoveGenreById(id);
             return RedirectToAction("ManageGenres");
         }
 
         public IActionResult AddGenreToMovie(int id)
         {
             GenreViewModel genreViewModel = new GenreViewModel();
-            foreach (GenreModel genre in _genreLogic.GetGenreModelsNotAssignedToThisMovie(id))
+            foreach (GenreModel genre in _genreCollection.GetGenreModelsNotAssignedToThisMovie(id))
             {
                 genreViewModel.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genre));
             }
@@ -73,7 +73,7 @@ namespace View.Controllers
         {
             if (genre.GenreId < 1)
             {
-                foreach (GenreModel genreModel in _genreLogic.GetGenreModelsNotAssignedToThisMovie(genre.MovieId))
+                foreach (GenreModel genreModel in _genreCollection.GetGenreModelsNotAssignedToThisMovie(genre.MovieId))
                 {
                     genre.AllGenres.Add(ModelToViewModel.ToGenreViewModel(genreModel));
                 }
@@ -81,7 +81,7 @@ namespace View.Controllers
                 ModelState.AddModelError("Genre", "Please select a genre");
                 return View(genre);
             }
-            _genreLogic.AddGenreToMovie(ViewModelToModel.ToGenreModel(genre));
+            ViewModelToModel.ToGenreModel(genre, _genreCollection).AddGenreToMovie();
             return RedirectToAction("Index", "Movie");
         }
     }
